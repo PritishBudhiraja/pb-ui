@@ -11,9 +11,9 @@ describe("CopyButton", () => {
       configurable: true,
       value: { writeText },
     })
-    render(<CopyButton value="pnpm add @pritishbudhiraja/ui" label="install" />)
+    render(<CopyButton value="pnpm add @pritish.budhiraja/ui" label="install" />)
     await user.click(screen.getByRole("button", { name: "Copy install" }))
-    expect(writeText).toHaveBeenCalledWith("pnpm add @pritishbudhiraja/ui")
+    expect(writeText).toHaveBeenCalledWith("pnpm add @pritish.budhiraja/ui")
   })
 
   it("toasts when copy fails", async () => {

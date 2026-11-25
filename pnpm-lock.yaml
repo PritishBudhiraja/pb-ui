@@ -26,10 +26,10 @@ importers:
 
   apps/docs:
     dependencies:
-      '@pritishbudhiraja/tokens':
+      '@pritish.budhiraja/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@pritishbudhiraja/ui':
+      '@pritish.budhiraja/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       framer-motion:
@@ -72,10 +72,10 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@pritishbudhiraja/tokens':
+      '@pritish.budhiraja/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@pritishbudhiraja/ui':
+      '@pritish.budhiraja/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       lucide-react:
@@ -129,7 +129,7 @@ importers:
 
   packages/ui:
     dependencies:
-      '@pritishbudhiraja/tokens':
+      '@pritish.budhiraja/tokens':
         specifier: workspace:*
         version: link:../tokens
       '@radix-ui/react-accordion':

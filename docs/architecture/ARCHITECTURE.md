@@ -15,6 +15,6 @@ No extra packages for motion, hooks, or icons until bundle measurements require 
 
 - React 19 peer; no bundled React
 - ESM + `.d.ts`
-- CSS is a side-effect import: `@pritishbudhiraja/ui/styles.css`
+- CSS is a side-effect import: `@pritish.budhiraja/ui/styles.css`
 - No `window` access during render except inside client effects
 - Compatible with Next.js client components and Vite SPAs

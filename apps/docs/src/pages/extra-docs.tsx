@@ -95,7 +95,7 @@ import {
   Timeline,
   TimelineItem,
   TimePicker,
-} from "@pritishbudhiraja/ui"
+} from "@pritish.budhiraja/ui"
 import type { ReactNode } from "react"
 import { useState } from "react"
 import { Preview } from "../ui/preview"

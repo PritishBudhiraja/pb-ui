@@ -31,8 +31,8 @@ import {
   TooltipTrigger,
   toast,
   toHeatmapLevel,
-} from "@pritishbudhiraja/ui"
-import { OriginButton } from "@pritishbudhiraja/ui/motion"
+} from "@pritish.budhiraja/ui"
+import { OriginButton } from "@pritish.budhiraja/ui/motion"
 import { Search } from "lucide-react"
 import type { ReactNode } from "react"
 import { Navigate, useParams } from "react-router-dom"
@@ -359,10 +359,10 @@ const DOCS: Record<string, ComponentDoc> = {
     title: "OriginButton",
     kicker: "Signature",
     description:
-      "Cursor-origin ripple CTA. Import from @pritishbudhiraja/ui/motion. Filled and outline share one implementation.",
+      "Cursor-origin ripple CTA. Import from @pritish.budhiraja/ui/motion. Filled and outline share one implementation.",
     preview: (
       <Preview
-        code={`import { OriginButton } from "@pritishbudhiraja/ui/motion"
+        code={`import { OriginButton } from "@pritish.budhiraja/ui/motion"
 
 <OriginButton>Primary</OriginButton>
 <OriginButton variant="outline">Secondary</OriginButton>`}
@@ -485,7 +485,7 @@ const DOCS: Record<string, ComponentDoc> = {
     description:
       "Fixed 3px bar. Import from motion. Optional on long article pages — this docs layout does not mount it globally so it does not fight the header.",
     preview: (
-      <Preview code={`import { ScrollProgress } from "@pritishbudhiraja/ui/motion"`}>
+      <Preview code={`import { ScrollProgress } from "@pritish.budhiraja/ui/motion"`}>
         <Text tone="muted">Mount once in the host app shell.</Text>
       </Preview>
     ),

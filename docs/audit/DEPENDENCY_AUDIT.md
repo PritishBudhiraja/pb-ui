@@ -23,7 +23,7 @@
 
 ## Security overrides
 
-`pnpm.overrides` pin nested tooling to patched releases. They are not runtime dependencies of `@pritishbudhiraja/ui`.
+`pnpm.overrides` pin nested tooling to patched releases. They are not runtime dependencies of `@pritish.budhiraja/ui`.
 
 | Package   | Why                                                                | Pinned to |
 | --------- | ------------------------------------------------------------------ | --------- |
@@ -48,4 +48,4 @@ Kept Radix Toast from the portfolio instead of Sonner so the existing API (`toas
 
 ## Motion decision
 
-`framer-motion` is an **optional peer**. Core `@pritishbudhiraja/ui` does not import it. `@pritishbudhiraja/ui/motion` does.
+`framer-motion` is an **optional peer**. Core `@pritish.budhiraja/ui` does not import it. `@pritish.budhiraja/ui/motion` does.

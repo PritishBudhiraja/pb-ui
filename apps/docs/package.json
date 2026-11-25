@@ -1,5 +1,5 @@
 {
-  "name": "@pritishbudhiraja/docs",
+  "name": "@pritish.budhiraja/docs",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,8 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@pritishbudhiraja/tokens": "workspace:*",
-    "@pritishbudhiraja/ui": "workspace:*",
+    "@pritish.budhiraja/tokens": "workspace:*",
+    "@pritish.budhiraja/ui": "workspace:*",
     "framer-motion": "^14.0.0",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",

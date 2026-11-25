@@ -1,4 +1,4 @@
-import { Button, Toaster, toast } from "@pritishbudhiraja/ui"
+import { Button, Toaster, toast } from "@pritish.budhiraja/ui"
 import type { Meta, StoryObj } from "@storybook/react"
 
 function ToastPreview() {

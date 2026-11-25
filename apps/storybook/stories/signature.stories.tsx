@@ -10,8 +10,8 @@ import {
   Text,
   ThemeToggle,
   toHeatmapLevel,
-} from "@pritishbudhiraja/ui"
-import { OriginButton } from "@pritishbudhiraja/ui/motion"
+} from "@pritish.budhiraja/ui"
+import { OriginButton } from "@pritish.budhiraja/ui/motion"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
 

@@ -1,4 +1,4 @@
-import { CommandPalette, type CommandPaletteItem } from "@pritishbudhiraja/ui"
+import { CommandPalette, type CommandPaletteItem } from "@pritish.budhiraja/ui"
 import type { Meta, StoryObj } from "@storybook/react"
 
 function PalettePreview() {

@@ -1,4 +1,4 @@
-import { CopyButton, cn } from "@pritishbudhiraja/ui"
+import { CopyButton, cn } from "@pritish.budhiraja/ui"
 import type { ReactNode } from "react"
 
 export function Preview({

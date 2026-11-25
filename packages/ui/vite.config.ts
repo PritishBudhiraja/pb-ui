@@ -35,7 +35,7 @@ export default defineConfig({
         "clsx",
         "tailwind-merge",
         /^@radix-ui\//,
-        "@pritishbudhiraja/tokens",
+        "@pritish.budhiraja/tokens",
       ],
     },
     sourcemap: true,

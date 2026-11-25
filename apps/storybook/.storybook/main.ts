@@ -18,8 +18,8 @@ const config: StorybookConfig = {
       ...config.resolve,
       alias: {
         ...config.resolve?.alias,
-        "@pritishbudhiraja/ui/motion": join(root, "../../../packages/ui/src/motion.ts"),
-        "@pritishbudhiraja/ui": join(root, "../../../packages/ui/src/index.ts"),
+        "@pritish.budhiraja/ui/motion": join(root, "../../../packages/ui/src/motion.ts"),
+        "@pritish.budhiraja/ui": join(root, "../../../packages/ui/src/index.ts"),
       },
     }
     return config

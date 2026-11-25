@@ -1,4 +1,4 @@
-import { Checkbox, Input, Label, Textarea } from "@pritishbudhiraja/ui"
+import { Checkbox, Input, Label, Textarea } from "@pritish.budhiraja/ui"
 import type { Meta, StoryObj } from "@storybook/react"
 
 function FormPreview() {

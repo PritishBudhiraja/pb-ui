@@ -35,8 +35,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
         run: |
-          pnpm --filter @pritishbudhiraja/tokens publish --access public --no-git-checks
-          pnpm --filter @pritishbudhiraja/ui publish --access public --no-git-checks
+          pnpm --filter @pritish.budhiraja/tokens publish --access public --no-git-checks
+          pnpm --filter @pritish.budhiraja/ui publish --access public --no-git-checks
 
       - name: Version or publish from changesets
         if: github.event_name == 'push'

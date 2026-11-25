@@ -13,7 +13,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@pritishbudhiraja/ui"
+} from "@pritish.budhiraja/ui"
 import type { Meta, StoryObj } from "@storybook/react"
 
 function OverlayPreview() {

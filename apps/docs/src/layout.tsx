@@ -1,4 +1,4 @@
-import { CommandPalette, cn, HatchDivider, ThemeToggle, Toaster } from "@pritishbudhiraja/ui"
+import { CommandPalette, cn, HatchDivider, ThemeToggle, Toaster } from "@pritish.budhiraja/ui"
 import { Menu, X } from "lucide-react"
 import { type Ref, Suspense, useEffect, useRef, useState } from "react"
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"

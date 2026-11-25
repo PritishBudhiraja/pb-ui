@@ -1,5 +1,5 @@
-import { Button, EditorialHeading, HatchDivider, Text } from "@pritishbudhiraja/ui"
-import { OriginButton } from "@pritishbudhiraja/ui/motion"
+import { Button, EditorialHeading, HatchDivider, Text } from "@pritish.budhiraja/ui"
+import { OriginButton } from "@pritish.budhiraja/ui/motion"
 import { Link } from "react-router-dom"
 import { useDocsTheme } from "../theme"
 import { PageHeader, Preview } from "../ui/preview"
@@ -52,10 +52,10 @@ export function IntroductionPage() {
 }
 
 export function InstallationPage() {
-  const install = `pnpm add @pritishbudhiraja/ui`
-  const usage = `import "@pritishbudhiraja/ui/styles.css"
-import { Button } from "@pritishbudhiraja/ui"
-import { OriginButton } from "@pritishbudhiraja/ui/motion"`
+  const install = `pnpm add @pritish.budhiraja/ui`
+  const usage = `import "@pritish.budhiraja/ui/styles.css"
+import { Button } from "@pritish.budhiraja/ui"
+import { OriginButton } from "@pritish.budhiraja/ui/motion"`
 
   return (
     <article className="space-y-6">
@@ -85,10 +85,10 @@ export function GettingStartedPage() {
         description="Import CSS once, set data-theme on the document, then compose primitives. ThemeToggle is controlled — you own storage."
       />
       <ol className="list-decimal space-y-3 pl-5 text-sm leading-relaxed text-muted-foreground">
-        <li>Import @pritishbudhiraja/ui/styles.css in the app root.</li>
+        <li>Import @pritish.budhiraja/ui/styles.css in the app root.</li>
         <li>Set data-theme="portfolio" or "epoch" and toggle the dark class.</li>
         <li>Load fonts and assign --pb-font-* if you are not using the docs defaults.</li>
-        <li>Import motion components from @pritishbudhiraja/ui/motion only where needed.</li>
+        <li>Import motion components from @pritish.budhiraja/ui/motion only where needed.</li>
       </ol>
     </article>
   )
@@ -196,7 +196,7 @@ export function MotionPage() {
         description="Theme reveal is 400ms with a circular View Transition. OriginButton uses a spring ripple. Respect prefers-reduced-motion — ThemeToggle and OriginButton already do."
       />
       <Text tone="muted">
-        Import @pritishbudhiraja/ui/motion only for OriginButton and ScrollProgress. Core UI has no
+        Import @pritish.budhiraja/ui/motion only for OriginButton and ScrollProgress. Core UI has no
         framer-motion import.
       </Text>
     </article>

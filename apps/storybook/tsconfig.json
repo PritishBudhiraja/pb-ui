@@ -3,8 +3,8 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
-      "@pritishbudhiraja/ui": ["../../packages/ui/src/index.ts"],
-      "@pritishbudhiraja/ui/motion": ["../../packages/ui/src/motion.ts"]
+      "@pritish.budhiraja/ui": ["../../packages/ui/src/index.ts"],
+      "@pritish.budhiraja/ui/motion": ["../../packages/ui/src/motion.ts"]
     }
   },
   "include": [".storybook", "stories"]

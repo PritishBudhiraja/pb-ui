@@ -37,9 +37,9 @@ Reject duplicate components with different names but equivalent responsibilities
 
 ## Packages
 
-- `@pritishbudhiraja/tokens` — CSS variables and themes.
-- `@pritishbudhiraja/ui` — components without `framer-motion`.
-- `@pritishbudhiraja/ui/motion` — OriginButton, ScrollProgress, and other motion-only exports.
+- `@pritish.budhiraja/tokens` — CSS variables and themes.
+- `@pritish.budhiraja/ui` — components without `framer-motion`.
+- `@pritish.budhiraja/ui/motion` — OriginButton, ScrollProgress, and other motion-only exports.
 
 ## Definition of done
 

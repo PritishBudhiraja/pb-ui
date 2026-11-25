@@ -1,6 +1,6 @@
 # Package architecture
 
-## `@pritishbudhiraja/tokens`
+## `@pritish.budhiraja/tokens`
 
 Source CSS only. No JS build. Exports:
 
@@ -8,7 +8,7 @@ Source CSS only. No JS build. Exports:
 - `themes/portfolio.css`
 - `themes/epoch.css`
 
-## `@pritishbudhiraja/ui`
+## `@pritish.budhiraja/ui`
 
 Vite library build:
 

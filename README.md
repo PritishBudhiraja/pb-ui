@@ -1,19 +1,19 @@
 # Hatch
 
-A React design system: editorial, minimal, and built to reuse across products. The packages still live under `@pritishbudhiraja/*`; this repo is `pb-ui`.
+A React design system: editorial, minimal, and built to reuse across products. The packages still live under `@pritish.budhiraja/*`; this repo is `pb-ui`.
 
-- Tokens and themes in `@pritishbudhiraja/tokens`
-- Components in `@pritishbudhiraja/ui`
-- Motion pieces in `@pritishbudhiraja/ui/motion`
+- Tokens and themes in `@pritish.budhiraja/tokens`
+- Components in `@pritish.budhiraja/ui`
+- Motion pieces in `@pritish.budhiraja/ui/motion`
 - Documentation site in `apps/docs`
 
 ## Packages
 
 | Package                       | What it is                                                               |
 | ----------------------------- | ------------------------------------------------------------------------ |
-| `@pritishbudhiraja/tokens`    | Semantic CSS variables. `portfolio` and `epoch` themes (light and dark). |
-| `@pritishbudhiraja/ui`        | React components. No Next.js APIs.                                       |
-| `@pritishbudhiraja/ui/motion` | `OriginButton` and `ScrollProgress`. Optional `framer-motion` peer.      |
+| `@pritish.budhiraja/tokens`    | Semantic CSS variables. `portfolio` and `epoch` themes (light and dark). |
+| `@pritish.budhiraja/ui`        | React components. No Next.js APIs.                                       |
+| `@pritish.budhiraja/ui/motion` | `OriginButton` and `ScrollProgress`. Optional `framer-motion` peer.      |
 
 ## Components
 
@@ -34,9 +34,9 @@ A React design system: editorial, minimal, and built to reuse across products. T
 ## Usage
 
 ```tsx
-import "@pritishbudhiraja/ui/styles.css"
-import { Button, ThemeToggle, FramedContainer } from "@pritishbudhiraja/ui"
-import { OriginButton } from "@pritishbudhiraja/ui/motion"
+import "@pritish.budhiraja/ui/styles.css"
+import { Button, ThemeToggle, FramedContainer } from "@pritish.budhiraja/ui"
+import { OriginButton } from "@pritish.budhiraja/ui/motion"
 ```
 
 Set the palette on the document root:
@@ -48,7 +48,7 @@ Set the palette on the document root:
 Add `class="dark"` for dark mode. `ThemeToggle` is controlled: pass `theme` and `setTheme`. Load fonts in the host app; override `--pb-font-sans`, `--pb-font-serif`, `--pb-font-display`, and `--pb-font-hand` as needed.
 
 ```bash
-pnpm add @pritishbudhiraja/tokens @pritishbudhiraja/ui
+pnpm add @pritish.budhiraja/tokens @pritish.budhiraja/ui
 ```
 
 ## Develop
