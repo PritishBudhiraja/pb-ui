@@ -12,4 +12,4 @@
 - Example apps (Next.js and Vite)
 - Optional component registry
 - Adopt the library in other products
-- Keep `ui.pritishbudhiraja.com` on Vercel (add the domain in the project if TLS is still pending)
+- Docs live at [ui.pritishbudhiraja.com](https://ui.pritishbudhiraja.com)

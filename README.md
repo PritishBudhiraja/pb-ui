@@ -76,7 +76,7 @@ On the import screen, Vercel lists `docs`, `storybook`, and `ui`. Import **docs*
 
 That sets Root Directory to `apps/docs`. `apps/docs/vercel.json` installs from the repo root so the pnpm workspace still builds.
 
-Production URL: [https://ui.pritishbudhiraja.com](https://ui.pritishbudhiraja.com) (Vercel also serves [https://pb-ui-phi.vercel.app](https://pb-ui-phi.vercel.app)). Cloudflare already has a DNS-only CNAME for `ui` → `cname.vercel-dns.com`. Add `ui.pritishbudhiraja.com` under the Vercel project’s Domains tab so TLS can issue.
+Production: [https://ui.pritishbudhiraja.com](https://ui.pritishbudhiraja.com) (`ui` CNAME → `cname.vercel-dns.com`, DNS only). Vercel also serves [https://pb-ui-phi.vercel.app](https://pb-ui-phi.vercel.app).
 
 ## More
 
