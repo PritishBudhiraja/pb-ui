@@ -1,0 +1,22 @@
+# Component inventory
+
+Verified against `Portfolio-Website/components`. Do not treat this as an instruction to extract everything.
+
+| Name                                         | Path                                    | Responsibility           | Consumers             | Reusability                     | Action                                    | P   | Complexity |
+| -------------------------------------------- | --------------------------------------- | ------------------------ | --------------------- | ------------------------------- | ----------------------------------------- | --- | ---------- |
+| Button                                       | `components/ui/button.tsx`              | CVA button + Slot        | Navbar                | Generic                         | Extract                                   | P0  | Low        |
+| OriginButton                                 | `components/ui/origin-button.tsx`       | Filled ripple CTA        | About, resume actions | Generic pattern, incomplete API | Refactor then extract                     | P0  | Med        |
+| OriginButtonOutline                          | same                                    | Outline ripple           | About, resume actions | Duplicate of filled             | Compose into OriginButton                 | P0  | Med        |
+| Toast / Toaster / useToast                   | `components/ui/toast*.tsx`              | Radix toast store        | CopyButton, layout    | Generic; remove delay was 1e6   | Extract + fix                             | P1  | Low        |
+| SiteFrame / Hatch                            | `components/site-frame.tsx`             | Dashed column + hatch    | Pages                 | Generic                         | Extract as FramedContainer / HatchDivider | P0  | Low        |
+| MarginNote                                   | `components/margin-note.tsx`            | Handwritten aside        | Many sections         | Signature                       | Extract as EditorialAnnotation            | P0  | Low        |
+| ThemeToggle                                  | `components/theme-toggle.tsx`           | VT clip-path toggle      | Navbar                | Coupled to next-themes          | Inject theme                              | P0  | Med        |
+| ThemeProvider                                | `components/theme-provider.tsx`         | next-themes pass-through | Layout                | Optional peer                   | Defer (consumers bring their provider)    | P2  | Low        |
+| CommandMenu                                  | `components/command-menu.tsx`           | ⌘K navigation            | Navbar                | Hardcoded routes + Next router  | Refactor as CommandPalette                | P1  | Med        |
+| CopyButton                                   | `components/copy-button.tsx`            | Clipboard + toast        | Hero                  | Generic                         | Extract                                   | P1  | Low        |
+| ScrollProgress                               | `components/scroll-progress.tsx`        | Top progress bar         | Layout                | Generic                         | Extract to motion                         | P1  | Low        |
+| SmoothScrollProvider                         | `components/smooth-scroll-provider.tsx` | Lenis                    | Layout                | Optional plugin                 | Defer                                     | P2  | Low        |
+| GithubContributions                          | `components/github-contributions.tsx`   | Heatmap + GitHub copy    | Home                  | Mixed                           | Extract heatmap only                      | P1  | Med        |
+| LocalTime                                    | `components/local-time.tsx`             | Kolkata clock            | Hero                  | App-specific TZ                 | Defer                                     | P2  | Low        |
+| Navbar / Footer / Hero / sections / resume/* | various                                 | Product chrome           | App                   | App-specific                    | Retain                                    | P2  | —          |
+| `cn`                                         | `lib/utils.ts`                          | clsx + twMerge           | Everywhere            | Generic                         | Extract                                   | P0  | Low        |

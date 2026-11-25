@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@pritishbudhiraja/tokens/index.css";
+
+@source "./**/*.{ts,tsx}";

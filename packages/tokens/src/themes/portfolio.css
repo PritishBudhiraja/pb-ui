@@ -1,0 +1,70 @@
+/* Portfolio light and dark. */
+
+:root,
+[data-theme="portfolio"],
+.theme-portfolio {
+  color-scheme: light;
+  --pb-theme: portfolio;
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(0 0% 9%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(0 0% 9%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 9%);
+  --primary: hsl(0 0% 9%);
+  --primary-foreground: hsl(0 0% 98%);
+  --secondary: hsl(0 0% 96%);
+  --secondary-foreground: hsl(0 0% 9%);
+  --muted: hsl(0 0% 96%);
+  --muted-foreground: hsl(0 0% 40%);
+  --accent: hsl(0 0% 96%);
+  --accent-foreground: hsl(0 0% 9%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(0 0% 90%);
+  --input: hsl(0 0% 90%);
+  --ring: hsl(0 0% 9%);
+  --editorial: hsl(0 0% 40%);
+  --radius: 0.5rem;
+  --gutter-ink: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --pb-font-sans: var(--font-geist-sans);
+  --pb-font-display: var(--font-geist-sans);
+  --pb-font-serif: var(--font-source-serif);
+  --pb-font-mono: var(--font-geist-mono);
+  --pb-font-hand: "Caveat";
+  --pb-duration-fast: 150ms;
+  --pb-duration-theme: 400ms;
+  --pb-ease-theme: cubic-bezier(0.4, 0, 0.2, 1);
+  --pb-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --pb-shadow-overlay: 0 20px 40px color-mix(in srgb, var(--foreground) 8%, transparent);
+  --pb-z-overlay: 200;
+  --pb-z-toast: 100;
+}
+
+.dark,
+.dark[data-theme="portfolio"],
+.theme-portfolio.dark,
+.dark .theme-portfolio {
+  color-scheme: dark;
+  --background: hsl(0 0% 4%);
+  --foreground: hsl(0 0% 93%);
+  --card: hsl(0 0% 6%);
+  --card-foreground: hsl(0 0% 93%);
+  --popover: hsl(0 0% 6%);
+  --popover-foreground: hsl(0 0% 93%);
+  --primary: hsl(0 0% 93%);
+  --primary-foreground: hsl(0 0% 9%);
+  --secondary: hsl(0 0% 12%);
+  --secondary-foreground: hsl(0 0% 93%);
+  --muted: hsl(0 0% 12%);
+  --muted-foreground: hsl(0 0% 58%);
+  --accent: hsl(0 0% 12%);
+  --accent-foreground: hsl(0 0% 93%);
+  --destructive: hsl(0 62.8% 30.6%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(0 0% 16%);
+  --input: hsl(0 0% 16%);
+  --ring: hsl(0 0% 93%);
+  --editorial: hsl(0 0% 58%);
+  --gutter-ink: color-mix(in srgb, var(--foreground) 12%, transparent);
+}

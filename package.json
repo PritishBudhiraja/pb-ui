@@ -1,0 +1,28 @@
+{
+  "name": "pb-ui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "PB UI — personal design system and component library",
+  "packageManager": "pnpm@10.18.0",
+  "scripts": {
+    "dev": "pnpm --filter @pritishbudhiraja/docs dev",
+    "storybook": "pnpm --filter @pritishbudhiraja/storybook dev",
+    "build": "pnpm --filter @pritishbudhiraja/tokens build && pnpm --filter @pritishbudhiraja/ui build",
+    "build:docs": "pnpm --filter @pritishbudhiraja/docs build",
+    "build:storybook": "pnpm --filter @pritishbudhiraja/storybook build",
+    "lint": "biome check . && pnpm --filter @pritishbudhiraja/ui typecheck && pnpm --filter @pritishbudhiraja/docs typecheck",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "test": "pnpm --filter @pritishbudhiraja/ui test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "changeset": "changeset"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.15",
+    "@changesets/cli": "^2.29.8",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

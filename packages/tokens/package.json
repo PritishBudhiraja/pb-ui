@@ -1,0 +1,20 @@
+{
+  "name": "@pritishbudhiraja/tokens",
+  "version": "0.1.0",
+  "description": "PB UI design tokens and theme CSS",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.css",
+    "./index.css": "./src/index.css",
+    "./themes/portfolio.css": "./src/themes/portfolio.css",
+    "./themes/epoch.css": "./src/themes/epoch.css"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "node -e \"process.exit(0)\"",
+    "typecheck": "node -e \"process.exit(0)\""
+  }
+}
