@@ -1,3 +1,3 @@
 # Changesets
 
-Add a changeset for publishable package changes. `pnpm release` builds and publishes public packages to npm.
+Add a changeset for publishable package changes. GitHub Actions publishes to npm (`Release` workflow).
