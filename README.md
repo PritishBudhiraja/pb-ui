@@ -1,6 +1,6 @@
-# PB UI
+# Hatch
 
-A React design system: editorial, minimal, and built to reuse across products.
+A React design system: editorial, minimal, and built to reuse across products. The packages still live under `@pritishbudhiraja/*`; this repo is `pb-ui`.
 
 - Tokens and themes in `@pritishbudhiraja/tokens`
 - Components in `@pritishbudhiraja/ui`
@@ -17,17 +17,19 @@ A React design system: editorial, minimal, and built to reuse across products.
 
 ## Components
 
-**Layout and type:** `FramedContainer`, `Surface`, `HatchDivider`, `EditorialAnnotation`, `Text`, `Heading`, `EditorialHeading`, `EmptyState`
+**Layout and type:** `FramedContainer`, `Surface`, `HatchDivider`, `EditorialAnnotation`, `Text`, `Heading`, `EditorialHeading`, `EmptyState`, `Stack`, `Grid`, `Separator`, `Card`
 
-**Actions:** `Button`, `IconButton`, `OriginButton`, `CopyButton`, `ThemeToggle`
+**Actions:** `Button`, `IconButton`, `LinkButton`, `OriginButton`, `CopyButton`, `ThemeToggle`, `LoadingButton`
 
-**Forms:** `Input`, `Textarea`, `Label`, `Checkbox`
+**Forms:** `Input`, `Textarea`, `Label`, `Checkbox`, `Select`, `Combobox`, `Slider`, `RadioGroup`, `Switch`, `FormField`, `SearchInput`, `DatePicker`, `TimePicker`, `FilterBar`
 
-**Overlays:** `Dialog`, `Popover`, `Tooltip`, `CommandPalette`
+**Overlays:** `Dialog`, `AlertDialog`, `Sheet`/`Drawer`, `Popover`, `Tooltip`, `DropdownMenu`, `ContextMenu`, `CommandPalette`
 
-**Feedback:** `Toast`, `Toaster`, `toast()`, `CalendarHeatmap`, `ScrollProgress`
+**Feedback:** `Toast`, `Alert`, `Skeleton`, `Spinner`, `ErrorState`, `ProgressBar`, `ProgressRing`, `CalendarHeatmap`, `ScrollProgress`
 
-**Utilities:** `cn`, `useClipboard`, `useReducedMotion`, `useToast`
+**Navigation and data:** `Tabs`, `Accordion`, `Breadcrumb`, `Pagination`, `Navbar`, `Sidebar`, `AppShell`, `Badge`, `Avatar`, `Table`, `DataTable`, `Timeline`, `StatCard`, `DescriptionList`
+
+**Utilities:** `cn`, `useClipboard`, `useReducedMotion`, `useToast`, `useKeyboardShortcut`, `useMediaQuery`, `useDebounce`, `useControlledState`, `useClickOutside`
 
 ## Usage
 
@@ -49,7 +51,7 @@ The packages are not on npm yet. Consume them from this workspace or from GitHub
 
 ## Develop
 
-Node 20+ and pnpm. Run commands from the repository root.
+Node 22.11+ and pnpm. Run commands from the repository root.
 
 ```bash
 pnpm install

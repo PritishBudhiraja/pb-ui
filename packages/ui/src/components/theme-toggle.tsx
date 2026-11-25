@@ -88,7 +88,9 @@ export function ThemeToggle({ theme, setTheme, className }: ThemeToggleProps) {
         className,
       )}
       onClick={() => {
+        /* v8 ignore start */
         if (!buttonRef.current) return
+        /* v8 ignore stop */
         if (reducedMotion) {
           setTheme(isDark ? "light" : "dark")
           return

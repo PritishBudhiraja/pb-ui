@@ -16,5 +16,18 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    strictPort: true,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          if (id.includes("node_modules/framer-motion")) return "motion"
+          if (id.includes("node_modules/@radix-ui")) return "radix"
+          if (id.includes("node_modules/cmdk")) return "cmdk"
+          if (id.includes("pages/components")) return "component-docs"
+        },
+      },
+    },
   },
 })

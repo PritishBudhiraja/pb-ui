@@ -2,7 +2,11 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "paths": {
+      "@pritishbudhiraja/ui": ["../../packages/ui/src/index.ts"],
+      "@pritishbudhiraja/ui/motion": ["../../packages/ui/src/motion.ts"]
+    }
   },
   "include": ["src"]
 }

@@ -1,6 +1,6 @@
 # Design system specification
 
-PB UI is a personal frontend ecosystem: minimal, editorial, calm, keyboard-friendly, and composable. It is not a shadcn dump and not an Epoch product kit.
+Hatch is a personal frontend ecosystem: minimal, editorial, calm, keyboard-friendly, and composable. It is not a shadcn dump and not an Epoch product kit. The packages are `@pritishbudhiraja/tokens` and `@pritishbudhiraja/ui`.
 
 ## Identity
 

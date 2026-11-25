@@ -11,8 +11,10 @@ export function Preview({
   className?: string
 }) {
   return (
-    <div className="overflow-hidden rounded-md border border-dashed border-border">
-      <div className={cn("flex flex-wrap items-center gap-3 bg-background p-6", className)}>
+    <div className="overflow-visible rounded-md border border-dashed border-border">
+      <div
+        className={cn("flex min-h-24 flex-wrap items-center gap-3 bg-background p-6", className)}
+      >
         {children}
       </div>
       {code ? (

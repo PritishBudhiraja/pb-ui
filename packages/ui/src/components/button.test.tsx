@@ -12,4 +12,25 @@ describe("Button", () => {
     render(<Button disabled>Save</Button>)
     expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
   })
+
+  it("renders the remaining variants", () => {
+    render(
+      <>
+        <Button variant="destructive" size="sm">
+          D
+        </Button>
+        <Button variant="secondary" size="lg">
+          S
+        </Button>
+        <Button variant="ghost" size="icon" aria-label="icon">
+          G
+        </Button>
+        <Button variant="link">L</Button>
+        <Button asChild>
+          <a href="/x">Child</a>
+        </Button>
+      </>,
+    )
+    expect(screen.getByRole("link", { name: "Child" })).toHaveAttribute("href", "/x")
+  })
 })

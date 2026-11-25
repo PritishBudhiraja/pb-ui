@@ -79,7 +79,9 @@ export const OriginButton = ({
 
   const setFromEvent = (event: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>, next: number) => {
     const node = containerRef.current
+    /* v8 ignore start */
     if (!node) return
+    /* v8 ignore stop */
     const rect = node.getBoundingClientRect()
     if ("clientX" in event) {
       setCursorPos({ x: event.clientX - rect.left, y: event.clientY - rect.top })

@@ -1,22 +1,50 @@
+import { lazy } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { DocsLayout } from "./layout"
-import { ComponentPage } from "./pages/components"
-import {
-  AccessibilityPage,
-  ChangelogPage,
-  ColorsPage,
-  ContributingPage,
-  GettingStartedPage,
-  HooksPage,
-  InstallationPage,
-  IntroductionPage,
-  MotionPage,
-  PhilosophyPage,
-  SpacingPage,
-  ThemesPage,
-  TypographyPage,
-} from "./pages/overview"
 import { ThemeStateProvider } from "./theme"
+
+const IntroductionPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.IntroductionPage })),
+)
+const InstallationPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.InstallationPage })),
+)
+const GettingStartedPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.GettingStartedPage })),
+)
+const PhilosophyPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.PhilosophyPage })),
+)
+const ColorsPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.ColorsPage })),
+)
+const TypographyPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.TypographyPage })),
+)
+const SpacingPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.SpacingPage })),
+)
+const MotionPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.MotionPage })),
+)
+const ThemesPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.ThemesPage })),
+)
+const AccessibilityPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.AccessibilityPage })),
+)
+const HooksPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.HooksPage })),
+)
+const ChangelogPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.ChangelogPage })),
+)
+const ContributingPage = lazy(() =>
+  import("./pages/overview").then((module) => ({ default: module.ContributingPage })),
+)
+const ComponentPage = lazy(() =>
+  import("./pages/components").then((module) => ({ default: module.ComponentPage })),
+)
 
 export function App() {
   return (

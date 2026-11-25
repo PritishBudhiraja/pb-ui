@@ -8,7 +8,7 @@ export function IntroductionPage() {
   return (
     <article className="space-y-8">
       <PageHeader
-        kicker="PB UI"
+        kicker="Hatch"
         title="A personal design system, not a template."
         description="A React component library with a calm editorial voice: dashed structure, hatch rules, handwritten notes, and origin-ripple actions."
       />
@@ -19,8 +19,9 @@ export function IntroductionPage() {
       <div className="space-y-3">
         <EditorialHeading as="h2">What is in the library</EditorialHeading>
         <Text tone="muted">
-          Two themes, form and overlay primitives, and signature pieces: hatch, frame, annotation,
-          heatmap, and OriginButton. This site is built with the same packages.
+          Two themes, form and overlay primitives, navigation and data display, and signature
+          pieces: hatch, frame, annotation, heatmap, and OriginButton. This site is built with the
+          same packages.
         </Text>
       </div>
       <HatchDivider />
@@ -260,7 +261,7 @@ export function HooksPage() {
       <PageHeader
         kicker="Utilities"
         title="Hooks and utilities"
-        description="Small helpers that already have a consumer. No hook zoo."
+        description="Small helpers. Theme storage stays in the host (ADR-003)."
       />
       <ul className="space-y-2 text-sm text-muted-foreground">
         <li>
@@ -275,6 +276,21 @@ export function HooksPage() {
         <li>
           <code>useToast</code> / <code>toast()</code> — module store, limit 3, 4s remove
         </li>
+        <li>
+          <code>useKeyboardShortcut</code> — key + modifier match
+        </li>
+        <li>
+          <code>useMediaQuery</code> — matchMedia
+        </li>
+        <li>
+          <code>useDebounce</code> — delayed value
+        </li>
+        <li>
+          <code>useControlledState</code> — controlled or uncontrolled
+        </li>
+        <li>
+          <code>useClickOutside</code> — pointerdown outside a ref
+        </li>
       </ul>
     </article>
   )
@@ -286,7 +302,7 @@ export function ChangelogPage() {
       <PageHeader
         kicker="Project"
         title="Changelog"
-        description="Version 0.1.0: tokens, primitives, signature components, and this documentation site."
+        description="0.1.0 tokens and signature set, plus the remaining catalogue primitives."
       />
       <Text tone="muted">
         0.1.0 — tokens, primitives, signature components, Storybook, this site.

@@ -28,8 +28,7 @@ const LEVEL_CLASS = [
 
 export function toHeatmapLevel(value: number): HeatmapLevel {
   const clamped = Math.min(HEATMAP_LEVELS.length - 1, Math.max(0, Math.trunc(value)))
-  const level = HEATMAP_LEVELS[clamped]
-  return level ?? 0
+  return HEATMAP_LEVELS[clamped] as HeatmapLevel
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -62,7 +61,7 @@ export function weeksFromDays(days: HeatmapDay[]) {
   return weeks
 }
 
-function monthLabels(weeks: Array<Array<HeatmapDay | null>>) {
+export function monthLabels(weeks: Array<Array<HeatmapDay | null>>) {
   const labels: Array<{ index: number; label: string }> = []
   let last = -1
   weeks.forEach((week, index) => {
@@ -70,7 +69,7 @@ function monthLabels(weeks: Array<Array<HeatmapDay | null>>) {
     if (!day) return
     const month = new Date(`${day.date}T00:00:00Z`).getUTCMonth()
     if (month !== last) {
-      labels.push({ index, label: MONTHS[month] ?? "" })
+      labels.push({ index, label: MONTHS[month] ?? "Jan" })
       last = month
     }
   })

@@ -30,7 +30,7 @@ function SignaturePreview() {
           <EditorialAnnotation>signature language</EditorialAnnotation>
           <div className="flex items-center justify-between">
             <Heading as="h1" size="lg">
-              PB UI
+              Hatch
             </Heading>
             <ThemeToggle
               theme={theme}

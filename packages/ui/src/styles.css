@@ -3,3 +3,17 @@
 @import "@pritishbudhiraja/tokens/index.css";
 
 @source "./**/*.{ts,tsx}";
+
+.pb-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.pb-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pb-scroll::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}

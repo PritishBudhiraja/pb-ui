@@ -1,5 +1,8 @@
 # Visual baseline
 
-Intended captures: https://www.pritishbudhiraja.com/ at desktop, tablet, and mobile, in light and dark.
+Captures of https://www.pritishbudhiraja.com/ for theme and layout reference.
 
-If this directory has no images, browser capture was not completed during scaffolding. Re-run against the live site before any portfolio migration.
+- `portfolio-desktop-dark.png`
+- `portfolio-desktop-light.png`
+
+A separate mobile viewport capture was not stored; the browser preview used here stays at desktop width. Use the live site and device tools for phone layout.

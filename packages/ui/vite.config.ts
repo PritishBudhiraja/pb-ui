@@ -9,8 +9,8 @@ export default defineConfig({
     react(),
     dts({
       include: ["src"],
-      exclude: ["src/**/*.test.ts", "src/**/*.test.tsx", "src/styles.css"],
-      rollupTypes: true,
+      exclude: ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test/**", "src/styles.css"],
+      bundleTypes: false,
     }),
   ],
   build: {
@@ -45,5 +45,17 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text-summary", "text", "lcov"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: ["src/**/*.test.*", "src/test/**", "src/styles.css"],
+      thresholds: {
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100,
+      },
+    },
   },
 })

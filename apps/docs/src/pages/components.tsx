@@ -38,6 +38,7 @@ import type { ReactNode } from "react"
 import { Navigate, useParams } from "react-router-dom"
 import { useDocsTheme } from "../theme"
 import { PageHeader, Preview, PropTable } from "../ui/preview"
+import { EXTRA_DOCS } from "./extra-docs"
 
 interface ComponentDoc {
   title: string
@@ -526,7 +527,7 @@ function ThemeTogglePreview() {
 export function ComponentPage() {
   const { slug } = useParams()
   if (!slug) return <Navigate to="/" replace />
-  const doc = DOCS[slug]
+  const doc = DOCS[slug] ?? EXTRA_DOCS[slug]
   if (!doc) return <Navigate to="/" replace />
 
   return (
