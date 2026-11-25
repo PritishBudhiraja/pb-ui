@@ -72,14 +72,9 @@ pnpm dev
 
 ## Host the docs (Vercel)
 
-Import this GitHub repo in Vercel. Keep the **Root Directory** as the repository root (not `apps/docs`) so the pnpm workspace can build. `vercel.json` already sets:
+On the import screen, Vercel lists `docs`, `storybook`, and `ui`. Import **docs** only (`Import single project`). Skip Storybook and the UI package. Leave environment variables empty.
 
-- Install: `pnpm install --frozen-lockfile`
-- Build: `pnpm build && pnpm build:docs`
-- Output: `apps/docs/dist`
-- SPA rewrites so `/components/button` and other client routes work
-
-Node 22.11+ (see `engines` in `package.json`). Custom domains can wait until you point DNS.
+That sets Root Directory to `apps/docs`. `apps/docs/vercel.json` installs from the repo root so the pnpm workspace still builds.
 
 ## More
 
