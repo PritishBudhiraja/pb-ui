@@ -16,7 +16,8 @@
     "test": "pnpm --filter @pritishbudhiraja/ui test",
     "test:coverage": "pnpm --filter @pritishbudhiraja/ui test:coverage",
     "typecheck": "pnpm -r --if-present typecheck",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.15",

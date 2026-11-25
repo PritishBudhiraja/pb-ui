@@ -19,7 +19,7 @@
 | @vitest/coverage-v8      | Coverage report in CI                              | c8                | MIT        |
 | storybook 8              | Engineering workspace                              | Ladle             | MIT        |
 | biome                    | Lint/format, same as portfolio                     | eslint            | MIT        |
-| @changesets/cli          | Local versioning, no publish (v3, Node 22.11+)     | —                 | MIT        |
+| @changesets/cli          | Versioning and npm publish (v3, Node 22.11+)       | —                 | MIT        |
 
 ## Security overrides
 

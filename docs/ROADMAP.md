@@ -8,7 +8,7 @@
 
 ## Next
 
-- Package release process
+- Package release process (`pnpm release` → npm)
 - Example apps (Next.js and Vite)
 - Optional component registry
 - Adopt the library in other products

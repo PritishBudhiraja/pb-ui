@@ -47,7 +47,9 @@ Set the palette on the document root:
 
 Add `class="dark"` for dark mode. `ThemeToggle` is controlled: pass `theme` and `setTheme`. Load fonts in the host app; override `--pb-font-sans`, `--pb-font-serif`, `--pb-font-display`, and `--pb-font-hand` as needed.
 
-The packages are not on npm yet. Consume them from this workspace or from GitHub.
+```bash
+pnpm add @pritishbudhiraja/tokens @pritishbudhiraja/ui
+```
 
 ## Develop
 

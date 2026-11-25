@@ -1,8 +1,20 @@
 {
   "name": "@pritishbudhiraja/tokens",
   "version": "0.1.0",
-  "description": "PB UI design tokens and theme CSS",
+  "description": "Hatch design tokens and theme CSS",
   "license": "MIT",
+  "homepage": "https://ui.pritishbudhiraja.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PritishBudhiraja/pb-ui.git",
+    "directory": "packages/tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/PritishBudhiraja/pb-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "exports": {
     ".": "./src/index.css",
@@ -11,7 +23,9 @@
     "./themes/epoch.css": "./src/themes/epoch.css"
   },
   "files": [
-    "src"
+    "src",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "build": "node -e \"process.exit(0)\"",
