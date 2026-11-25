@@ -70,6 +70,17 @@ pnpm dev
 | `pnpm test`       | Vitest                                       |
 | `pnpm lint`       | Biome and TypeScript                         |
 
+## Host the docs (Vercel)
+
+Import this GitHub repo in Vercel. Keep the **Root Directory** as the repository root (not `apps/docs`) so the pnpm workspace can build. `vercel.json` already sets:
+
+- Install: `pnpm install --frozen-lockfile`
+- Build: `pnpm build && pnpm build:docs`
+- Output: `apps/docs/dist`
+- SPA rewrites so `/components/button` and other client routes work
+
+Node 22.11+ (see `engines` in `package.json`). Custom domains can wait until you point DNS.
+
 ## More
 
 - [Design spec](docs/specifications/DESIGN_SYSTEM_SPEC.md)
