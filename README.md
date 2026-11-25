@@ -1,11 +1,11 @@
 # Hatch
 
-A React design system: editorial, minimal, and built to reuse across products. The packages still live under `@pritish.budhiraja/*`; this repo is `pb-ui`.
+A React design system: editorial, minimal, and built to reuse across products. Packages publish as `@pritish.budhiraja/*`; this repo is `pb-ui`.
 
-- Tokens and themes in `@pritish.budhiraja/tokens`
-- Components in `@pritish.budhiraja/ui`
-- Motion pieces in `@pritish.budhiraja/ui/motion`
-- Documentation site in `apps/docs`
+- Docs: [ui.pritishbudhiraja.com](https://ui.pritishbudhiraja.com)
+- [`@pritish.budhiraja/tokens`](https://www.npmjs.com/package/@pritish.budhiraja/tokens)
+- [`@pritish.budhiraja/ui`](https://www.npmjs.com/package/@pritish.budhiraja/ui)
+- Motion: `@pritish.budhiraja/ui/motion`
 
 ## Packages
 
@@ -33,6 +33,10 @@ A React design system: editorial, minimal, and built to reuse across products. T
 
 ## Usage
 
+```bash
+pnpm add @pritish.budhiraja/ui
+```
+
 ```tsx
 import "@pritish.budhiraja/ui/styles.css"
 import { Button, ThemeToggle, FramedContainer } from "@pritish.budhiraja/ui"
@@ -46,10 +50,6 @@ Set the palette on the document root:
 ```
 
 Add `class="dark"` for dark mode. `ThemeToggle` is controlled: pass `theme` and `setTheme`. Load fonts in the host app; override `--pb-font-sans`, `--pb-font-serif`, `--pb-font-display`, and `--pb-font-hand` as needed.
-
-```bash
-pnpm add @pritish.budhiraja/tokens @pritish.budhiraja/ui
-```
 
 ## Develop
 

@@ -62,12 +62,10 @@ import { OriginButton } from "@pritish.budhiraja/ui/motion"`
       <PageHeader
         kicker="Setup"
         title="Installation"
-        description="Install the UI package, import the stylesheet once, then import components. Until npm is live, use this workspace or GitHub."
+        description="Install from npm, import the stylesheet once, then import components."
       />
       <Preview code={install}>
-        <Text tone="muted">
-          Workspace install is already wired in apps/docs and apps/storybook.
-        </Text>
+        <Text tone="muted">@pritish.budhiraja/tokens is included as a dependency of the UI package.</Text>
       </Preview>
       <Preview code={usage}>
         <Button>Imported Button</Button>
@@ -305,7 +303,8 @@ export function ChangelogPage() {
         description="0.1.0 tokens and signature set, plus the remaining catalogue primitives."
       />
       <Text tone="muted">
-        0.1.0 — tokens, primitives, signature components, Storybook, this site.
+        0.1.0 — tokens, catalogue, Storybook, docs at ui.pritishbudhiraja.com, npm
+        (@pritish.budhiraja/tokens and @pritish.budhiraja/ui).
       </Text>
     </article>
   )

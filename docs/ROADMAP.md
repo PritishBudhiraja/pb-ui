@@ -3,13 +3,12 @@
 ## Now
 
 - Tokens, primitives, signature components
-- Documentation site (`pnpm dev`, Vercel)
+- Docs at [ui.pritishbudhiraja.com](https://ui.pritishbudhiraja.com)
+- npm `@pritish.budhiraja/tokens` and `@pritish.budhiraja/ui` (0.1.0)
 - Storybook workbench (`pnpm storybook`)
 
 ## Next
 
-- Package release process (GitHub Actions → npm)
 - Example apps (Next.js and Vite)
 - Optional component registry
 - Adopt the library in other products
-- Docs live at [ui.pritishbudhiraja.com](https://ui.pritishbudhiraja.com)

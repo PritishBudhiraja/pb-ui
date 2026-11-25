@@ -32,7 +32,7 @@ Reject duplicate components with different names but equivalent responsibilities
 - No Epoch domain widgets (SeasonCard, FocusTimer, TaskRow, and similar).
 - No hardcoded product colors inside generic components — use semantic tokens.
 - Do not install dependencies without documenting why in `docs/audit/DEPENDENCY_AUDIT.md`.
-- Do not publish packages, configure DNS, or provision AWS without approval.
+- Do not publish from a laptop. npm releases go through GitHub Actions (`Release`). Do not configure DNS or AWS without approval.
 - Do not generate boilerplate documentation.
 
 ## Packages
