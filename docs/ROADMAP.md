@@ -12,4 +12,4 @@
 - Example apps (Next.js and Vite)
 - Optional component registry
 - Adopt the library in other products
-- Custom domain for the Vercel docs site when DNS is approved
+- Keep `ui.pritishbudhiraja.com` on Vercel (add the domain in the project if TLS is still pending)
