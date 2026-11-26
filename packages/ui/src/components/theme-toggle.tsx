@@ -2,12 +2,16 @@
 
 import { Moon, Sun } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
+import { useMediaQuery } from "../hooks/use-media-query"
 import { useReducedMotion } from "../hooks/use-reduced-motion"
 import { cn } from "../lib/cn"
+import { IconButton } from "./icon-button"
 
 export interface ThemeToggleProps {
   theme?: string
+  resolvedTheme?: string
   setTheme: (theme: string) => void
+  label?: string
   className?: string
 }
 
@@ -52,41 +56,36 @@ async function runViewTransition(
   }
 }
 
-export function ThemeToggle({ theme, setTheme, className }: ThemeToggleProps) {
+export function ThemeToggle({
+  theme,
+  resolvedTheme,
+  setTheme,
+  label = "Toggle theme",
+  className,
+}: ThemeToggleProps) {
   const [mounted, setMounted] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const reducedMotion = useReducedMotion()
+  const prefersDark = useMediaQuery("(prefers-color-scheme: dark)")
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const isDark = theme === "dark"
+  const systemTheme = prefersDark ? "dark" : "light"
+  const isDark = (resolvedTheme ?? (theme === "system" ? systemTheme : theme)) === "dark"
+  const buttonClass = cn("relative h-8 w-8 overflow-hidden", className)
 
   if (!mounted) {
-    return (
-      <button
-        type="button"
-        className={cn(
-          "relative flex h-8 w-8 items-center justify-center rounded-md bg-muted/50",
-          className,
-        )}
-        aria-label="Toggle theme"
-        disabled
-      >
-        <span className="sr-only">Toggle theme</span>
-      </button>
-    )
+    return <IconButton variant="ghost" label={label} className={buttonClass} disabled />
   }
 
   return (
-    <button
+    <IconButton
       ref={buttonRef}
-      type="button"
-      className={cn(
-        "relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-md bg-muted/50 text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-        className,
-      )}
+      variant="ghost"
+      label={label}
+      className={buttonClass}
       onClick={() => {
         /* v8 ignore start */
         if (!buttonRef.current) return
@@ -97,10 +96,9 @@ export function ThemeToggle({ theme, setTheme, className }: ThemeToggleProps) {
         }
         void runViewTransition(buttonRef.current, isDark, setTheme)
       }}
-      aria-label="Toggle theme"
       aria-pressed={isDark}
     >
-      {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-    </button>
+      {isDark ? <Moon /> : <Sun />}
+    </IconButton>
   )
 }

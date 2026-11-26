@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import type { ToastActionElement, ToastProps } from "../components/toast"
 
@@ -60,12 +62,6 @@ export function reducer(state: ToastState, action: Action): ToastState {
       }
     case "DISMISS_TOAST": {
       const { toastId } = action
-      if (toastId) addToRemoveQueue(toastId)
-      else {
-        for (const toast of state.toasts) {
-          addToRemoveQueue(toast.id)
-        }
-      }
       return {
         ...state,
         toasts: state.toasts.map((t) =>
@@ -89,12 +85,20 @@ function dispatch(action: Action) {
   })
 }
 
+function dismissToast(toastId?: string) {
+  const ids = toastId === undefined ? memoryState.toasts.map((t) => t.id) : [toastId]
+  for (const id of ids) {
+    addToRemoveQueue(id)
+  }
+  dispatch({ type: "DISMISS_TOAST", toastId })
+}
+
 type Toast = Omit<ToasterToast, "id">
 
 function toast({ ...props }: Toast) {
   const id = genId()
   const update = (next: ToasterToast) => dispatch({ type: "UPDATE_TOAST", toast: { ...next, id } })
-  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
+  const dismiss = () => dismissToast(id)
 
   dispatch({
     type: "ADD_TOAST",
@@ -127,7 +131,7 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+    dismiss: dismissToast,
   }
 }
 

@@ -1,4 +1,7 @@
-import type { HTMLAttributes, ReactNode } from "react"
+"use client"
+
+import { type HTMLAttributes, type ReactNode, useId } from "react"
+import { FormFieldContext } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 import { Label } from "./label"
 
@@ -17,20 +20,26 @@ export function FormField({
   children: ReactNode
   className?: string
 }) {
-  const hintId = htmlFor ? `${htmlFor}-hint` : undefined
-  const errorId = htmlFor ? `${htmlFor}-error` : undefined
+  const generatedId = useId()
+  const id = htmlFor ?? generatedId
+  const hintId = `${id}-hint`
+  const errorId = `${id}-error`
+  const showHint = Boolean(hint) && !error
+  const describedBy = error ? errorId : showHint ? hintId : undefined
 
   return (
-    <div className={cn("grid gap-1.5", className)}>
-      <Label htmlFor={htmlFor}>{label}</Label>
-      {children}
-      {hint && !error ? (
-        <p id={hintId} className="text-xs text-muted-foreground">
-          {hint}
-        </p>
-      ) : null}
-      {error ? <FormError id={errorId}>{error}</FormError> : null}
-    </div>
+    <FormFieldContext.Provider value={{ id, describedBy, invalid: Boolean(error) }}>
+      <div className={cn("grid gap-1.5", className)}>
+        <Label htmlFor={id}>{label}</Label>
+        {children}
+        {showHint ? (
+          <p id={hintId} className="text-xs text-muted-foreground">
+            {hint}
+          </p>
+        ) : null}
+        {error ? <FormError id={errorId}>{error}</FormError> : null}
+      </div>
+    </FormFieldContext.Provider>
   )
 }
 

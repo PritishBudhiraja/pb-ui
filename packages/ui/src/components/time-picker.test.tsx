@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { TimePicker } from "./time-picker"
 
 describe("TimePicker", () => {
@@ -8,6 +9,7 @@ describe("TimePicker", () => {
     const user = userEvent.setup()
     render(<TimePicker defaultValue="09:00" />)
     await user.click(screen.getByRole("button", { name: /9:00|09:00|9:00 AM/i }))
+    await expectNoAxeViolations()
     await user.click(screen.getByRole("option", { name: "2" }))
     await user.click(screen.getByRole("option", { name: "PM" }))
     await user.click(screen.getByRole("option", { name: "30" }))

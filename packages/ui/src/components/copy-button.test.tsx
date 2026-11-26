@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 import { useToast } from "../hooks/use-toast"
+import { expectNoAxeViolations } from "../test/axe"
 import { CopyButton } from "./copy-button"
 
 function mockClipboard(writeText: ReturnType<typeof vi.fn>) {
@@ -24,6 +25,7 @@ describe("CopyButton", () => {
         <ToastCount />
       </>,
     )
+    await expectNoAxeViolations()
     await user.click(screen.getByRole("button", { name: "Copy install" }))
     expect(writeText).toHaveBeenCalledWith("pnpm add @pritish.budhiraja/ui")
     expect(onCopied).toHaveBeenCalledWith("pnpm add @pritish.budhiraja/ui")
