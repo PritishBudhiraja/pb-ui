@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "pnpm --filter @pritish.budhiraja/docs dev",
     "storybook": "pnpm --filter @pritish.budhiraja/storybook dev",
-    "build": "pnpm --filter @pritish.budhiraja/tokens build && pnpm --filter @pritish.budhiraja/ui build",
+    "build": "pnpm --filter @pritish.budhiraja/ui build",
     "build:docs": "pnpm --filter @pritish.budhiraja/docs build",
     "build:storybook": "pnpm --filter @pritish.budhiraja/storybook build",
     "lint": "biome check . && pnpm --filter @pritish.budhiraja/ui typecheck && pnpm --filter @pritish.budhiraja/docs typecheck",

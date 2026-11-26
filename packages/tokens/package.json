@@ -26,9 +26,5 @@
     "src",
     "LICENSE",
     "README.md"
-  ],
-  "scripts": {
-    "build": "node -e \"process.exit(0)\"",
-    "typecheck": "node -e \"process.exit(0)\""
-  }
+  ]
 }
