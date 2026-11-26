@@ -1,4 +1,7 @@
+"use client"
+
 import type * as React from "react"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
@@ -9,6 +12,7 @@ export function Input({
   ref,
   ...props
 }: InputProps & { ref?: React.Ref<HTMLInputElement> }) {
+  const field = useFormFieldControl(props)
   return (
     <input
       type={type}
@@ -18,6 +22,7 @@ export function Input({
       )}
       ref={ref}
       {...props}
+      {...field}
     />
   )
 }

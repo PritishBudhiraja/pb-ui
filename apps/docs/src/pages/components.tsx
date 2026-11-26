@@ -473,10 +473,16 @@ const DOCS: Record<string, ComponentDoc> = {
       "Circular View Transition clip. Pass theme and setTheme. This page uses the docs theme store.",
     preview: <ThemeTogglePreview />,
     code: "",
-    a11y: "aria-pressed reflects dark mode. Reduced motion skips the clip-path animation.",
+    a11y: "IconButton with aria-pressed for dark mode. Reduced motion skips the clip-path animation.",
     props: [
-      { name: "theme", type: "string", description: "Current mode, typically light | dark" },
+      { name: "theme", type: "string", description: "light | dark | system" },
+      {
+        name: "resolvedTheme",
+        type: "string",
+        description: "Actual light or dark when theme is system (for example from next-themes)",
+      },
       { name: "setTheme", type: "(theme: string) => void", description: "Host setter" },
+      { name: "label", type: "string", description: "Accessible name. Default Toggle theme" },
     ],
   },
   "scroll-progress": {

@@ -66,7 +66,7 @@ export {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "./components/context-menu"
-export { CopyButton } from "./components/copy-button"
+export { CopyButton, type CopyButtonProps } from "./components/copy-button"
 export {
   DataTable,
   type DataTableColumn,
@@ -193,6 +193,7 @@ export { useClickOutside } from "./hooks/use-click-outside"
 export { useClipboard } from "./hooks/use-clipboard"
 export { useControlledState } from "./hooks/use-controlled-state"
 export { useDebounce } from "./hooks/use-debounce"
+export { useFormFieldControl } from "./hooks/use-form-field-control"
 export { useKeyboardShortcut } from "./hooks/use-keyboard-shortcut"
 export { useMediaQuery } from "./hooks/use-media-query"
 export { useReducedMotion } from "./hooks/use-reduced-motion"

@@ -1,6 +1,9 @@
+"use client"
+
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown } from "lucide-react"
 import type * as React from "react"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 import { menuContentClass, menuItemClass } from "../lib/menu"
 
@@ -14,6 +17,7 @@ export function SelectTrigger({
   ref,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
+  const field = useFormFieldControl(props)
   return (
     <SelectPrimitive.Trigger
       ref={ref}
@@ -22,6 +26,7 @@ export function SelectTrigger({
         className,
       )}
       {...props}
+      {...field}
     >
       {children}
       <SelectPrimitive.Icon asChild>

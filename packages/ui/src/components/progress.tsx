@@ -5,12 +5,14 @@ import { cn } from "../lib/cn"
 export function ProgressBar({
   className,
   value,
+  label = "Progress",
   ref,
   ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+}: React.ComponentProps<typeof ProgressPrimitive.Root> & { label?: string }) {
   return (
     <ProgressPrimitive.Root
       ref={ref}
+      aria-label={label}
       className={cn("relative h-2 w-full overflow-hidden rounded-full bg-secondary", className)}
       value={value}
       {...props}

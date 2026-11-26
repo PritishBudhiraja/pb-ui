@@ -1,4 +1,7 @@
+"use client"
+
 import type * as React from "react"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>
@@ -8,6 +11,7 @@ export function Textarea({
   ref,
   ...props
 }: TextareaProps & { ref?: React.Ref<HTMLTextAreaElement> }) {
+  const field = useFormFieldControl(props)
   return (
     <textarea
       className={cn(
@@ -16,6 +20,7 @@ export function Textarea({
       )}
       ref={ref}
       {...props}
+      {...field}
     />
   )
 }
