@@ -11,11 +11,15 @@ export function formatTime(hours: number, minutes: number) {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`
 }
 
-export function nowTime(minuteStep = 5) {
+export function currentTime(minuteStep = 5) {
   const now = new Date()
-  const hours = now.getHours()
   const raw = now.getMinutes()
   const minutes = Math.min(59 - (59 % minuteStep), Math.floor(raw / minuteStep) * minuteStep)
+  return { hours: now.getHours(), minutes }
+}
+
+export function nowTime(minuteStep = 5) {
+  const { hours, minutes } = currentTime(minuteStep)
   return formatTime(hours, minutes)
 }
 

@@ -78,7 +78,11 @@ describe("catalogue primitives", () => {
               description="Add one"
               action={<button type="button">Add</button>}
             />
-            <ErrorState title="Failed" description="Try again" action={<button type="button">Retry</button>} />
+            <ErrorState
+              title="Failed"
+              description="Try again"
+              action={<button type="button">Retry</button>}
+            />
             <ProgressBar />
             <ProgressBar value={40} />
             <ProgressRing />

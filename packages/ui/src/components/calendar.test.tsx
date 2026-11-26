@@ -8,7 +8,12 @@ describe("Calendar", () => {
     const onSelect = vi.fn()
     const user = userEvent.setup()
     render(
-      <Calendar month={new Date(2026, 10, 1)} value="2026-11-01" onMonthChange={vi.fn()} onSelect={onSelect} />,
+      <Calendar
+        month={new Date(2026, 10, 1)}
+        value="2026-11-01"
+        onMonthChange={vi.fn()}
+        onSelect={onSelect}
+      />,
     )
     await user.click(screen.getByRole("button", { name: "26" }))
     expect(onSelect).toHaveBeenCalledWith("2026-11-26")

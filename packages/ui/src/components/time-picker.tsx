@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"
 import { cn } from "../lib/cn"
 import {
+  currentTime,
   displayTime,
   formatTime,
   fromClockParts,
-  nowTime,
   parseTime,
   toClockParts,
 } from "../lib/time"
@@ -44,7 +44,7 @@ export function TimePicker({
     defaultValue,
     onChange: onValueChange,
   })
-  const parsed = parseTime(selected) ?? parseTime(nowTime(minuteStep))!
+  const parsed = parseTime(selected) ?? currentTime(minuteStep)
   const clock = toClockParts(parsed.hours, parsed.minutes)
   const [hour12, setHour12] = useState(clock.hour12)
   const [minutes, setMinutes] = useState(clock.minutes)
@@ -52,7 +52,7 @@ export function TimePicker({
 
   useEffect(() => {
     if (!open) return
-    const next = (parseTime(selected) ?? parseTime(nowTime(minuteStep)))!
+    const next = parseTime(selected) ?? currentTime(minuteStep)
     const parts = toClockParts(next.hours, next.minutes)
     setHour12(parts.hour12)
     setMinutes(parts.minutes)
@@ -170,8 +170,7 @@ export function TimePicker({
               variant="ghost"
               size="sm"
               onClick={() => {
-                const now = nowTime(minuteStep)
-                const parsedNow = parseTime(now)!
+                const parsedNow = currentTime(minuteStep)
                 const parts = toClockParts(parsedNow.hours, parsedNow.minutes)
                 commit(parts.hour12, parts.minutes, parts.period, true)
               }}
