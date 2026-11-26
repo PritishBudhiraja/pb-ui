@@ -193,3 +193,15 @@ describe("catalogue primitives", () => {
     expect(screen.getByText("3 total, 2026-01-01 to 2026-01-03")).toBeInTheDocument()
   })
 })
+
+describe("ProgressBar", () => {
+  it("fills relative to max", () => {
+    const { container } = render(<ProgressBar value={50} max={200} label="Quarter" />)
+    const indicator = container.querySelector("[data-state] > div") as HTMLElement
+    expect(indicator.style.transform).toBe("translateX(-75%)")
+    expect(screen.getByRole("progressbar", { name: "Quarter" })).toHaveAttribute(
+      "aria-valuemax",
+      "200",
+    )
+  })
+})

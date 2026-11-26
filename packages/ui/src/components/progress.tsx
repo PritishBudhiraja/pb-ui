@@ -2,9 +2,14 @@ import * as ProgressPrimitive from "@radix-ui/react-progress"
 import type * as React from "react"
 import { cn } from "../lib/cn"
 
+function percent(value: number | null | undefined, max: number) {
+  return Math.min(100, Math.max(0, ((value ?? 0) / max) * 100))
+}
+
 export function ProgressBar({
   className,
   value,
+  max = 100,
   label = "Progress",
   ref,
   ...props
@@ -15,11 +20,12 @@ export function ProgressBar({
       aria-label={label}
       className={cn("relative h-2 w-full overflow-hidden rounded-full bg-secondary", className)}
       value={value}
+      max={max}
       {...props}
     >
       <ProgressPrimitive.Indicator
         className="h-full w-full bg-primary transition-transform motion-reduce:transition-none"
-        style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}
+        style={{ transform: `translateX(-${100 - percent(value, max)}%)` }}
       />
     </ProgressPrimitive.Root>
   )

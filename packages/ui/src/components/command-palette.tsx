@@ -105,10 +105,10 @@ export function CommandPalette({
           placeholder={placeholder}
           className="h-11 w-full border-b border-border bg-transparent px-3 text-sm outline-none"
         />
+        <Command.Empty className="px-3 py-6 text-center text-sm text-muted-foreground">
+          {emptyText}
+        </Command.Empty>
         <Command.List className="max-h-72 overflow-y-auto p-1">
-          <Command.Empty className="px-3 py-6 text-center text-sm text-muted-foreground">
-            {emptyText}
-          </Command.Empty>
           {Object.entries(groups).map(([heading, groupItems]) => (
             <Command.Group
               key={heading}
@@ -118,7 +118,8 @@ export function CommandPalette({
               {groupItems.map((item) => (
                 <Command.Item
                   key={item.id}
-                  value={`${item.label} ${item.keywords ?? ""}`}
+                  value={item.id}
+                  keywords={[item.label, ...(item.keywords ? [item.keywords] : [])]}
                   onSelect={() => {
                     setOpen(false)
                     onSelect(item)

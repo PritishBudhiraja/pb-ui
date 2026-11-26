@@ -38,7 +38,7 @@
   --pb-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --pb-shadow-overlay: 0 20px 40px color-mix(in srgb, var(--foreground) 8%, transparent);
   --pb-z-overlay: 200;
-  --pb-z-toast: 100;
+  --pb-z-toast: 300;
 }
 
 .dark,
@@ -60,8 +60,8 @@
   --muted-foreground: hsl(0 0% 58%);
   --accent: hsl(0 0% 12%);
   --accent-foreground: hsl(0 0% 93%);
-  --destructive: hsl(0 62.8% 30.6%);
-  --destructive-foreground: hsl(0 0% 98%);
+  --destructive: hsl(0 84.2% 59%);
+  --destructive-foreground: hsl(0 0% 9%);
   --border: hsl(0 0% 16%);
   --input: hsl(0 0% 16%);
   --ring: hsl(0 0% 93%);

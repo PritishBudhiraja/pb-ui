@@ -50,4 +50,16 @@ describe("weeksFromDays", () => {
       { index: 3, label: "Feb" },
     ])
   })
+
+  it("handles days given out of order", () => {
+    const weeks = weeksFromDays([
+      { date: "2026-01-03", count: 2, level: 2 },
+      { date: "2026-01-01", count: 1, level: 1 },
+    ])
+    const dates = weeks
+      .flat()
+      .filter(Boolean)
+      .map((day) => day?.date)
+    expect(dates).toEqual(["2026-01-01", "2026-01-02", "2026-01-03"])
+  })
 })

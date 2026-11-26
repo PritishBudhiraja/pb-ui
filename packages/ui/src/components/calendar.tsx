@@ -1,11 +1,18 @@
 "use client"
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { type KeyboardEvent, useEffect, useRef, useState } from "react"
 import { cn } from "../lib/cn"
-import { addMonths, calendarWeeks, isSameDay, startOfMonth, toISODate } from "../lib/date"
+import { addDays, addMonths, calendarWeeks, isSameDay, startOfMonth, toISODate } from "../lib/date"
 import { IconButton } from "./icon-button"
 
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"]
+const ARROW_DAYS: Record<string, number> = {
+  ArrowLeft: -1,
+  ArrowRight: 1,
+  ArrowUp: -7,
+  ArrowDown: 7,
+}
 
 export interface CalendarProps {
   month: Date
@@ -30,6 +37,25 @@ export function Calendar({
   const today = new Date()
   const weeks = calendarWeeks(view)
   const label = new Intl.DateTimeFormat(undefined, { month: "long", year: "numeric" }).format(view)
+  const dayLabel = new Intl.DateTimeFormat(undefined, { dateStyle: "full" })
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [focusIso, setFocusIso] = useState<string | null>(null)
+  const inView = (iso: string | undefined) => iso?.slice(0, 7) === toISODate(view).slice(0, 7)
+  const tabStop = [focusIso ?? undefined, value, toISODate(today)].find(inView) ?? toISODate(view)
+
+  useEffect(() => {
+    if (!focusIso) return
+    gridRef.current?.querySelector<HTMLButtonElement>(`[data-iso="${focusIso}"]`)?.focus()
+  }, [focusIso])
+
+  function onDayKeyDown(event: KeyboardEvent<HTMLButtonElement>, date: Date) {
+    const delta = ARROW_DAYS[event.key]
+    if (delta === undefined) return
+    event.preventDefault()
+    const target = addDays(date, delta)
+    if (target.getMonth() !== view.getMonth()) onMonthChange(startOfMonth(target))
+    setFocusIso(toISODate(target))
+  }
 
   return (
     <div className={cn("w-[16.5rem]", className)}>
@@ -52,7 +78,7 @@ export function Calendar({
           <ChevronRight />
         </IconButton>
       </div>
-      <div className="grid grid-cols-7 gap-y-1 text-center">
+      <div ref={gridRef} className="grid grid-cols-7 gap-y-1 text-center">
         {WEEKDAYS.map((day, index) => (
           <span
             key={`${day}-${index}`}
@@ -71,8 +97,14 @@ export function Calendar({
             <button
               key={iso + (outside ? "-out" : "")}
               type="button"
+              data-iso={outside ? undefined : iso}
+              aria-label={dayLabel.format(date)}
+              aria-pressed={selected}
+              aria-current={isToday ? "date" : undefined}
+              tabIndex={iso === tabStop && !outside ? 0 : -1}
               disabled={disabled}
               onClick={() => onSelect(iso)}
+              onKeyDown={(event) => onDayKeyDown(event, date)}
               className={cn(
                 "mx-auto flex h-8 w-8 items-center justify-center rounded-md text-sm tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30",
                 outside && "text-muted-foreground/50",

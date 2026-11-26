@@ -17,6 +17,8 @@ const pairs: Array<[text: string, surface: string]> = [
   ["muted-foreground", "background"],
   ["muted-foreground", "muted"],
   ["editorial", "background"],
+  ["destructive", "background"],
+  ["destructive", "card"],
 ]
 
 function blocks(css: string) {

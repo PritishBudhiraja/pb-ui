@@ -73,4 +73,30 @@ describe("CommandPalette", () => {
     expect(first).not.toHaveBeenCalled()
     expect(second).toHaveBeenCalledWith(true)
   })
+
+  it("selects only one of two items with the same label", async () => {
+    const onSelect = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <CommandPalette
+        open
+        onOpenChange={vi.fn()}
+        onSelect={onSelect}
+        items={[
+          { id: "docs-button", label: "Button", group: "Docs" },
+          { id: "story-button", label: "Button", group: "Stories" },
+        ]}
+      />,
+    )
+    const options = screen.getAllByRole("option", { name: "Button" })
+    expect(
+      options.filter((option) => option.getAttribute("aria-selected") === "true"),
+    ).toHaveLength(1)
+    await user.type(screen.getByRole("combobox"), "zzz")
+    expect(screen.getByText("No results.")).toBeInTheDocument()
+    await expectNoAxeViolations()
+    await user.clear(screen.getByRole("combobox"))
+    await user.click(screen.getAllByRole("option", { name: "Button" })[1] as HTMLElement)
+    expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "story-button" }))
+  })
 })

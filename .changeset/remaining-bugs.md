@@ -14,4 +14,4 @@ Fixes:
 - Types resolve under `moduleResolution: "node"` (`types`, `main` and `typesVersions` added).
 - `CHANGELOG.md` is included in both packages.
 
-Tokens: three colours now meet WCAG AA 4.5:1 for text. Portfolio light `--destructive` goes from 60.2% to 48.3% lightness. Epoch light `--muted-foreground` and `--editorial` go from `#65785b` to `#5c6e53`. Epoch dark `--destructive` goes from `#c45c5c` to `#b64242`.
+Tokens: three colours now meet WCAG AA 4.5:1 for text. Portfolio light `--destructive` goes from 60.2% to 48.3% lightness. Epoch light `--muted-foreground` and `--editorial` go from `#65785b` to `#5c6e53`. Epoch dark `--destructive` changes too; see the audit fixes changeset.

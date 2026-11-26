@@ -26,6 +26,10 @@ export function addMonths(date: Date, count: number) {
   return new Date(date.getFullYear(), date.getMonth() + count, 1)
 }
 
+export function addDays(date: Date, count: number) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + count)
+}
+
 export function isSameDay(a: Date, b: Date) {
   return (
     a.getFullYear() === b.getFullYear() &&
