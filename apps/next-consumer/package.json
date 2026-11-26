@@ -1,0 +1,25 @@
+{
+  "name": "@pritish.budhiraja/next-consumer",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3010",
+    "build": "next build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@pritish.budhiraja/tokens": "workspace:*",
+    "@pritish.budhiraja/ui": "workspace:*",
+    "framer-motion": "^14.0.0",
+    "next": "^16.2.11",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^7.0.2"
+  }
+}

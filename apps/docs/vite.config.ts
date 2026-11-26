@@ -11,6 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@pritish.budhiraja/ui/motion": join(root, "../../packages/ui/src/motion.ts"),
+      "@pritish.budhiraja/ui/charts": join(root, "../../packages/ui/src/charts.ts"),
       "@pritish.budhiraja/ui": join(root, "../../packages/ui/src/index.ts"),
     },
   },

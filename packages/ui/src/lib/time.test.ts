@@ -1,5 +1,15 @@
 import { describe, expect, it, vi } from "vitest"
-import { displayTime, formatTime, fromClockParts, nowTime, parseTime, toClockParts } from "./time"
+import {
+  displayTime,
+  formatIsoDuration,
+  formatTime,
+  fromClockParts,
+  minutesToTime,
+  nowTime,
+  parseTime,
+  timeToMinutes,
+  toClockParts,
+} from "./time"
 
 describe("time helpers", () => {
   it("round-trips HH:mm", () => {
@@ -29,5 +39,13 @@ describe("time helpers", () => {
   it("formats a 12-hour display string", () => {
     expect(displayTime("not-a-time")).toBe("")
     expect(displayTime("09:30")).toMatch(/9:30/i)
+  })
+
+  it("converts minutes and ISO durations", () => {
+    expect(timeToMinutes("09:30")).toBe(570)
+    expect(timeToMinutes("nope")).toBeUndefined()
+    expect(minutesToTime(90)).toBe("01:30")
+    expect(minutesToTime(-5)).toBe("00:00")
+    expect(formatIsoDuration(90)).toBe("PT1H30M")
   })
 })

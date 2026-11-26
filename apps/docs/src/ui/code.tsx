@@ -1,4 +1,4 @@
-import { CopyButton, cn, toast } from "@pritish.budhiraja/ui"
+import { cn, CodeBlock as HatchCodeBlock, toast } from "@pritish.budhiraja/ui"
 import { type ReactNode, useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -15,25 +15,15 @@ export function CodeBlock({
   className?: string
 }) {
   return (
-    <div
-      className={cn(
-        "relative overflow-hidden rounded-md border border-dashed border-border bg-muted/40",
-        className,
-      )}
-    >
-      <CopyButton
-        value={code}
-        label={label}
-        onCopied={() => toast({ title: "Copied", description: label })}
-        onCopyError={() =>
-          toast({ title: "Could not copy", description: label, variant: "destructive" })
-        }
-        className="absolute right-2 top-2 h-7 w-7"
-      />
-      <pre className="overflow-x-auto p-4 pr-12 text-[12px] leading-relaxed text-muted-foreground">
-        <code>{code}</code>
-      </pre>
-    </div>
+    <HatchCodeBlock
+      code={code}
+      label={label}
+      className={className}
+      onCopied={() => toast({ title: "Copied", description: label })}
+      onCopyError={() =>
+        toast({ title: "Could not copy", description: label, variant: "destructive" })
+      }
+    />
   )
 }
 

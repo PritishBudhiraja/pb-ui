@@ -1,6 +1,6 @@
 # Theming
 
-Apply the palette with `data-theme="portfolio"` on a root node. Dark mode uses the `.dark` class (same contract as `next-themes`).
+Apply the palette with `data-theme="portfolio"` on a root node. Dark mode uses the `.dark` class (same contract as `next-themes`). There is no second product theme. Token changes happen in Hatch and apply to every consumer (ADR-004).
 
 ```html
 <html class="dark" data-theme="portfolio">

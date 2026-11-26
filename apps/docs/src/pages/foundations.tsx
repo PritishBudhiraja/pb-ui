@@ -79,8 +79,8 @@ export function FoundationsPage() {
         <EditorialHeading as="h2">Typography</EditorialHeading>
         <Text tone="muted">
           Semantic families: sans for UI, serif for editorial display, hand for annotations, mono
-          for code. The portfolio host uses Geist and Source Serif. This docs site uses Inter and
-          Source Serif so it can run without next/font. Override --pb-font-* in the host.
+          for code. Editorial serif is Instrument Serif. The portfolio host maps sans to Geist; this
+          docs site uses Inter so it can run without next/font. Override --pb-font-* in the host.
         </Text>
         <div className="space-y-4 rounded-md border border-dashed border-border p-4">
           <p className="font-sans text-2xl font-semibold tracking-tight">Sans heading</p>

@@ -11,7 +11,7 @@ import { IconButton } from "./icon-button"
 export interface ThemeToggleProps {
   theme?: string
   resolvedTheme?: string
-  setTheme: (theme: string) => void
+  setTheme: (theme: "light" | "dark") => void
   label?: string
   className?: string
 }

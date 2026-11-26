@@ -42,6 +42,35 @@ export function compareISODate(a: string, b: string) {
   return a.localeCompare(b)
 }
 
+export function startOfWeek(date: Date, weekStartsOn = 0) {
+  const offset = (date.getDay() - weekStartsOn + 7) % 7
+  return addDays(date, -offset)
+}
+
+export function weekDays(weekStart: Date) {
+  return Array.from({ length: 7 }, (_, index) => addDays(weekStart, index))
+}
+
+export function isISODateInRange(iso: string, from?: string, to?: string) {
+  if (from && iso < from) return false
+  if (to && iso > to) return false
+  return Boolean(from || to)
+}
+
+export function parseCivilDateTime(value: string) {
+  const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})$/.exec(value)
+  if (!match?.[1] || !match[2]) return undefined
+  const date = parseISODate(match[1])
+  if (!date) return undefined
+  const [hours, minutes] = match[2].split(":").map(Number) as [number, number]
+  if (hours > 23 || minutes > 59) return undefined
+  return { date, isoDate: match[1], hours, minutes }
+}
+
+export function toCivilDateTime(isoDate: string, hours: number, minutes: number) {
+  return `${isoDate}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`
+}
+
 export function calendarWeeks(month: Date, weekStartsOn = 0) {
   const first = startOfMonth(month)
   const startOffset = (first.getDay() - weekStartsOn + 7) % 7

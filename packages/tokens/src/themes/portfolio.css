@@ -29,7 +29,7 @@
   --gutter-ink: color-mix(in srgb, var(--foreground) 10%, transparent);
   --pb-font-sans: var(--font-geist-sans);
   --pb-font-display: var(--font-geist-sans);
-  --pb-font-serif: var(--font-source-serif);
+  --pb-font-serif: var(--font-instrument-serif, var(--font-source-serif));
   --pb-font-mono: var(--font-geist-mono);
   --pb-font-hand: "Caveat";
   --pb-duration-fast: 150ms;

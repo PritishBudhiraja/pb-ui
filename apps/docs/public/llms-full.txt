@@ -48,8 +48,15 @@ Docs: https://ui.pritishbudhiraja.com
 ## Data and type
 
 - Text, Heading (EditorialHeading for serif display)
-- Badge, Avatar, Card, Table, DataTable, Timeline, StatCard, DescriptionList
+- Badge, Avatar, Card, Table, DataTable, Timeline, ActivityTimeline, StatCard, DescriptionList
 - Stack, Grid, Separator
+- DateRangePicker, DurationPicker, TimeRangePicker
+- WeekCalendar, TimeGrid, CalendarEvent, SortableList
+- SplitWorkspace, ResizablePanel, CollapsibleSidebar, InspectorPanel
+- CodeBlock, MarkdownRenderer, RichTextEditor, StreamingText
+- AIExecutionStatus, WorkflowStepper, MilestoneStepper
+- TimeAllocationBar, WeeklyActivityGrid, CountdownDisplay, FileDropzone, VirtualList
+- Charts via @pritish.budhiraja/ui/charts: StackedBarChart, AreaChart, DonutChart
 
 ## Hooks
 

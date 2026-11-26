@@ -11,4 +11,5 @@ coverage
 .vite
 .vercel
 .cache
+.next
 *.tsbuildinfo

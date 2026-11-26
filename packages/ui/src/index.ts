@@ -5,6 +5,17 @@ export {
   AccordionTrigger,
 } from "./components/accordion"
 export {
+  type ActivityItem,
+  ActivityTimeline,
+  type ActivityTimelineProps,
+} from "./components/activity-timeline"
+export {
+  AIExecutionStatus,
+  type AIExecutionStatusProps,
+  type ExecutionStatus,
+  type ExecutionStep,
+} from "./components/ai-execution-status"
+export {
   Alert,
   AlertDescription,
   AlertTitle,
@@ -32,7 +43,11 @@ export {
   BreadcrumbSeparator,
 } from "./components/breadcrumb"
 export { Button, type ButtonProps, buttonVariants } from "./components/button"
-export { Calendar, type CalendarProps } from "./components/calendar"
+export {
+  Calendar,
+  type CalendarProps,
+  type DateRangeValue as CalendarRangeValue,
+} from "./components/calendar"
 export {
   CalendarHeatmap,
   type CalendarHeatmapProps,
@@ -50,6 +65,7 @@ export {
   CardTitle,
 } from "./components/card"
 export { Checkbox } from "./components/checkbox"
+export { CodeBlock, type CodeBlockProps } from "./components/code-block"
 export { Combobox, type ComboboxItem, type ComboboxProps } from "./components/combobox"
 export {
   CommandPalette,
@@ -73,6 +89,7 @@ export {
   ContextMenuTrigger,
 } from "./components/context-menu"
 export { CopyButton, type CopyButtonProps } from "./components/copy-button"
+export { CountdownDisplay, type CountdownDisplayProps } from "./components/countdown-display"
 export {
   DataTable,
   type DataTableColumn,
@@ -81,6 +98,11 @@ export {
   type DataTableSortDirection,
 } from "./components/data-table"
 export { DatePicker, type DatePickerProps } from "./components/date-picker"
+export {
+  DateRangePicker,
+  type DateRangePickerProps,
+  type DateRangeValue,
+} from "./components/date-range-picker"
 export {
   DescriptionDetail,
   DescriptionList,
@@ -111,10 +133,12 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/dropdown-menu"
+export { DurationPicker, type DurationPickerProps } from "./components/duration-picker"
 export { EditorialAnnotation } from "./components/editorial-annotation"
 export { EditorialHeading, type EditorialHeadingProps } from "./components/editorial-heading"
 export { EmptyState } from "./components/empty-state"
 export { ErrorState } from "./components/error-state"
+export { FileDropzone, type FileDropzoneProps } from "./components/file-dropzone"
 export { FilterBar } from "./components/filter-bar"
 export { FormError, FormField } from "./components/form-field"
 export { FramedContainer } from "./components/framed-container"
@@ -122,10 +146,12 @@ export { HatchDivider } from "./components/hatch-divider"
 export { Heading, type HeadingProps } from "./components/heading"
 export { IconButton, type IconButtonProps } from "./components/icon-button"
 export { Input, type InputProps } from "./components/input"
+export { InspectorPanel, type InspectorPanelProps } from "./components/inspector-panel"
 export { KeyboardShortcut } from "./components/keyboard-shortcut"
 export { Label } from "./components/label"
 export { LinkButton, type LinkButtonProps } from "./components/link-button"
 export { LoadingButton, type LoadingButtonProps } from "./components/loading-button"
+export { MarkdownRenderer, type MarkdownRendererProps } from "./components/markdown-renderer"
 export { MobileNavigation } from "./components/mobile-navigation"
 export { Navbar, NavbarBrand, NavbarSpacer } from "./components/navbar"
 export {
@@ -137,6 +163,7 @@ export {
 export { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from "./components/popover"
 export { ProgressBar, ProgressRing } from "./components/progress"
 export { RadioGroup, RadioGroupItem } from "./components/radio-group"
+export { RichTextEditor, type RichTextEditorProps } from "./components/rich-text-editor"
 export { ScrollArea } from "./components/scroll-area"
 export { SearchInput } from "./components/search-input"
 export {
@@ -165,12 +192,28 @@ export {
   SheetTitle,
   SheetTrigger,
 } from "./components/sheet"
-export { Sidebar, SidebarItem, SidebarSection } from "./components/sidebar"
+export { CollapsibleSidebar, Sidebar, SidebarItem, SidebarSection } from "./components/sidebar"
 export { Skeleton } from "./components/skeleton"
 export { Slider, type SliderProps } from "./components/slider"
+export { type SortableItem, SortableList, type SortableListProps } from "./components/sortable-list"
 export { Spinner } from "./components/spinner"
+export {
+  ResizablePanel,
+  SplitPane,
+  SplitWorkspace,
+  type SplitWorkspaceProps,
+} from "./components/split-workspace"
 export { Grid, Stack } from "./components/stack"
 export { StatCard } from "./components/stat-card"
+export {
+  MilestoneStepper,
+  type StepItem,
+  Stepper,
+  type StepperProps,
+  type StepStatus,
+  WorkflowStepper,
+} from "./components/stepper"
+export { StreamingText, type StreamingTextProps } from "./components/streaming-text"
 export { Surface, type SurfaceProps } from "./components/surface"
 export { Switch } from "./components/switch"
 export {
@@ -186,7 +229,18 @@ export { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/tabs"
 export { Text, type TextProps } from "./components/text"
 export { Textarea, type TextareaProps } from "./components/textarea"
 export { ThemeToggle, type ThemeToggleProps } from "./components/theme-toggle"
+export {
+  type AllocationSegment,
+  TimeAllocationBar,
+  type TimeAllocationBarProps,
+} from "./components/time-allocation-bar"
 export { TimePicker, type TimePickerProps } from "./components/time-picker"
+export {
+  isValidTimeRange,
+  TimeRangePicker,
+  type TimeRangePickerProps,
+  type TimeRangeValue,
+} from "./components/time-range-picker"
 export { Timeline, TimelineItem } from "./components/timeline"
 export {
   Toast,
@@ -201,6 +255,21 @@ export {
 } from "./components/toast"
 export { Toaster } from "./components/toaster"
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./components/tooltip"
+export { VirtualList, type VirtualListProps } from "./components/virtual-list"
+export {
+  CalendarEvent,
+  type CalendarEventData,
+  type CalendarEventProps,
+  TimeGrid,
+  type TimeGridProps,
+  WeekCalendar,
+  type WeekCalendarProps,
+} from "./components/week-calendar"
+export {
+  type ActivityCell,
+  WeeklyActivityGrid,
+  type WeeklyActivityGridProps,
+} from "./components/weekly-activity-grid"
 export { useClickOutside } from "./hooks/use-click-outside"
 export { useClipboard } from "./hooks/use-clipboard"
 export { useControlledState } from "./hooks/use-controlled-state"

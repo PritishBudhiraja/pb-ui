@@ -41,6 +41,24 @@ export function toClockParts(hours: number, minutes: number) {
   return { hour12, minutes, period }
 }
 
+export function timeToMinutes(value: string) {
+  const parsed = parseTime(value)
+  if (!parsed) return undefined
+  return parsed.hours * 60 + parsed.minutes
+}
+
+export function minutesToTime(total: number) {
+  const clamped = Math.max(0, Math.min(23 * 60 + 59, Math.round(total)))
+  return formatTime(Math.floor(clamped / 60), clamped % 60)
+}
+
+export function formatIsoDuration(totalMinutes: number) {
+  const safe = Math.max(0, Math.round(totalMinutes))
+  const hours = Math.floor(safe / 60)
+  const minutes = safe % 60
+  return `PT${hours}H${minutes}M`
+}
+
 export function fromClockParts(hour12: number, minutes: number, period: "AM" | "PM") {
   const normalized = hour12 === 12 ? 0 : hour12
   const hours = period === "PM" ? normalized + 12 : normalized

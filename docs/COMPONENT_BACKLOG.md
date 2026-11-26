@@ -8,12 +8,16 @@
 
 **Hooks:** `cn`, `useClipboard`, `useReducedMotion`, `useToast`, `useKeyboardShortcut`, `useMediaQuery`, `useDebounce`, `useControlledState`, `useClickOutside`.
 
+## Expansion (this pass)
+
+DateRangePicker, DurationPicker, TimeRangePicker, WeekCalendar, TimeGrid, CalendarEvent, SortableList, SplitWorkspace, collapsible Sidebar, InspectorPanel, CodeBlock, MarkdownRenderer, StreamingText, RichTextEditor, AIExecutionStatus, WorkflowStepper, MilestoneStepper, TimeAllocationBar, WeeklyActivityGrid, ActivityTimeline, CountdownDisplay, FileDropzone, VirtualList, and optional `/charts` (StackedBar, Area, Donut).
+
 ## Intentionally not in the library
 
-- **Charts** — keep Recharts (and similar) out of core. Compose in the product.
 - **useTheme** — host owns `data-theme` / `.dark` (ADR-003).
-- **DayPicker / TanStack Table** — DatePicker is a Hatch calendar in a popover; DataTable is a thin column mapper.
+- **DayPicker / TanStack Table / FullCalendar** — DatePicker is a Hatch calendar in a popover; DataTable is a thin column mapper; week view is a Hatch grid.
+- **Epoch domain widgets** — SeasonCard, GoalTree, TaskBoard, FocusSession, and the rest of that product surface.
 
 ## Later if a product needs it
 
-Virtualized tables, rich calendars, command-style combobox with cmdk, and chart primitives.
+Virtualized tables, FullCalendar if recurrence/drag outgrow the Hatch grid, shadcn registry.

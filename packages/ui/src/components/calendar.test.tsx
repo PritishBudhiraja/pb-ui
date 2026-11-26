@@ -110,6 +110,89 @@ describe("Calendar", () => {
     container.remove()
   })
 
+  it("selects a date range, reversing and restarting", async () => {
+    const onRangeChange = vi.fn()
+    const user = userEvent.setup()
+    const { rerender } = render(
+      <Calendar
+        mode="range"
+        month={new Date(2026, 10, 1)}
+        range={{}}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+        onRangeChange={onRangeChange}
+      />,
+    )
+    await user.click(screen.getByRole("button", { name: "Thursday, November 12, 2026" }))
+    expect(onRangeChange).toHaveBeenCalledWith({ from: "2026-11-12", to: undefined })
+    rerender(
+      <Calendar
+        mode="range"
+        month={new Date(2026, 10, 1)}
+        range={{ from: "2026-11-12" }}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+        onRangeChange={onRangeChange}
+      />,
+    )
+    await user.click(screen.getByRole("button", { name: "Monday, November 16, 2026" }))
+    expect(onRangeChange).toHaveBeenCalledWith({ from: "2026-11-12", to: "2026-11-16" })
+    rerender(
+      <Calendar
+        mode="range"
+        month={new Date(2026, 10, 1)}
+        range={{ from: "2026-11-16" }}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+        onRangeChange={onRangeChange}
+      />,
+    )
+    await user.click(screen.getByRole("button", { name: "Thursday, November 12, 2026" }))
+    expect(onRangeChange).toHaveBeenCalledWith({ from: "2026-11-12", to: "2026-11-16" })
+    rerender(
+      <Calendar
+        mode="range"
+        month={new Date(2026, 10, 1)}
+        range={{ from: "2026-11-12", to: "2026-11-16" }}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+        onRangeChange={onRangeChange}
+      />,
+    )
+    await user.click(screen.getByRole("button", { name: "Thursday, November 26, 2026" }))
+    expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-11-26", to: undefined })
+  })
+
+  it("selects a range day without a range callback", async () => {
+    const user = userEvent.setup()
+    render(
+      <Calendar
+        mode="range"
+        month={new Date(2026, 10, 1)}
+        range={{ from: "2026-11-12", to: "2026-11-16" }}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    )
+    await user.click(screen.getByRole("button", { name: "Monday, November 16, 2026" }))
+  })
+
+  it("starts a range when no range value is passed", async () => {
+    const onRangeChange = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <Calendar
+        mode="range"
+        month={new Date(2026, 10, 1)}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+        onRangeChange={onRangeChange}
+      />,
+    )
+    await user.click(screen.getByRole("button", { name: "Thursday, November 12, 2026" }))
+    expect(onRangeChange).toHaveBeenCalledWith({ from: "2026-11-12", to: undefined })
+  })
+
   it("uses the locale's weekday names and a chosen first day", () => {
     render(
       <Calendar

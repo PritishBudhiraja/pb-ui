@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
+import { revealFromOrigin } from "../lib/view-transition"
 import { expectNoAxeViolations } from "../test/axe"
 import { OriginButton, OriginButtonOutline } from "./origin-button"
 import { ScrollProgress } from "./scroll-progress"
@@ -171,5 +172,30 @@ describe("motion components", () => {
       fireEvent.blur(node)
     }
     for (const handler of Object.values(handlers)) expect(handler).toHaveBeenCalledTimes(2)
+  })
+
+  it("runs a view transition without a name", async () => {
+    const update = vi.fn()
+    const origin = document.createElement("button")
+    document.body.append(origin)
+    document.documentElement.animate = vi.fn() as typeof document.documentElement.animate
+    Object.defineProperty(document, "startViewTransition", {
+      configurable: true,
+      writable: true,
+      value: (next: () => void) => {
+        next()
+        return {
+          ready: Promise.resolve(),
+          finished: Promise.resolve(),
+          skipped: false,
+          types: new Set<string>(),
+          skipTransition() {},
+          updateCallbackDone: Promise.resolve(),
+        }
+      },
+    })
+    await revealFromOrigin(origin, update)
+    expect(update).toHaveBeenCalled()
+    origin.remove()
   })
 })

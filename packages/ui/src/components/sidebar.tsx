@@ -1,11 +1,17 @@
 import type { HTMLAttributes, ReactNode } from "react"
 import { cn } from "../lib/cn"
 
-export function Sidebar({ className, ...props }: HTMLAttributes<HTMLElement>) {
+export function Sidebar({
+  className,
+  collapsed = false,
+  ...props
+}: HTMLAttributes<HTMLElement> & { collapsed?: boolean }) {
   return (
     <aside
+      data-collapsed={collapsed ? "true" : undefined}
       className={cn(
-        "flex w-56 shrink-0 flex-col gap-1 border-r border-border bg-background p-3",
+        "flex shrink-0 flex-col gap-1 border-r border-border bg-background p-3",
+        collapsed ? "w-14 items-center overflow-hidden" : "w-56",
         className,
       )}
       {...props}
@@ -34,6 +40,8 @@ export function SidebarItem({
     </button>
   )
 }
+
+export const CollapsibleSidebar = Sidebar
 
 export function SidebarSection({ title, children }: { title?: string; children: ReactNode }) {
   return (

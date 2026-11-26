@@ -14,11 +14,19 @@ const ARROW_DAYS: Record<string, number> = {
   ArrowDown: 7,
 }
 
+export interface DateRangeValue {
+  from?: string
+  to?: string
+}
+
 export interface CalendarProps {
   month: Date
   onMonthChange: (month: Date) => void
   value?: string
+  range?: DateRangeValue
+  mode?: "single" | "range"
   onSelect: (iso: string) => void
+  onRangeChange?: (range: DateRangeValue) => void
   min?: string
   max?: string
   locale?: string
@@ -36,11 +44,20 @@ function weekdayNames(locale: string | undefined, weekStartsOn: number) {
   })
 }
 
+function nextRange(current: DateRangeValue, iso: string): DateRangeValue {
+  if (!current.from || (current.from && current.to)) return { from: iso, to: undefined }
+  if (iso < current.from) return { from: iso, to: current.from }
+  return { from: current.from, to: iso }
+}
+
 export function Calendar({
   month,
   onMonthChange,
   value,
+  range,
+  mode = "single",
   onSelect,
+  onRangeChange,
   min,
   max,
   locale,
@@ -62,9 +79,12 @@ export function Calendar({
   const gridRef = useRef<HTMLDivElement>(null)
   const [focusIso, setFocusIso] = useState<string | null>(null)
   const inView = (iso: string | undefined) => iso?.slice(0, 7) === toISODate(view).slice(0, 7)
+  const rangeFrom = range?.from
+  const rangeTo = range?.to
   const tabStop =
-    [focusIso ?? undefined, value, today ? toISODate(today) : undefined].find(inView) ??
-    toISODate(view)
+    [focusIso ?? undefined, value, rangeFrom, rangeTo, today ? toISODate(today) : undefined].find(
+      inView,
+    ) ?? toISODate(view)
 
   useEffect(() => {
     if (!focusIso) return
@@ -115,7 +135,9 @@ export function Calendar({
         {weeks.flat().map((date) => {
           const iso = toISODate(date)
           const outside = date.getMonth() !== view.getMonth()
-          const selected = value === iso
+          const inRange =
+            mode === "range" && !!rangeFrom && iso >= rangeFrom && iso <= (rangeTo ?? rangeFrom)
+          const selected = mode === "range" ? iso === rangeFrom || iso === rangeTo : value === iso
           const isToday = today !== null && isSameDay(date, today)
           const disabled = Boolean((min && iso < min) || (max && iso > max))
           return (
@@ -128,11 +150,15 @@ export function Calendar({
               aria-current={isToday ? "date" : undefined}
               tabIndex={iso === tabStop && !outside ? 0 : -1}
               disabled={disabled}
-              onClick={() => onSelect(iso)}
+              onClick={() => {
+                onSelect(iso)
+                if (mode === "range" && onRangeChange) onRangeChange(nextRange(range ?? {}, iso))
+              }}
               onKeyDown={(event) => onDayKeyDown(event, date)}
               className={cn(
                 "mx-auto flex h-8 w-8 items-center justify-center rounded-md text-sm tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30",
                 outside && "text-muted-foreground/50",
+                inRange && !selected && "bg-accent text-accent-foreground",
                 isToday && !selected && "border border-dashed border-border",
                 selected && "bg-primary text-primary-foreground",
                 !selected && !disabled && "hover:bg-accent hover:text-accent-foreground",

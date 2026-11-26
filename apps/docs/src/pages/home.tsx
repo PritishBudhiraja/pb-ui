@@ -1,11 +1,16 @@
 import {
   Button,
+  CountdownDisplay,
+  DateRangePicker,
   EditorialAnnotation,
   EditorialHeading,
   HatchDivider,
+  MilestoneStepper,
+  SortableList,
   Surface,
   Text,
   ThemeToggle,
+  TimeAllocationBar,
 } from "@pritish.budhiraja/ui"
 import { OriginButton } from "@pritish.budhiraja/ui/motion"
 import { Link } from "react-router-dom"
@@ -122,24 +127,47 @@ export function HomePage() {
       </section>
 
       <section className="space-y-4">
-        <EditorialHeading as="h2">What we built</EditorialHeading>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Built
-            title="Tokens, one palette"
-            body="Semantic CSS variables. The same near-neutral grayscale as the live site — light and dark, not a second product look."
-          />
-          <Built
-            title="Primitives that stay quiet"
-            body="Buttons, fields, overlays, tables, and shells. Radix where it earns the dependency. No Next.js APIs inside the library."
-          />
-          <Built
-            title="Signature identity"
-            body="FramedContainer, HatchDivider, EditorialAnnotation, CalendarHeatmap, OriginButton, ThemeToggle. These are why Hatch is not a template."
-          />
-          <Built
-            title="A real consumer"
-            body="The portfolio installs Hatch from npm. Epoch domain widgets (SeasonCard, FocusTimer, TaskRow) stay in Epoch until reuse is proven."
-          />
+        <EditorialHeading as="h2">Rendered here</EditorialHeading>
+        <Text tone="muted">
+          The same components the packages export. The full set lives on the Components page.
+        </Text>
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Surface className="space-y-3 p-4">
+            <p className="text-xs text-muted-foreground">DateRangePicker</p>
+            <DateRangePicker defaultValue={{ from: "2026-11-12", to: "2026-11-16" }} />
+          </Surface>
+          <Surface className="space-y-3 p-4">
+            <p className="text-xs text-muted-foreground">SortableList</p>
+            <SortableList
+              defaultItems={[
+                { id: "a", label: "Alpha" },
+                { id: "b", label: "Beta" },
+                { id: "c", label: "Gamma" },
+              ]}
+            />
+          </Surface>
+          <Surface className="space-y-3 p-4">
+            <p className="text-xs text-muted-foreground">TimeAllocationBar</p>
+            <TimeAllocationBar
+              segments={[
+                { label: "Deep", value: 3 },
+                { label: "Shallow", value: 1 },
+              ]}
+            />
+          </Surface>
+          <Surface className="flex flex-wrap items-end justify-between gap-4 p-4">
+            <div>
+              <p className="text-xs text-muted-foreground">CountdownDisplay</p>
+              <CountdownDisplay remainingSeconds={1500} />
+            </div>
+            <MilestoneStepper
+              current={1}
+              steps={[
+                { id: "1", label: "Start" },
+                { id: "2", label: "Ship" },
+              ]}
+            />
+          </Surface>
         </div>
       </section>
 
@@ -163,14 +191,5 @@ export function HomePage() {
         </div>
       </section>
     </article>
-  )
-}
-
-function Built({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="rounded-md border border-dashed border-border p-4">
-      <h3 className="text-sm font-medium">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
-    </div>
   )
 }

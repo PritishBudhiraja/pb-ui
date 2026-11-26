@@ -7,5 +7,10 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@pritish.budhiraja/docs", "@pritish.budhiraja/storybook"]
+  "ignore": [
+    "@pritish.budhiraja/docs",
+    "@pritish.budhiraja/storybook",
+    "@pritish.budhiraja/vite-consumer",
+    "@pritish.budhiraja/next-consumer"
+  ]
 }

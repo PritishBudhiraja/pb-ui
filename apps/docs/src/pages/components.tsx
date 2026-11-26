@@ -38,6 +38,7 @@ import type { ReactNode } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
 import { useDocsTheme } from "../theme"
 import { PageHeader, Preview, PropTable } from "../ui/preview"
+import { EXPANSION_DOCS } from "./expansion-docs"
 import { EXTRA_DOCS } from "./extra-docs"
 
 export interface ComponentDoc {
@@ -70,7 +71,7 @@ function ButtonDoc() {
   )
 }
 
-const DOCS: Record<string, ComponentDoc> = {
+export const CORE_DOCS: Record<string, ComponentDoc> = {
   button: {
     title: "Button",
     kicker: "Primitive",
@@ -526,7 +527,7 @@ const DOCS: Record<string, ComponentDoc> = {
         type: "string",
         description: "Actual light or dark when theme is system (for example from next-themes)",
       },
-      { name: "setTheme", type: "(theme: string) => void", description: "Host setter" },
+      { name: "setTheme", type: '(theme: "light" | "dark") => void', description: "Host setter" },
       { name: "label", type: "string", description: "Accessible name. Default Toggle theme" },
     ],
   },
@@ -588,8 +589,8 @@ function ThemeTogglePreview() {
 export function ComponentPage() {
   const { slug } = useParams()
   if (!slug) return <Navigate to="/components" replace />
-  const extra = EXTRA_DOCS[slug]
-  const doc = DOCS[slug] ?? extra
+  const extra = EXTRA_DOCS[slug] ?? EXPANSION_DOCS[slug]
+  const doc = CORE_DOCS[slug] ?? extra
   if (!doc) return <Navigate to="/components" replace />
   const why = doc.why
   const whenNot = doc.whenNot

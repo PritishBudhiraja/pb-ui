@@ -3,7 +3,7 @@ import { cn } from "../lib/cn"
 
 type HeadingTag = "h1" | "h2" | "h3" | "p"
 
-export interface EditorialHeadingProps extends HTMLAttributes<HTMLHeadingElement> {
+export interface EditorialHeadingProps extends HTMLAttributes<HTMLElement> {
   as?: HeadingTag
 }
 

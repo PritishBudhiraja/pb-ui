@@ -14,7 +14,7 @@ html {
 :root {
   --pb-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
   --pb-font-display: Inter, ui-sans-serif, system-ui, sans-serif;
-  --pb-font-serif: "Source Serif 4", Georgia, serif;
+  --pb-font-serif: "Instrument Serif", Georgia, serif;
   --pb-font-mono: ui-monospace, SFMono-Regular, monospace;
   --pb-font-hand: Caveat, cursive;
 }

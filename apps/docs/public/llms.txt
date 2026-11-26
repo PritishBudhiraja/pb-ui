@@ -34,7 +34,11 @@ OriginButton, FramedContainer, HatchDivider, EditorialAnnotation, CalendarHeatma
 ## Categories
 
 - Actions: Button, IconButton, LinkButton, LoadingButton, CopyButton
-- Forms: Input, Textarea, Label, Checkbox, Switch, RadioGroup, Select, Combobox, Slider, FormField, SearchInput, DatePicker, TimePicker, FilterBar
+- Forms: Input, Textarea, Label, Checkbox, Switch, RadioGroup, Select, Combobox, Slider, FormField, SearchInput, DatePicker, DateRangePicker, TimePicker, TimeRangePicker, DurationPicker, FilterBar
 - Overlays: Dialog, AlertDialog, Sheet, Popover, Tooltip, DropdownMenu, ContextMenu, CommandPalette, Toast, Alert, EmptyState, ErrorState, Skeleton, Spinner, ProgressBar
-- Navigation: Tabs, Accordion, Breadcrumb, Pagination, Navbar, Sidebar, AppShell, KeyboardShortcut
-- Data: Text, Heading, Badge, Avatar, Card, Table, DataTable, Timeline, StatCard, DescriptionList, Stack, Grid, Separator
+- Navigation: Tabs, Accordion, Breadcrumb, Pagination, Navbar, Sidebar, CollapsibleSidebar, AppShell, SplitWorkspace, InspectorPanel, KeyboardShortcut
+- Data: Text, Heading, Badge, Avatar, Card, Table, DataTable, Timeline, ActivityTimeline, StatCard, DescriptionList, Stack, Grid, Separator
+- Schedule: WeekCalendar, TimeGrid, CalendarEvent, SortableList
+- Content: CodeBlock, MarkdownRenderer, RichTextEditor, StreamingText, AIExecutionStatus, WorkflowStepper, MilestoneStepper
+- Presentation: TimeAllocationBar, WeeklyActivityGrid, CountdownDisplay, FileDropzone, VirtualList
+- Charts (optional import @pritish.budhiraja/ui/charts): StackedBarChart, AreaChart, DonutChart

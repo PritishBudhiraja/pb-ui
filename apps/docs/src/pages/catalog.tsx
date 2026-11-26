@@ -2,43 +2,69 @@ import { EditorialHeading, Text } from "@pritish.budhiraja/ui"
 import { Link } from "react-router-dom"
 import { CATALOG } from "../catalog"
 import { PageHeader } from "../ui/preview"
+import { CORE_DOCS } from "./components"
+import { EXPANSION_DOCS } from "./expansion-docs"
+import { EXTRA_DOCS } from "./extra-docs"
+
+const WIDE = new Set([
+  "week-calendar",
+  "time-grid",
+  "calendar-event",
+  "split-workspace",
+  "app-shell",
+  "weekly-activity-grid",
+  "rich-text-editor",
+  "stacked-bar-chart",
+  "area-chart",
+  "donut-chart",
+  "virtual-list",
+  "calendar-heatmap",
+  "data-table",
+  "table",
+  "navbar",
+])
+
+function livePreview(slug: string) {
+  return CORE_DOCS[slug]?.preview ?? EXTRA_DOCS[slug]?.preview ?? EXPANSION_DOCS[slug]?.preview
+}
 
 export function CatalogPage() {
   return (
-    <article className="space-y-12">
+    <article className="space-y-16">
       <PageHeader
         kicker="Components"
-        title="A catalog with reasons, not a dump of every export."
-        description="Each category exists because a consumer needed it. Signature first — that is Hatch. Primitives exist so signature pieces do not reinvent a button."
+        title="Everything in Hatch, rendered."
+        description="Each block is the real component running in this site. Open a name for API notes."
       />
       {CATALOG.map((category) => (
         <section key={category.id} id={category.id} className="scroll-mt-20 space-y-4">
           <EditorialHeading as="h2">{category.title}</EditorialHeading>
           <Text tone="muted">{category.purpose}</Text>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
-              <thead>
-                <tr className="border-b border-dashed border-border text-xs text-muted-foreground">
-                  <th className="py-2 pr-4 font-medium">Component</th>
-                  <th className="py-2 font-medium">When to use</th>
-                </tr>
-              </thead>
-              <tbody>
-                {category.items.map((item) => (
-                  <tr key={item.slug} className="border-b border-dashed border-border align-top">
-                    <td className="py-2 pr-4">
+          <div className="grid gap-4 md:grid-cols-2">
+            {category.items.map((item) => {
+              const preview = livePreview(item.slug)
+              return (
+                <article
+                  key={item.slug}
+                  className={WIDE.has(item.slug) ? "min-w-0 md:col-span-2" : "min-w-0"}
+                >
+                  <div className="overflow-hidden rounded-md border border-dashed border-border">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2 px-4 pt-3">
                       <Link
-                        className="font-medium underline-offset-2 hover:underline"
+                        className="text-sm font-medium underline-offset-2 hover:underline"
                         to={`/components/${item.slug}`}
                       >
                         {item.name}
                       </Link>
-                    </td>
-                    <td className="py-2 text-muted-foreground">{item.when}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <p className="text-xs text-muted-foreground">{item.when}</p>
+                    </div>
+                    <div className="mt-2 [&>div]:rounded-none [&>div]:border-0 [&>div]:border-t [&>div]:border-dashed [&>div>div.relative]:hidden">
+                      {preview}
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </section>
       ))}

@@ -4,11 +4,13 @@ import { cn } from "../lib/cn"
 export function AppShell({
   header,
   sidebar,
+  inspector,
   children,
   className,
 }: {
   header?: ReactNode
   sidebar?: ReactNode
+  inspector?: ReactNode
   children: ReactNode
   className?: string
 }) {
@@ -18,6 +20,7 @@ export function AppShell({
       <div className="flex min-h-0 flex-1">
         {sidebar}
         <main className="min-w-0 flex-1 p-4">{children}</main>
+        {inspector}
       </div>
     </div>
   )

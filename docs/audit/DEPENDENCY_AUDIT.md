@@ -36,11 +36,24 @@ Vitest is on 5.x so `@vitest/mocker` and tinypool come from the patched tree. `u
 
 `vite-plugin-dts` / Volar still declare `typescript@<7`. Types are unbundled because API Extractor cannot follow `Omit` under TypeScript 7. `@typescript/typescript6` is the JS Compiler API fallback dts requires.
 
+## Expansion (ADR-005)
+
+| Package                            | Why                               | Alternatives         | Licence |
+| ---------------------------------- | --------------------------------- | -------------------- | ------- |
+| @dnd-kit/core, sortable, utilities | SortableList + keyboard reorder   | HTML DnD             | MIT     |
+| @tiptap/react, pm, starter-kit     | RichTextEditor chrome             | Lexical, textarea    | MIT     |
+| react-markdown                     | MarkdownRenderer without raw HTML | marked + DOMPurify   | MIT     |
+| react-resizable-panels             | SplitWorkspace                    | custom split         | MIT     |
+| recharts                           | Optional `/charts` entry only     | product-owned charts | MIT     |
+| @tanstack/react-virtual            | VirtualList                       | windowing by hand    | MIT     |
+
+Next.js and `@tailwindcss/postcss` are only dependencies of `apps/next-consumer`. They are not part of `@pritish.budhiraja/ui`. The consumer uses Next 16.2+ because Next 15 cannot load TypeScript 7 (no JavaScript compiler API). The library itself does not depend on Next.
+
 ## Explicitly not installed
 
-Sonner, React DayPicker, TanStack Table/Virtual, Recharts, dnd-kit, FullCalendar, React Hook Form, Zod, next, next-themes, lenis, geist, vaul.
+Sonner, React DayPicker, TanStack Table, FullCalendar, React Hook Form, Zod, next-themes, lenis, geist, vaul, react-dropzone, rehype-raw.
 
-DatePicker is a Popover + Calendar grid. No DayPicker. DataTable maps columns onto Table. Charts stay in product apps.
+DatePicker is a Popover + Calendar grid. No DayPicker. DataTable maps columns onto Table. Charts are an optional entry, not core `index.js`.
 
 ## Toast decision
 
