@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { Calendar } from "./calendar"
 
 describe("Calendar", () => {
@@ -31,7 +32,7 @@ describe("Calendar", () => {
     expect(onMonthChange).toHaveBeenCalledTimes(2)
   })
 
-  it("disables days outside min and max", () => {
+  it("disables days outside min and max", async () => {
     render(
       <Calendar
         month={new Date(2026, 10, 1)}
@@ -42,5 +43,6 @@ describe("Calendar", () => {
       />,
     )
     expect(screen.getAllByRole("button", { name: "1" })[0]).toBeDisabled()
+    await expectNoAxeViolations()
   })
 })

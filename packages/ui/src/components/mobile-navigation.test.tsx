@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { MobileNavigation } from "./mobile-navigation"
 
 describe("MobileNavigation", () => {
@@ -12,6 +13,7 @@ describe("MobileNavigation", () => {
       </MobileNavigation>,
     )
     await user.click(screen.getByRole("button", { name: "Open menu" }))
+    await expectNoAxeViolations()
     expect(screen.getByRole("dialog", { name: "Menu" })).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Docs" })).toBeInTheDocument()
   })

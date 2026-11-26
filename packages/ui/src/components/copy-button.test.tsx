@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { CopyButton } from "./copy-button"
 
 describe("CopyButton", () => {
@@ -12,6 +13,7 @@ describe("CopyButton", () => {
       value: { writeText },
     })
     render(<CopyButton value="pnpm add @pritish.budhiraja/ui" label="install" />)
+    await expectNoAxeViolations()
     await user.click(screen.getByRole("button", { name: "Copy install" }))
     expect(writeText).toHaveBeenCalledWith("pnpm add @pritish.budhiraja/ui")
   })
