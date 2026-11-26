@@ -79,7 +79,14 @@ const listeners: Array<(state: ToastState) => void> = []
 let memoryState: ToastState = { toasts: [] }
 
 function dispatch(action: Action) {
+  // The store is module-level, so on a server it would be shared by every request.
+  if (typeof window === "undefined") return
   memoryState = reducer(memoryState, action)
+  for (const [id, timeout] of toastTimeouts) {
+    if (memoryState.toasts.some((t) => t.id === id)) continue
+    clearTimeout(timeout)
+    toastTimeouts.delete(id)
+  }
   listeners.forEach((listener) => {
     listener(memoryState)
   })

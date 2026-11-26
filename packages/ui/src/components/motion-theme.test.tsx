@@ -146,4 +146,30 @@ describe("motion components", () => {
     await user.click(screen.getByRole("button", { name: "Toggle theme" }))
     expect(setTheme).toHaveBeenCalledWith("dark")
   })
+
+  it("keeps the caller's pointer and focus handlers", () => {
+    mockMatchMedia(false)
+    const handlers = {
+      onMouseEnter: vi.fn(),
+      onMouseLeave: vi.fn(),
+      onFocus: vi.fn(),
+      onBlur: vi.fn(),
+    }
+    render(
+      <>
+        <OriginButton {...handlers}>Button</OriginButton>
+        <OriginButton href="/x" {...handlers}>
+          Link
+        </OriginButton>
+      </>,
+    )
+    for (const name of ["Button", "Link"]) {
+      const node = screen.getByText(name).closest("a, button") as HTMLElement
+      fireEvent.mouseEnter(node)
+      fireEvent.mouseLeave(node)
+      fireEvent.focus(node)
+      fireEvent.blur(node)
+    }
+    for (const handler of Object.values(handlers)) expect(handler).toHaveBeenCalledTimes(2)
+  })
 })

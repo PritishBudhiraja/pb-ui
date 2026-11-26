@@ -45,6 +45,8 @@ export function DatePicker({
     onChange: onValueChange,
   })
   const selectedDate = parseISODate(selected)
+  const todayIso = toISODate(new Date())
+  const todayOutOfRange = Boolean((min && todayIso < min) || (max && todayIso > max))
   const [month, setMonth] = useState(() => startOfMonth(selectedDate ?? new Date()))
 
   const display = useMemo(() => {
@@ -115,9 +117,9 @@ export function DatePicker({
               type="button"
               variant="ghost"
               size="sm"
+              disabled={todayOutOfRange}
               onClick={() => {
-                const today = toISODate(new Date())
-                setSelected(today)
+                setSelected(todayIso)
                 setMonth(startOfMonth(new Date()))
                 setOpen(false)
               }}
@@ -127,7 +129,7 @@ export function DatePicker({
           </div>
         </PopoverContent>
       </Popover>
-      {name ? <input type="hidden" name={name} value={selected} /> : null}
+      {name ? <input type="hidden" name={name} value={selected} disabled={disabled} /> : null}
     </>
   )
 }

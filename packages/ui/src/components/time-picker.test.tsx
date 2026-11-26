@@ -31,4 +31,9 @@ describe("TimePicker", () => {
     await user.click(screen.getByRole("button", { name: "Now" }))
     expect(screen.getByRole("button")).not.toHaveTextContent(/pick a time/i)
   })
+
+  it("disables the hidden input with the picker", () => {
+    const { container } = render(<TimePicker name="at" defaultValue="09:00" disabled />)
+    expect(container.querySelector('input[name="at"]')).toBeDisabled()
+  })
 })

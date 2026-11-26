@@ -59,4 +59,17 @@ describe("CopyButton", () => {
     await user.click(screen.getByRole("button", { name: "Copy id" }))
     expect(screen.getByRole("status")).toHaveTextContent("Fehler")
   })
+
+  it("shows the failure when a copy fails right after a success", async () => {
+    const user = userEvent.setup()
+    mockClipboard(
+      vi.fn().mockResolvedValueOnce(undefined).mockRejectedValueOnce(new Error("denied")),
+    )
+    render(<CopyButton value="x" label="twice" />)
+    const button = screen.getByRole("button", { name: "Copy twice" })
+    await user.click(button)
+    expect(screen.getByRole("status")).toHaveTextContent("Copied")
+    await user.click(button)
+    expect(screen.getByRole("status")).toHaveTextContent("Could not copy")
+  })
 })

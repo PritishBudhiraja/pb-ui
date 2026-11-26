@@ -9,6 +9,7 @@ import {
   type MouseEvent,
   type ReactNode,
   type Ref,
+  type SyntheticEvent,
   useRef,
   useState,
 } from "react"
@@ -123,11 +124,26 @@ export const OriginButton = ({
     </>
   )
 
+  const caller = props as Partial<
+    Record<"onMouseEnter" | "onMouseLeave" | "onFocus" | "onBlur", (event: SyntheticEvent) => void>
+  >
   const pointerHandlers = {
-    onMouseEnter: (event: MouseEvent<HTMLElement>) => setFromEvent(event, 1),
-    onMouseLeave: (event: MouseEvent<HTMLElement>) => setFromEvent(event, 0),
-    onFocus: (event: FocusEvent<HTMLElement>) => setFromEvent(event, 1),
-    onBlur: (event: FocusEvent<HTMLElement>) => setFromEvent(event, 0),
+    onMouseEnter: (event: MouseEvent<HTMLElement>) => {
+      caller.onMouseEnter?.(event)
+      setFromEvent(event, 1)
+    },
+    onMouseLeave: (event: MouseEvent<HTMLElement>) => {
+      caller.onMouseLeave?.(event)
+      setFromEvent(event, 0)
+    },
+    onFocus: (event: FocusEvent<HTMLElement>) => {
+      caller.onFocus?.(event)
+      setFromEvent(event, 1)
+    },
+    onBlur: (event: FocusEvent<HTMLElement>) => {
+      caller.onBlur?.(event)
+      setFromEvent(event, 0)
+    },
   }
 
   if (isAnchorProps(props)) {

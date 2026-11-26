@@ -15,7 +15,7 @@
   --secondary: #eeeadf;
   --secondary-foreground: #252c25;
   --muted: #eeeadf;
-  --muted-foreground: #65785b;
+  --muted-foreground: #5c6e53;
   --accent: #eeeadf;
   --accent-foreground: #252c25;
   --destructive: #a33b3b;
@@ -23,7 +23,7 @@
   --border: #deded4;
   --input: #deded4;
   --ring: #293e31;
-  --editorial: #65785b;
+  --editorial: #5c6e53;
   --radius: 0.5rem;
   --gutter-ink: color-mix(in srgb, var(--foreground) 10%, transparent);
   --pb-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
@@ -51,8 +51,8 @@
   --muted-foreground: #a9bda0;
   --accent: #222a24;
   --accent-foreground: #eaece3;
-  --destructive: #c45c5c;
-  --destructive-foreground: #eaece3;
+  --destructive: #cb6e6e;
+  --destructive-foreground: #171d19;
   --border: #3a443c;
   --input: #3a443c;
   --ring: #b5c7ab;

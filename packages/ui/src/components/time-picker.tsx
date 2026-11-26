@@ -185,7 +185,7 @@ export function TimePicker({
           </div>
         </PopoverContent>
       </Popover>
-      {name ? <input type="hidden" name={name} value={selected} /> : null}
+      {name ? <input type="hidden" name={name} value={selected} disabled={disabled} /> : null}
     </>
   )
 }

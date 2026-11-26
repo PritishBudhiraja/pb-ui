@@ -10,7 +10,7 @@ describe("DatePicker", () => {
     render(<DatePicker defaultValue="2026-11-01" />)
     await user.click(screen.getByRole("button", { name: /2026/ }))
     await expectNoAxeViolations()
-    await user.click(screen.getByRole("button", { name: "26" }))
+    await user.click(screen.getByRole("button", { name: "Thursday, November 26, 2026" }))
     expect(screen.getByRole("button", { name: /26/ })).toBeInTheDocument()
   })
 
@@ -37,5 +37,15 @@ describe("DatePicker", () => {
     await user.keyboard("{Escape}")
     await user.click(screen.getByRole("button", { name: /pick a date/i }))
     expect(screen.getByRole("button", { name: "Today" })).toBeInTheDocument()
+  })
+
+  it("disables Today outside min and max, and the hidden input when disabled", async () => {
+    const user = userEvent.setup()
+    const { container, rerender } = render(<DatePicker name="day" max="2000-01-01" />)
+    await user.click(screen.getByRole("button", { name: /pick a date/i }))
+    expect(screen.getByRole("button", { name: "Today" })).toBeDisabled()
+    await user.keyboard("{Escape}")
+    rerender(<DatePicker name="day" min="2999-01-01" disabled />)
+    expect(container.querySelector('input[name="day"]')).toBeDisabled()
   })
 })

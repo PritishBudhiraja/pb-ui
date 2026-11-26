@@ -24,13 +24,16 @@ export function FormField({
   const id = htmlFor ?? generatedId
   const hintId = `${id}-hint`
   const errorId = `${id}-error`
+  const labelId = `${id}-label`
   const showHint = Boolean(hint) && !error
   const describedBy = error ? errorId : showHint ? hintId : undefined
 
   return (
-    <FormFieldContext.Provider value={{ id, describedBy, invalid: Boolean(error) }}>
+    <FormFieldContext.Provider value={{ id, labelId, describedBy, invalid: Boolean(error) }}>
       <div className={cn("grid gap-1.5", className)}>
-        <Label htmlFor={id}>{label}</Label>
+        <Label id={labelId} htmlFor={id}>
+          {label}
+        </Label>
         {children}
         {showHint ? (
           <p id={hintId} className="text-xs text-muted-foreground">

@@ -37,8 +37,9 @@ export function weeksFromDays(days: HeatmapDay[]) {
   if (days.length === 0) return []
 
   const byDate = new Map(days.map((day) => [day.date, day]))
-  const first = new Date(`${days[0]?.date}T00:00:00Z`)
-  const last = new Date(`${days[days.length - 1]?.date}T00:00:00Z`)
+  const sorted = [...byDate.keys()].sort()
+  const first = new Date(`${sorted[0]}T00:00:00Z`)
+  const last = new Date(`${sorted[sorted.length - 1]}T00:00:00Z`)
   if (Number.isNaN(first.getTime()) || Number.isNaN(last.getTime())) return []
 
   const weeks: Array<Array<HeatmapDay | null>> = []

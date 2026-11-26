@@ -1,5 +1,8 @@
+"use client"
+
 import * as SwitchPrimitive from "@radix-ui/react-switch"
 import type * as React from "react"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 
 export function Switch({
@@ -7,6 +10,7 @@ export function Switch({
   ref,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
+  const field = useFormFieldControl(props)
   return (
     <SwitchPrimitive.Root
       ref={ref}
@@ -15,6 +19,7 @@ export function Switch({
         className,
       )}
       {...props}
+      {...field}
     >
       <SwitchPrimitive.Thumb
         className={cn(

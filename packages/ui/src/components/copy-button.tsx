@@ -28,7 +28,8 @@ export function CopyButton({
 }: CopyButtonProps) {
   const { copied, copy } = useClipboard()
   const [failed, setFailed] = useState(false)
-  const status = copied ? copiedText : failed ? errorText : ""
+  const showCopied = copied && !failed
+  const status = failed ? errorText : showCopied ? copiedText : ""
 
   async function onCopy() {
     setFailed(false)
@@ -52,7 +53,7 @@ export function CopyButton({
           className,
         )}
       >
-        {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+        {showCopied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
       </button>
       <span role="status" className="sr-only">
         {status}
