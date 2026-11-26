@@ -56,6 +56,9 @@ export function InstallationPage() {
   const usage = `import "@pritish.budhiraja/ui/styles.css"
 import { Button } from "@pritish.budhiraja/ui"
 import { OriginButton } from "@pritish.budhiraja/ui/motion"`
+  const tailwind = `/* Your app's CSS, when it already uses Tailwind CSS v4 */
+@import "tailwindcss";
+@import "@pritish.budhiraja/ui/tailwind.css";`
 
   return (
     <article className="space-y-6">
@@ -72,6 +75,12 @@ import { OriginButton } from "@pritish.budhiraja/ui/motion"`
       <Preview code={usage}>
         <Button>Imported Button</Button>
       </Preview>
+      <Preview code={tailwind}>
+        <Text tone="muted">
+          Already using Tailwind CSS v4? Import tailwind.css from your stylesheet instead of
+          styles.css, so preflight and the theme are included once.
+        </Text>
+      </Preview>
     </article>
   )
 }
@@ -85,7 +94,11 @@ export function GettingStartedPage() {
         description="Import CSS once, set data-theme on the document, then compose primitives. ThemeToggle is controlled — you own storage."
       />
       <ol className="list-decimal space-y-3 pl-5 text-sm leading-relaxed text-muted-foreground">
-        <li>Import @pritish.budhiraja/ui/styles.css in the app root.</li>
+        <li>
+          Import @pritish.budhiraja/ui/styles.css in the app root, or
+          @pritish.budhiraja/ui/tailwind.css from your stylesheet if the app already uses Tailwind
+          CSS v4.
+        </li>
         <li>Set data-theme="portfolio" or "epoch" and toggle the dark class.</li>
         <li>Load fonts and assign --pb-font-* if you are not using the docs defaults.</li>
         <li>Import motion components from @pritish.budhiraja/ui/motion only where needed.</li>
