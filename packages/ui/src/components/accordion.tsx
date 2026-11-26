@@ -1,52 +1,60 @@
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { ChevronDown } from "lucide-react"
-import * as React from "react"
+import type * as React from "react"
 import { cn } from "../lib/cn"
 
 export const Accordion = AccordionPrimitive.Root
 
-export const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn("border-b border-border", className)}
-    {...props}
-  />
-))
-AccordionItem.displayName = AccordionPrimitive.Item.displayName
-
-export const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
+export function AccordionItem({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+  return (
+    <AccordionPrimitive.Item
       ref={ref}
-      className={cn(
-        "flex flex-1 items-center justify-between py-3 text-left text-sm font-medium transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&[data-state=open]>svg]:rotate-180",
-        className,
-      )}
+      className={cn("border-b border-border", className)}
+      {...props}
+    />
+  )
+}
+
+export function AccordionTrigger({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        ref={ref}
+        className={cn(
+          "flex flex-1 items-center justify-between py-3 text-left text-sm font-medium transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&[data-state=open]>svg]:rotate-180",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+        <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground motion-reduce:transition-none" />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  )
+}
+
+export function AccordionContent({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+  return (
+    <AccordionPrimitive.Content
+      ref={ref}
+      className="overflow-hidden text-sm data-[state=closed]:animate-none data-[state=open]:animate-none"
       {...props}
     >
-      {children}
-      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground motion-reduce:transition-none" />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-))
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
-
-export const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="overflow-hidden text-sm data-[state=closed]:animate-none data-[state=open]:animate-none"
-    {...props}
-  >
-    <div className={cn("pb-3 text-muted-foreground", className)}>{children}</div>
-  </AccordionPrimitive.Content>
-))
-AccordionContent.displayName = AccordionPrimitive.Content.displayName
+      <div className={cn("pb-3 text-muted-foreground", className)}>{children}</div>
+    </AccordionPrimitive.Content>
+  )
+}

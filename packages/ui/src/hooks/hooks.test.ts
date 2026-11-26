@@ -1,5 +1,6 @@
 import { act, renderHook } from "@testing-library/react"
-import { useRef } from "react"
+import { createElement, useRef } from "react"
+import { renderToString } from "react-dom/server"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { useClickOutside } from "./use-click-outside"
 import { useClipboard } from "./use-clipboard"
@@ -185,6 +186,19 @@ describe("useMediaQuery", () => {
     expect(media.addEventListener).toHaveBeenCalled()
     unmount()
     expect(media.removeEventListener).toHaveBeenCalled()
+  })
+})
+
+function MediaQueryProbe() {
+  return createElement("span", null, String(useMediaQuery("(min-width: 800px)")))
+}
+
+describe("useMediaQuery on the server", () => {
+  it("renders false without touching matchMedia", () => {
+    const matchMedia = vi.fn()
+    window.matchMedia = matchMedia
+    expect(renderToString(createElement(MediaQueryProbe))).toBe("<span>false</span>")
+    expect(matchMedia).not.toHaveBeenCalled()
   })
 })
 

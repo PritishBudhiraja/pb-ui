@@ -67,7 +67,13 @@ export {
   ContextMenuTrigger,
 } from "./components/context-menu"
 export { CopyButton, type CopyButtonProps } from "./components/copy-button"
-export { DataTable, type DataTableColumn } from "./components/data-table"
+export {
+  DataTable,
+  type DataTableColumn,
+  type DataTableProps,
+  type DataTableSort,
+  type DataTableSortDirection,
+} from "./components/data-table"
 export { DatePicker, type DatePickerProps } from "./components/date-picker"
 export {
   DescriptionDetail,

@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import * as React from "react"
+import type * as React from "react"
 import { cn } from "../lib/cn"
 
 export const buttonVariants = cva(
@@ -35,17 +35,22 @@ export interface ButtonProps
   asChild?: boolean
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, type = "button", ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        type={asChild ? undefined : type}
-        {...props}
-      />
-    )
-  },
-)
-Button.displayName = "Button"
+export function Button({
+  className,
+  variant,
+  size,
+  asChild = false,
+  type = "button",
+  ref,
+  ...props
+}: ButtonProps & { ref?: React.Ref<HTMLButtonElement> }) {
+  const Comp = asChild ? Slot : "button"
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      type={asChild ? undefined : type}
+      {...props}
+    />
+  )
+}
