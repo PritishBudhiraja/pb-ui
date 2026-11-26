@@ -22,12 +22,11 @@ function mockMatchMedia(matches: boolean) {
 describe("motion components", () => {
   it("handles origin button pointer and focus", async () => {
     mockMatchMedia(false)
-    const user = userEvent.setup()
     const ref = createRef<HTMLButtonElement>()
     render(
       <>
         <OriginButton ref={ref}>Go</OriginButton>
-        <OriginButton ref={(node) => node}>Fn</OriginButton>
+        <OriginButton ref={() => undefined}>Fn</OriginButton>
         <OriginButtonOutline href="/x">Link</OriginButtonOutline>
         <OriginButton href="/y">Anchor</OriginButton>
         <OriginButtonOutline>Outline</OriginButtonOutline>

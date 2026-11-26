@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react"
 import { afterEach, describe, expect, it, vi } from "vitest"
-import { reducer, toast, type ToastState, useToast } from "./use-toast"
+import { reducer, type ToastState, toast, useToast } from "./use-toast"
 
 describe("toast reducer", () => {
   it("limits the number of toasts", () => {

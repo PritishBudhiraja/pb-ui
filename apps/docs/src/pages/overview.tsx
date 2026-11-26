@@ -65,7 +65,9 @@ import { OriginButton } from "@pritish.budhiraja/ui/motion"`
         description="Install from npm, import the stylesheet once, then import components."
       />
       <Preview code={install}>
-        <Text tone="muted">@pritish.budhiraja/tokens is included as a dependency of the UI package.</Text>
+        <Text tone="muted">
+          @pritish.budhiraja/tokens is included as a dependency of the UI package.
+        </Text>
       </Preview>
       <Preview code={usage}>
         <Button>Imported Button</Button>

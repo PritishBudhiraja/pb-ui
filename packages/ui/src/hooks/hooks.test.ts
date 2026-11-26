@@ -56,7 +56,9 @@ describe("useKeyboardShortcut", () => {
       window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, ctrlKey: true }))
     })
     act(() => {
-      window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, shiftKey: true }))
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "k", metaKey: true, shiftKey: true }),
+      )
     })
     expect(handler).not.toHaveBeenCalled()
   })
@@ -65,11 +67,15 @@ describe("useKeyboardShortcut", () => {
     const handler = vi.fn()
     renderHook(() => useKeyboardShortcut({ key: "s", ctrl: true, shift: true }, handler))
     act(() => {
-      window.dispatchEvent(new KeyboardEvent("keydown", { key: "s", ctrlKey: true, shiftKey: true }))
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "s", ctrlKey: true, shiftKey: true }),
+      )
     })
     expect(handler).toHaveBeenCalledTimes(1)
     act(() => {
-      window.dispatchEvent(new KeyboardEvent("keydown", { key: "a", ctrlKey: true, shiftKey: true }))
+      window.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "a", ctrlKey: true, shiftKey: true }),
+      )
     })
     act(() => {
       window.dispatchEvent(
