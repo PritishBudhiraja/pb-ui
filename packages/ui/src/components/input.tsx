@@ -1,10 +1,12 @@
 import * as React from "react"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type = "text", ...props }, ref) => {
+    const field = useFormFieldControl(props)
     return (
       <input
         type={type}
@@ -14,6 +16,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         ref={ref}
         {...props}
+        {...field}
       />
     )
   },

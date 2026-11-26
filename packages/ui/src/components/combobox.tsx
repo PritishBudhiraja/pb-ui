@@ -1,5 +1,10 @@
+"use client"
+
+import { Command } from "cmdk"
 import { Check, ChevronsUpDown } from "lucide-react"
 import * as React from "react"
+import { useControlledState } from "../hooks/use-controlled-state"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 import { Button } from "./button"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
@@ -13,74 +18,96 @@ export interface ComboboxItem {
 export interface ComboboxProps {
   items: ComboboxItem[]
   value?: string
+  defaultValue?: string
   onValueChange?: (value: string) => void
   placeholder?: string
   searchPlaceholder?: string
   emptyText?: string
+  disabled?: boolean
   className?: string
+  id?: string
+  "aria-label"?: string
 }
 
 export function Combobox({
   items,
   value,
+  defaultValue = "",
   onValueChange,
   placeholder = "Select…",
   searchPlaceholder = "Search…",
   emptyText = "No matches",
+  disabled,
   className,
+  id,
+  "aria-label": ariaLabel,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
   const [query, setQuery] = React.useState("")
-  const selected = items.find((item) => item.value === value)
+  const [selected, setSelected] = useControlledState({
+    value,
+    defaultValue,
+    onChange: onValueChange,
+  })
+  const field = useFormFieldControl({ id })
+  const current = items.find((item) => item.value === selected)
   const filtered = items.filter((item) => item.label.toLowerCase().includes(query.toLowerCase()))
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next)
+        if (!next) setQuery("")
+      }}
+    >
       <PopoverTrigger asChild>
         <Button
+          {...field}
           variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className={cn("w-full justify-between font-normal", className)}
+          disabled={disabled}
+          aria-label={ariaLabel}
+          className={cn(
+            "w-full justify-between font-normal",
+            !current && "text-muted-foreground",
+            className,
+          )}
         >
-          {selected?.label ?? placeholder}
+          {current?.label ?? placeholder}
           <ChevronsUpDown className="h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-1" align="start">
-        <input
-          className="mb-1 h-9 w-full rounded-md border border-input bg-background px-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          placeholder={searchPlaceholder}
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          aria-label={searchPlaceholder}
-        />
-        <ul className="max-h-56 overflow-auto">
-          {filtered.length === 0 ? (
-            <li className="px-2 py-3 text-sm text-muted-foreground">{emptyText}</li>
-          ) : (
-            filtered.map((item) => (
-              <li key={item.value}>
-                <button
-                  type="button"
-                  disabled={item.disabled}
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent disabled:opacity-50",
-                    item.value === value && "bg-accent",
-                  )}
-                  onClick={() => {
-                    onValueChange?.(item.value)
-                    setOpen(false)
-                    setQuery("")
-                  }}
-                >
-                  {item.label}
-                  {item.value === value ? <Check className="h-4 w-4" /> : null}
-                </button>
-              </li>
-            ))
-          )}
-        </ul>
+        <Command shouldFilter={false} label={searchPlaceholder} defaultValue={selected}>
+          <Command.Input
+            value={query}
+            onValueChange={setQuery}
+            placeholder={searchPlaceholder}
+            className="mb-1 h-9 w-full rounded-md border border-input bg-background px-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          />
+          <Command.List className="max-h-56 overflow-auto">
+            <Command.Empty className="px-2 py-3 text-sm text-muted-foreground">
+              {emptyText}
+            </Command.Empty>
+            {filtered.map((item) => (
+              <Command.Item
+                key={item.value}
+                value={item.value}
+                disabled={item.disabled}
+                aria-checked={item.value === selected}
+                onSelect={() => {
+                  setSelected(item.value)
+                  setOpen(false)
+                  setQuery("")
+                }}
+                className="flex cursor-pointer items-center justify-between rounded-sm px-2 py-1.5 text-sm data-[disabled=true]:cursor-not-allowed data-[disabled=true]:opacity-50 data-[selected=true]:bg-accent"
+              >
+                {item.label}
+                {item.value === selected ? <Check className="h-4 w-4" /> : null}
+              </Command.Item>
+            ))}
+          </Command.List>
+        </Command>
       </PopoverContent>
     </Popover>
   )

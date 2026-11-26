@@ -1,6 +1,7 @@
 import { Clock } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 import {
   currentTime,
@@ -39,6 +40,7 @@ export function TimePicker({
   "aria-label": ariaLabel,
 }: TimePickerProps) {
   const [open, setOpen] = useState(false)
+  const field = useFormFieldControl({ id })
   const [selected, setSelected] = useControlledState({
     value,
     defaultValue,
@@ -85,7 +87,7 @@ export function TimePicker({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            id={id}
+            {...field}
             type="button"
             variant="outline"
             disabled={disabled}
