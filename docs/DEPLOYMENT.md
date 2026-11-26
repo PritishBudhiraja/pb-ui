@@ -6,9 +6,15 @@ The docs site builds with `pnpm build:docs` and is hosted on Vercel at [ui.priti
 
 `@pritish.budhiraja/tokens` and `@pritish.budhiraja/ui` are public (no paid npm plan). Publish from GitHub Actions, not from a laptop.
 
-1. Create a [granular access token](https://www.npmjs.com/settings/~/tokens) with **Read and write**, permission to publish new packages under `@pritish.budhiraja`, and **bypass 2FA** for automation.
-2. Add it as the repo secret `NPM_TOKEN` (`Settings → Secrets and variables → Actions`).
-3. First public versions (`0.1.0`) are already on npm. Later versions: add a changeset and merge to `main`.
-4. Optional: add a **Trusted Publisher** on each package — GitHub user `PritishBudhiraja`, repo `pb-ui`, workflow `release.yml`, allow `npm publish` — then OIDC can replace the long-lived token.
+Publishing uses npm [trusted publishing](https://docs.npmjs.com/trusted-publishers): GitHub Actions proves its identity with an OIDC token, so there is no npm token to store or rotate.
+
+1. Each package has a trusted publisher for repo `PritishBudhiraja/pb-ui`, workflow `release.yml`, with publish allowed. To set one up (npm 11.15+, your login and 2FA):
+
+   ```bash
+   npm trust github @pritish.budhiraja/ui --repo PritishBudhiraja/pb-ui --file release.yml --allow-publish
+   ```
+
+   Run it again for `@pritish.budhiraja/tokens`. A new package must be published once by hand before it can have a trusted publisher.
+2. To release, add a changeset and merge to `main`. The Release workflow opens a "Version packages" PR. Merging it runs `scripts/publish.mjs`, which publishes any version that is not on npm yet, then `scripts/tag-releases.mjs` tags it and creates a GitHub Release.
 
 The same workflow opens a Version PR when there are changesets, then publishes when that PR lands.
