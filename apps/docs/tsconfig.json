@@ -5,7 +5,8 @@
     "types": ["vite/client"],
     "paths": {
       "@pritish.budhiraja/ui": ["../../packages/ui/src/index.ts"],
-      "@pritish.budhiraja/ui/motion": ["../../packages/ui/src/motion.ts"]
+      "@pritish.budhiraja/ui/motion": ["../../packages/ui/src/motion.ts"],
+      "@pritish.budhiraja/ui/charts": ["../../packages/ui/src/charts.ts"]
     }
   },
   "include": ["src"]
