@@ -1,12 +1,17 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 
 export function useKeyboardShortcut(
   combo: { key: string; meta?: boolean; ctrl?: boolean; shift?: boolean },
   handler: (event: KeyboardEvent) => void,
   enabled = true,
 ) {
+  const handlerRef = useRef(handler)
+  useLayoutEffect(() => {
+    handlerRef.current = handler
+  })
+
   useEffect(() => {
     if (!enabled) return
     const onKey = (event: KeyboardEvent) => {
@@ -14,9 +19,9 @@ export function useKeyboardShortcut(
       if (Boolean(combo.meta) !== event.metaKey) return
       if (Boolean(combo.ctrl) !== event.ctrlKey) return
       if (Boolean(combo.shift) !== event.shiftKey) return
-      handler(event)
+      handlerRef.current(event)
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [combo.key, combo.meta, combo.ctrl, combo.shift, handler, enabled])
+  }, [combo.key, combo.meta, combo.ctrl, combo.shift, enabled])
 }
