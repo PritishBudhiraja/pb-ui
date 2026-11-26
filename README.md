@@ -11,7 +11,7 @@ A React design system: editorial, minimal, and built to reuse across products. P
 
 | Package                        | What it is                                                               |
 | ------------------------------ | ------------------------------------------------------------------------ |
-| `@pritish.budhiraja/tokens`    | Semantic CSS variables. `portfolio` and `epoch` themes (light and dark). |
+| `@pritish.budhiraja/tokens`    | Semantic CSS variables. One palette, light and dark. |
 | `@pritish.budhiraja/ui`        | React components. No Next.js APIs.                                       |
 | `@pritish.budhiraja/ui/motion` | `OriginButton` and `ScrollProgress`. Optional `framer-motion` peer.      |
 

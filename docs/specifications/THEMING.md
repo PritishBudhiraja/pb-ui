@@ -1,6 +1,6 @@
 # Theming
 
-Apply a theme with `data-theme="portfolio" | "epoch"` on a root node. Dark mode uses the `.dark` class (same contract as `next-themes`).
+Apply the palette with `data-theme="portfolio"` on a root node. Dark mode uses the `.dark` class (same contract as `next-themes`).
 
 ```html
 <html class="dark" data-theme="portfolio">

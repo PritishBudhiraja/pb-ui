@@ -6,7 +6,6 @@ Source CSS only. No JS build. Exports:
 
 - `.` / `index.css`
 - `themes/portfolio.css`
-- `themes/epoch.css`
 
 ## `@pritish.budhiraja/ui`
 

@@ -106,8 +106,8 @@ export function HomePage() {
         <CodeBlock code={USAGE} label="Minimal usage" />
         <ol className="list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
           <li>
-            Set <code>data-theme="portfolio"</code> or <code>data-theme="epoch"</code> on the
-            document. Toggle the <code>dark</code> class for mode.
+            Set <code>data-theme="portfolio"</code> on the document. Toggle the <code>dark</code>{" "}
+            class for mode.
           </li>
           <li>
             Load fonts in the host. Override <code>--pb-font-sans</code>,{" "}
@@ -125,8 +125,8 @@ export function HomePage() {
         <EditorialHeading as="h2">What we built</EditorialHeading>
         <div className="grid gap-4 sm:grid-cols-2">
           <Built
-            title="Tokens, two palettes"
-            body="Semantic CSS variables. Portfolio is the live grayscale site. Epoch is a candidate green editorial theme — not a second component tree."
+            title="Tokens, one palette"
+            body="Semantic CSS variables. The same near-neutral grayscale as the live site — light and dark, not a second product look."
           />
           <Built
             title="Primitives that stay quiet"

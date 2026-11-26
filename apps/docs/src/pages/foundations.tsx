@@ -13,14 +13,14 @@ const SWATCHES = [
 ] as const
 
 export function FoundationsPage() {
-  const { preset, setPreset, mode, setMode } = useDocsTheme()
+  const { mode, setMode } = useDocsTheme()
 
   return (
     <article className="space-y-14">
       <PageHeader
         kicker="Foundations"
         title="Tokens, type, and the rules we will not break."
-        description="Hatch is a three-layer token system — primitive, semantic, then component only when a primitive is not enough. Palette comes from data-theme. Mode comes from the dark class."
+        description="Hatch is a three-layer token system — primitive, semantic, then component only when a primitive is not enough. One palette. Mode comes from the dark class."
       />
 
       <section id="philosophy" className="scroll-mt-20 space-y-3">
@@ -52,8 +52,7 @@ export function FoundationsPage() {
       <section id="colors" className="scroll-mt-20 space-y-3">
         <EditorialHeading as="h2">Colors</EditorialHeading>
         <Text tone="muted">
-          Semantic variables. Portfolio is near-neutral grayscale. Epoch is a candidate green
-          editorial palette — proposed, not finalized. Switch the header theme to compare.
+          Semantic variables. Near-neutral grayscale — the same palette as the live site.
         </Text>
         <div className="grid gap-3 sm:grid-cols-2">
           {SWATCHES.map((name) => (
@@ -112,29 +111,15 @@ export function FoundationsPage() {
       <section id="themes" className="scroll-mt-20 space-y-3">
         <EditorialHeading as="h2">Themes</EditorialHeading>
         <Text tone="muted">
-          data-theme selects the palette. The dark class selects the mode. Epoch palettes are
-          candidates until contrast is signed off.
+          One palette. Set <code>data-theme="portfolio"</code> on the document. The dark class
+          selects light or dark.
         </Text>
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant={preset === "portfolio" ? "default" : "outline"}
-            onClick={() => setPreset("portfolio")}
-          >
-            Portfolio
-          </Button>
-          <Button
-            variant={preset === "epoch" ? "default" : "outline"}
-            onClick={() => setPreset("epoch")}
-          >
-            Epoch
-          </Button>
-          <Button
-            variant={mode === "dark" ? "default" : "outline"}
-            onClick={() => setMode(mode === "dark" ? "light" : "dark")}
-          >
-            Toggle {mode}
-          </Button>
-        </div>
+        <Button
+          variant={mode === "dark" ? "default" : "outline"}
+          onClick={() => setMode(mode === "dark" ? "light" : "dark")}
+        >
+          Toggle {mode}
+        </Button>
       </section>
 
       <section id="accessibility" className="scroll-mt-20 space-y-3">

@@ -19,4 +19,4 @@ If your app already uses Tailwind CSS v4, import the Tailwind entry from your ow
 @import "@pritish.budhiraja/ui/tailwind.css";
 ```
 
-`@pritish.budhiraja/tokens` is installed with this package. Set `data-theme="portfolio"` or `"epoch"` on the document, and `class="dark"` for dark mode.
+`@pritish.budhiraja/tokens` is installed with this package. Set `data-theme="portfolio"` on the document, and `class="dark"` for dark mode.

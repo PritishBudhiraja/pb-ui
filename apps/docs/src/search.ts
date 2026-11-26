@@ -1,7 +1,7 @@
 import { flattenNav, NAV } from "./nav"
 
 const PAGE_TEXT: Record<string, string> = {
-  "/": "hatch editorial dashed origin-ripple tokens npm install portfolio epoch agents",
+  "/": "hatch editorial dashed origin-ripple tokens npm install agents",
   "/components": "catalog signature actions forms overlays navigation data",
   "/foundations": "philosophy invariants colors typography spacing motion themes accessibility",
   "/agents": "llm prompt llms.txt cursor claude agents.md npm",

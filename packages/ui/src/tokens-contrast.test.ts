@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs"
 import { resolve } from "node:path"
 import { describe, expect, it } from "vitest"
 
-const themes = ["portfolio", "epoch"]
+const themes = ["portfolio"]
 
 // Text tokens and the surface each one is drawn on. WCAG AA body text needs 4.5:1.
 const pairs: Array<[text: string, surface: string]> = [

@@ -10,12 +10,9 @@ Monochrome semantics, dashed structure, hatch dividers, handwritten annotations,
 
 Three layers: primitive values inside theme files, semantic CSS variables (`--background`, `--primary`, `--editorial`, …), component CSS only for hatch/frame.
 
-Themes:
+One palette, light and dark.
 
-- **Portfolio light/dark** — default theme
-- **Epoch light/dark** — alternate theme
-
-Typography is semantic (`--font-sans`, `--font-serif`, `--font-display`, `--font-hand`). Portfolio uses Geist + Source Serif. Epoch candidates use Inter + Instrument Serif.
+Typography is semantic (`--font-sans`, `--font-serif`, `--font-display`, `--font-hand`). Sans for UI, Source Serif for editorial display.
 
 ## Non-goals
 

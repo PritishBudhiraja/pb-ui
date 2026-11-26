@@ -5,4 +5,4 @@
 - Annotations: `font-hand` (Caveat), 15px, rotated
 - Mono: reserved for code and kbd
 
-Portfolio theme maps sans/display to Geist and serif to Source Serif 4. Epoch theme maps display/serif to Instrument Serif and sans to Inter. Load those files in the host app; the library does not bundle font files.
+The host maps sans/display (Geist or Inter) and serif (Source Serif 4). Load those files in the host app; the library does not bundle font files.

@@ -3,7 +3,7 @@
 Install: pnpm add @pritish.budhiraja/ui
 Styles: import "@pritish.budhiraja/ui/styles.css"
 Motion: import { OriginButton, ScrollProgress } from "@pritish.budhiraja/ui/motion"
-Theme: data-theme="portfolio" | "epoch"; class="dark"
+Theme: data-theme="portfolio"; class="dark"
 Docs: https://ui.pritishbudhiraja.com
 
 ## Signature

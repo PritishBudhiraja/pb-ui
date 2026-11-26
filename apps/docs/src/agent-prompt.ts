@@ -11,7 +11,7 @@ export const AGENT_PROMPT = `You are an expert engineer building UI with Hatch (
 # Install
 - pnpm add @pritish.budhiraja/ui
 - Import "@pritish.budhiraja/ui/styles.css" once at the app root (or "@pritish.budhiraja/ui/tailwind.css" from a Tailwind v4 stylesheet).
-- Set data-theme="portfolio" or data-theme="epoch" on the document. Toggle class="dark" for mode.
+- Set data-theme="portfolio" on the document. Toggle class="dark" for mode.
 - Load fonts in the host. Override --pb-font-sans, --pb-font-serif, --pb-font-display, --pb-font-hand as needed.
 - OriginButton and ScrollProgress: import from "@pritish.budhiraja/ui/motion" (optional framer-motion peer).
 - ThemeToggle is controlled: pass theme (and resolvedTheme if using next-themes) and setTheme. Do not put storage inside the library.

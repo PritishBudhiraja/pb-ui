@@ -19,8 +19,7 @@
   "exports": {
     ".": "./src/index.css",
     "./index.css": "./src/index.css",
-    "./themes/portfolio.css": "./src/themes/portfolio.css",
-    "./themes/epoch.css": "./src/themes/epoch.css"
+    "./themes/portfolio.css": "./src/themes/portfolio.css"
   },
   "files": [
     "src",

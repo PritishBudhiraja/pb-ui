@@ -69,8 +69,8 @@ export function AgentsPage() {
             <code>@pritish.budhiraja/ui/styles.css</code> once.
           </li>
           <li>
-            Set <code>data-theme</code> and the <code>dark</code> class on the document. Do not
-            hardcode hex in components.
+            Set <code>data-theme="portfolio"</code> and the <code>dark</code> class on the document.
+            Do not hardcode hex in components.
           </li>
           <li>
             OriginButton and ScrollProgress come from <code>@pritish.budhiraja/ui/motion</code>.

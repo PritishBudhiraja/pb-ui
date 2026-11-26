@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react"
 import "./storybook.css"
 
-const THEME_PRESETS = ["portfolio-light", "portfolio-dark", "epoch-light", "epoch-dark"] as const
+const THEME_PRESETS = ["light", "dark"] as const
 
 type ThemePreset = (typeof THEME_PRESETS)[number]
 
@@ -12,27 +12,23 @@ function isThemePreset(value: unknown): value is ThemePreset {
 const preview: Preview = {
   globalTypes: {
     theme: {
-      description: "Color theme",
-      defaultValue: "portfolio-light",
+      description: "Color mode",
+      defaultValue: "light",
       toolbar: {
         title: "Theme",
         items: [
-          { value: "portfolio-light", title: "Portfolio Light" },
-          { value: "portfolio-dark", title: "Portfolio Dark" },
-          { value: "epoch-light", title: "Epoch Light (candidate)" },
-          { value: "epoch-dark", title: "Epoch Dark (candidate)" },
+          { value: "light", title: "Light" },
+          { value: "dark", title: "Dark" },
         ],
       },
     },
   },
   decorators: [
     (Story, context) => {
-      const value = isThemePreset(context.globals.theme) ? context.globals.theme : "portfolio-light"
-      const isDark = value.endsWith("-dark")
-      const isEpoch = value.startsWith("epoch")
+      const value = isThemePreset(context.globals.theme) ? context.globals.theme : "light"
       if (typeof document !== "undefined") {
-        document.documentElement.classList.toggle("dark", isDark)
-        document.documentElement.dataset.theme = isEpoch ? "epoch" : "portfolio"
+        document.documentElement.classList.toggle("dark", value === "dark")
+        document.documentElement.dataset.theme = "portfolio"
       }
       return Story()
     },

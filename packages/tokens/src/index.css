@@ -1,5 +1,4 @@
 @import "./themes/portfolio.css";
-@import "./themes/epoch.css";
 
 @theme inline {
   --color-background: var(--background);

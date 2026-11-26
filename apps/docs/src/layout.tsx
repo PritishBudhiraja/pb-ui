@@ -1,11 +1,4 @@
-import {
-  CommandPalette,
-  cn,
-  HatchDivider,
-  IconButton,
-  ThemeToggle,
-  Toaster,
-} from "@pritish.budhiraja/ui"
+import { CommandPalette, cn, HatchDivider, ThemeToggle, Toaster } from "@pritish.budhiraja/ui"
 import { Menu, X } from "lucide-react"
 import { type Ref, Suspense, useEffect, useRef, useState } from "react"
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"
@@ -16,7 +9,7 @@ import { useDocsTheme } from "./theme"
 const GITHUB = "https://github.com/PritishBudhiraja/pb-ui"
 
 export function DocsLayout() {
-  const { mode, setMode, preset, setPreset } = useDocsTheme()
+  const { mode, setMode } = useDocsTheme()
   const navigate = useNavigate()
   const location = useLocation()
   const [open, setOpen] = useState(false)
@@ -99,17 +92,6 @@ export function DocsLayout() {
             >
               GitHub
             </a>
-            <IconButton
-              variant="ghost"
-              className="h-8 w-8 font-serif text-sm italic"
-              label={
-                preset === "epoch" ? "Switch to Portfolio palette" : "Switch to Epoch palette"
-              }
-              aria-pressed={preset === "epoch"}
-              onClick={() => setPreset(preset === "epoch" ? "portfolio" : "epoch")}
-            >
-              {preset === "epoch" ? "E" : "P"}
-            </IconButton>
             <ThemeToggle
               theme={mode}
               setTheme={(next) => setMode(next === "dark" ? "dark" : "light")}

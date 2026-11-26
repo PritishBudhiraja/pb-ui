@@ -1,6 +1,6 @@
 # @pritish.budhiraja/tokens
 
-Hatch design tokens and themes (`portfolio`, `epoch`). Usually pulled in by `@pritish.budhiraja/ui`.
+Hatch design tokens — one palette, light and dark. Usually pulled in by `@pritish.budhiraja/ui`.
 
 ```bash
 pnpm add @pritish.budhiraja/tokens

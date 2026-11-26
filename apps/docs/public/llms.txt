@@ -15,7 +15,7 @@
 pnpm add @pritish.budhiraja/ui
 import "@pritish.budhiraja/ui/styles.css"
 
-Set data-theme="portfolio" | "epoch" on the document. Toggle class="dark".
+Set data-theme="portfolio" on the document. Toggle class="dark".
 OriginButton and ScrollProgress: import from @pritish.budhiraja/ui/motion.
 ThemeToggle is controlled (theme + setTheme). Host owns storage.
 
