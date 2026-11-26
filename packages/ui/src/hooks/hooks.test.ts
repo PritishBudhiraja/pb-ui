@@ -28,6 +28,24 @@ describe("useDebounce", () => {
 })
 
 describe("useKeyboardShortcut", () => {
+  it("keeps one listener and calls the latest handler across renders", () => {
+    const add = vi.spyOn(window, "addEventListener")
+    const first = vi.fn()
+    const second = vi.fn()
+    const { rerender } = renderHook(
+      ({ handler }) => useKeyboardShortcut({ key: "k", meta: true }, handler),
+      { initialProps: { handler: first } },
+    )
+    rerender({ handler: second })
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))
+    })
+    expect(add.mock.calls.filter(([type]) => type === "keydown")).toHaveLength(1)
+    expect(first).not.toHaveBeenCalled()
+    expect(second).toHaveBeenCalledTimes(1)
+    add.mockRestore()
+  })
+
   it("does nothing when disabled", () => {
     const handler = vi.fn()
     renderHook(() => useKeyboardShortcut({ key: "k", meta: true }, handler, false))
