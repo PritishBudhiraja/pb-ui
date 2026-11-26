@@ -23,6 +23,14 @@ describe("toast reducer", () => {
     expect(state.toasts[0]?.open).toBe(false)
   })
 
+  it("dismisses without scheduling a timer", () => {
+    const schedule = vi.spyOn(globalThis, "setTimeout")
+    reducer({ toasts: [{ id: "p1", open: true }] }, { type: "DISMISS_TOAST", toastId: "p1" })
+    reducer({ toasts: [{ id: "p2", open: true }] }, { type: "DISMISS_TOAST" })
+    expect(schedule).not.toHaveBeenCalled()
+    schedule.mockRestore()
+  })
+
   it("dismisses every toast", () => {
     const state = reducer(
       {
@@ -91,5 +99,23 @@ describe("toast helpers", () => {
     })
     unmount()
     vi.unstubAllGlobals()
+  })
+
+  it("dismisses every toast and removes them after the delay", () => {
+    vi.useFakeTimers()
+    const { result } = renderHook(() => useToast())
+    act(() => {
+      toast({ title: "One" })
+      toast({ title: "Two" })
+    })
+    act(() => {
+      result.current.dismiss()
+    })
+    expect(result.current.toasts).toHaveLength(2)
+    expect(result.current.toasts.every((item) => item.open === false)).toBe(true)
+    act(() => {
+      vi.advanceTimersByTime(4000)
+    })
+    expect(result.current.toasts).toHaveLength(0)
   })
 })
