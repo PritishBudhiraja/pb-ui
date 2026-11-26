@@ -1,5 +1,11 @@
 # @pritish.budhiraja/ui
 
+## 0.3.1
+
+### Patch Changes
+
+- f541827: Published with npm trusted publishing: the release workflow now authenticates to npm through GitHub Actions OIDC instead of a stored token. No changes to the package's code.
+
 ## 0.3.0
 
 ### Minor Changes
