@@ -66,7 +66,7 @@ export {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "./components/context-menu"
-export { CopyButton } from "./components/copy-button"
+export { CopyButton, type CopyButtonProps } from "./components/copy-button"
 export { DataTable, type DataTableColumn } from "./components/data-table"
 export { DatePicker, type DatePickerProps } from "./components/date-picker"
 export {
