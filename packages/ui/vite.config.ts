@@ -1,11 +1,32 @@
 /// <reference types="vitest/config" />
 import { resolve } from "node:path"
 import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
+import { defineConfig, type Plugin } from "vite"
 import dts from "vite-plugin-dts"
+
+// Rollup drops module-level directives, so record which sources start with
+// "use client" and put it back as the banner of that module's output file.
+function preserveUseClient(): Plugin {
+  const clientModules = new Set<string>()
+  return {
+    name: "preserve-use-client",
+    transform(code, id) {
+      if (/^\s*["']use client["']/.test(code)) clientModules.add(id)
+      return null
+    },
+    outputOptions(options) {
+      return {
+        ...options,
+        banner: (chunk) =>
+          chunk.facadeModuleId && clientModules.has(chunk.facadeModuleId) ? '"use client";' : "",
+      }
+    },
+  }
+}
 
 export default defineConfig({
   plugins: [
+    preserveUseClient(),
     react(),
     dts({
       include: ["src"],
@@ -23,6 +44,14 @@ export default defineConfig({
       fileName: (_format, name) => `${name}.js`,
     },
     rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE") return
+        warn(warning)
+      },
+      output: {
+        preserveModules: true,
+        preserveModulesRoot: "src",
+      },
       external: [
         "react",
         "react/jsx-runtime",
