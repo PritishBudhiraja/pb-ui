@@ -15,7 +15,7 @@ That command is independent of `workspace:*`. It `pnpm pack`s `ui` and `tokens`,
 | App              | What it proves                                                                                          |
 | ---------------- | ------------------------------------------------------------------------------------------------------- |
 | `consumers/vite` | `styles.css`, motion, charts, ThemeToggle, WeekCalendar, MarkdownRenderer, Instrument Serif, light/dark |
-| `consumers/next` | Tailwind v4 `@import "@pritish.budhiraja/ui/tailwind.css"`, SSR note, client island, RichTextEditor     |
+| `consumers/next` | Tailwind v4 `@import "@pritish.budhiraja/ui/tailwind.css"`, SSR note, client island, RichTextEditor. Next 16 defaults to Turbopack, which currently `require()`s Tailwind's ESM; the fixture builds with `--webpack`. |
 
 Results are written to `artifacts/published/smoke.json` (gitignored). Re-run locally after changing exports.
 
