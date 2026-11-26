@@ -1,3 +1,5 @@
+"use client"
+
 import { Clock } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"

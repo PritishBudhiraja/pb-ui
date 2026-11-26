@@ -1,3 +1,5 @@
+"use client"
+
 import { type HTMLAttributes, type ReactNode, useId } from "react"
 import { FormFieldContext } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"

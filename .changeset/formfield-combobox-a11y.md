@@ -1,6 +1,6 @@
 ---
-"@pritish.budhiraja/ui": minor
----
+
+## "@pritish.budhiraja/ui": minor
 
 FormField now connects its label, hint and error to the control: Input, Textarea, SelectTrigger, Combobox, DatePicker and TimePicker receive the field's id, `aria-describedby` and `aria-invalid`. A new `useFormFieldControl` hook lets custom controls do the same.
 

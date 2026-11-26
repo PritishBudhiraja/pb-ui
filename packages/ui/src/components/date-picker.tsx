@@ -1,3 +1,5 @@
+"use client"
+
 import { Calendar as CalendarIcon } from "lucide-react"
 import { useMemo, useState } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"
