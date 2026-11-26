@@ -63,9 +63,7 @@ export function HomePage() {
           </div>
         </div>
         <Surface className="relative p-5">
-          <EditorialAnnotation className="absolute -right-1 -top-3 max-w-[9rem] text-right">
-            the signature set
-          </EditorialAnnotation>
+          <EditorialAnnotation>the signature set</EditorialAnnotation>
           <p className="font-serif text-2xl italic">Hatch</p>
           <p className="mt-1 text-sm text-muted-foreground">Calm chrome. One loud action.</p>
           <HatchDivider className="my-4" />

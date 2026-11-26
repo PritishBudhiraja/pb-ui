@@ -4,8 +4,11 @@
 html,
 body,
 #root {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+}
+
+html {
+  overflow-x: clip;
 }
 
 :root {

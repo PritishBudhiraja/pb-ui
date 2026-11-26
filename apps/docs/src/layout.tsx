@@ -40,9 +40,9 @@ export function DocsLayout() {
   }, [location.pathname])
 
   return (
-    <div className="site-frame site-frame--wide h-svh overflow-hidden">
-      <div className="site-frame-column mx-auto flex h-svh max-w-[1120px] flex-col overflow-hidden border-x border-dashed border-border">
-        <header className="relative z-40 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-dashed border-border bg-background px-3 sm:px-6">
+    <div className="site-frame site-frame--wide min-h-svh overflow-x-clip">
+      <div className="site-frame-column mx-auto flex min-h-svh max-w-[1120px] flex-col border-x border-dashed border-border">
+        <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-dashed border-border bg-background px-3 sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <Link to="/" className="flex shrink-0 items-center gap-2">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-dashed border-border font-mono text-[11px] font-semibold">
@@ -117,7 +117,7 @@ export function DocsLayout() {
           </div>
         </header>
 
-        <div className="relative z-0 flex min-h-0 flex-1 overflow-hidden">
+        <div className="relative z-0 flex flex-1">
           {open && sidebar ? (
             <button
               type="button"
@@ -129,16 +129,17 @@ export function DocsLayout() {
           {sidebar ? (
             <aside
               className={cn(
-                "docs-nav z-30 flex min-h-0 w-[15.5rem] shrink-0 flex-col border-r border-dashed border-border bg-background",
+                "docs-nav z-30 w-[15.5rem] shrink-0 flex-col border-r border-dashed border-border bg-background",
                 open
-                  ? "absolute inset-y-0 left-0 shadow-xl lg:static lg:shadow-none"
+                  ? "absolute inset-y-0 left-0 flex overflow-y-auto shadow-xl lg:static lg:shadow-none"
                   : "hidden lg:flex",
+                "lg:sticky lg:top-14 lg:h-[calc(100svh-3.5rem)] lg:overflow-y-auto",
               )}
             >
               <DocsNav groups={sidebar} ref={navRef} onNavigate={() => setOpen(false)} />
             </aside>
           ) : null}
-          <div className="min-h-0 min-w-0 flex-1 overflow-y-auto">
+          <div className="min-w-0 flex-1">
             <main className="px-4 py-8 sm:px-8">
               <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
                 <Outlet />
