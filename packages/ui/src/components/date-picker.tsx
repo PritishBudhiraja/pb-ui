@@ -57,6 +57,7 @@ export function DatePicker({
 
   const display = selectedDate
     ? new Intl.DateTimeFormat(formatLocale, {
+        calendar: "gregory",
         day: "numeric",
         month: "short",
         year: "numeric",

@@ -1,4 +1,5 @@
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
+import { Slottable } from "@radix-ui/react-slot"
 import { Check, ChevronRight } from "lucide-react"
 import type * as React from "react"
 import { cn } from "../lib/cn"
@@ -47,7 +48,7 @@ export function ContextMenuCheckboxItem({
       className={cn(menuItemClass, "pr-8", className)}
       {...props}
     >
-      {children}
+      <Slottable>{children}</Slottable>
       <ContextMenuPrimitive.ItemIndicator className="absolute right-2">
         <Check className="h-4 w-4" />
       </ContextMenuPrimitive.ItemIndicator>
@@ -91,7 +92,7 @@ export function ContextMenuRadioItem({
       className={cn(menuItemClass, "pr-8", className)}
       {...props}
     >
-      {children}
+      <Slottable>{children}</Slottable>
       <ContextMenuPrimitive.ItemIndicator className="absolute right-2 flex items-center">
         <span className="h-2 w-2 rounded-full bg-current" />
       </ContextMenuPrimitive.ItemIndicator>
@@ -111,7 +112,7 @@ export function ContextMenuSubTrigger({
       className={cn(menuItemClass, "data-[state=open]:bg-accent", className)}
       {...props}
     >
-      {children}
+      <Slottable>{children}</Slottable>
       <ChevronRight className="ml-auto h-4 w-4" />
     </ContextMenuPrimitive.SubTrigger>
   )

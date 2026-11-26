@@ -52,10 +52,12 @@ export function Calendar({
   // The server cannot know the viewer's date, so mark today only after hydration.
   const today = useHydrated() ? new Date() : null
   const weeks = calendarWeeks(view, weekStartsOn)
-  const label = new Intl.DateTimeFormat(formatLocale, { month: "long", year: "numeric" }).format(
-    view,
-  )
-  const dayLabel = new Intl.DateTimeFormat(formatLocale, { dateStyle: "full" })
+  const label = new Intl.DateTimeFormat(formatLocale, {
+    calendar: "gregory",
+    month: "long",
+    year: "numeric",
+  }).format(view)
+  const dayLabel = new Intl.DateTimeFormat(formatLocale, { calendar: "gregory", dateStyle: "full" })
   const weekdays = weekdayNames(formatLocale, weekStartsOn)
   const gridRef = useRef<HTMLDivElement>(null)
   const [focusIso, setFocusIso] = useState<string | null>(null)

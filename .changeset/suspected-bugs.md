@@ -7,3 +7,5 @@
 - `TimePicker` shows and selects a minute that isn't on the step (10:07 with 5-minute steps).
 - `DropdownMenu` and `ContextMenu` export `Sub`, `SubTrigger`, `SubContent`, `RadioGroup`, `RadioItem` and `Portal`.
 - `CopyButton` announces "Copied" again on a repeat copy.
+- `Calendar` and `DatePicker` format with the Gregorian calendar, so locales whose default calendar differs (such as `fa-IR`) label the same dates the grid shows.
+- `CheckboxItem`, `RadioItem` and `SubTrigger` in both menus work with `asChild`.

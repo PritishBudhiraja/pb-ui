@@ -128,4 +128,19 @@ describe("Calendar", () => {
     const days = screen.getAllByRole("button").filter((node) => node.hasAttribute("aria-pressed"))
     expect(days[0]).toHaveAccessibleName("Montag, 26. Oktober 2026")
   })
+
+  it("keeps Gregorian dates in locales with another default calendar", () => {
+    render(
+      <Calendar
+        month={new Date(2026, 10, 1)}
+        locale="fa-IR"
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    )
+    const day = document.querySelector('[data-iso="2026-11-26"]')
+    const gregorian = new Intl.DateTimeFormat("fa-IR", { calendar: "gregory", dateStyle: "full" })
+    expect(day).toHaveAttribute("aria-label", gregorian.format(new Date(2026, 10, 26)))
+    expect(day?.getAttribute("aria-label")).toContain("۲۰۲۶")
+  })
 })
