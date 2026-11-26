@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { Combobox } from "./combobox"
 
 const items = [
@@ -16,6 +17,7 @@ describe("Combobox", () => {
     render(<Combobox items={items} value="one" onValueChange={onValueChange} />)
     await user.click(screen.getByRole("button", { name: "One" }))
     expect(screen.getByRole("option", { name: "One" })).toHaveAttribute("aria-checked", "true")
+    await expectNoAxeViolations()
     await user.type(screen.getByRole("combobox"), "tw")
     expect(screen.queryByRole("option", { name: "One" })).not.toBeInTheDocument()
     await user.click(screen.getByRole("option", { name: "Two" }))
@@ -37,6 +39,7 @@ describe("Combobox", () => {
     await user.click(screen.getByRole("button", { name: "Select…" }))
     await user.type(screen.getByRole("combobox"), "zzz")
     expect(screen.getByText("No matches")).toBeInTheDocument()
+    await expectNoAxeViolations()
     await user.keyboard("{Escape}")
     await user.click(screen.getByRole("button", { name: "Select…" }))
     expect(screen.getByRole("combobox")).toHaveValue("")

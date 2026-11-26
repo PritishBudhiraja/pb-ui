@@ -77,7 +77,11 @@ export function Combobox({
           <ChevronsUpDown className="h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-1" align="start">
+      <PopoverContent
+        aria-label={ariaLabel ?? placeholder}
+        className="w-[var(--radix-popover-trigger-width)] p-1"
+        align="start"
+      >
         <Command shouldFilter={false} label={searchPlaceholder} defaultValue={selected}>
           <Command.Input
             value={query}
@@ -85,10 +89,10 @@ export function Combobox({
             placeholder={searchPlaceholder}
             className="mb-1 h-9 w-full rounded-md border border-input bg-background px-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
           />
+          <Command.Empty className="px-2 py-3 text-sm text-muted-foreground">
+            {emptyText}
+          </Command.Empty>
           <Command.List className="max-h-56 overflow-auto">
-            <Command.Empty className="px-2 py-3 text-sm text-muted-foreground">
-              {emptyText}
-            </Command.Empty>
             {filtered.map((item) => (
               <Command.Item
                 key={item.value}
