@@ -1,5 +1,11 @@
 # @pritish.budhiraja/tokens
 
+## 0.1.2
+
+### Patch Changes
+
+- 6fbf76d: Expand Hatch with civil date/time pickers, week calendar, sortable lists, markdown and editor chrome, layout panes, and an optional `/charts` entry. Editorial serif prefers Instrument Serif when the host loads it.
+
 ## 0.1.1
 
 ### Patch Changes
