@@ -1,28 +1,60 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
+import { useToast } from "../hooks/use-toast"
 import { CopyButton } from "./copy-button"
 
+function mockClipboard(writeText: ReturnType<typeof vi.fn>) {
+  Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } })
+}
+
+function ToastCount() {
+  return <span data-testid="toasts">{useToast().toasts.length}</span>
+}
+
 describe("CopyButton", () => {
-  it("copies the value", async () => {
+  it("copies, announces and reports success without a toast", async () => {
     const user = userEvent.setup()
     const writeText = vi.fn().mockResolvedValue(undefined)
-    Object.defineProperty(navigator, "clipboard", {
-      configurable: true,
-      value: { writeText },
-    })
-    render(<CopyButton value="pnpm add @pritish.budhiraja/ui" label="install" />)
+    mockClipboard(writeText)
+    const onCopied = vi.fn()
+    render(
+      <>
+        <CopyButton value="pnpm add @pritish.budhiraja/ui" label="install" onCopied={onCopied} />
+        <ToastCount />
+      </>,
+    )
     await user.click(screen.getByRole("button", { name: "Copy install" }))
     expect(writeText).toHaveBeenCalledWith("pnpm add @pritish.budhiraja/ui")
+    expect(onCopied).toHaveBeenCalledWith("pnpm add @pritish.budhiraja/ui")
+    expect(screen.getByRole("status")).toHaveTextContent("Copied")
+    expect(screen.getByTestId("toasts")).toHaveTextContent("0")
   })
 
-  it("toasts when copy fails", async () => {
+  it("announces and reports a failed copy", async () => {
     const user = userEvent.setup()
-    Object.defineProperty(navigator, "clipboard", {
-      configurable: true,
-      value: { writeText: vi.fn().mockRejectedValue(new Error("denied")) },
-    })
-    render(<CopyButton value="x" label="fail" />)
+    const error = new Error("denied")
+    mockClipboard(vi.fn().mockRejectedValue(error))
+    const onCopyError = vi.fn()
+    render(<CopyButton value="x" label="fail" onCopyError={onCopyError} />)
     await user.click(screen.getByRole("button", { name: "Copy fail" }))
+    expect(onCopyError).toHaveBeenCalledWith(error)
+    expect(screen.getByRole("status")).toHaveTextContent("Could not copy")
+  })
+
+  it("uses custom text without callbacks", async () => {
+    const user = userEvent.setup()
+    mockClipboard(vi.fn().mockResolvedValue(undefined))
+    const { unmount } = render(
+      <CopyButton value="x" label="id" aria-label="Kopieren" copiedText="Kopiert" />,
+    )
+    expect(screen.getByRole("status")).toHaveTextContent("")
+    await user.click(screen.getByRole("button", { name: "Kopieren" }))
+    expect(screen.getByRole("status")).toHaveTextContent("Kopiert")
+    unmount()
+    mockClipboard(vi.fn().mockRejectedValue(new Error("denied")))
+    render(<CopyButton value="x" label="id" errorText="Fehler" />)
+    await user.click(screen.getByRole("button", { name: "Copy id" }))
+    expect(screen.getByRole("status")).toHaveTextContent("Fehler")
   })
 })

@@ -1,4 +1,4 @@
-import { CopyButton, cn } from "@pritish.budhiraja/ui"
+import { CopyButton, cn, toast } from "@pritish.budhiraja/ui"
 import type { ReactNode } from "react"
 
 export function Preview({
@@ -22,6 +22,14 @@ export function Preview({
           <CopyButton
             value={code}
             label="Example code"
+            onCopied={() => toast({ title: "Copied", description: "Example code" })}
+            onCopyError={() =>
+              toast({
+                title: "Could not copy",
+                description: "Example code",
+                variant: "destructive",
+              })
+            }
             className="absolute right-2 top-2 h-7 w-7"
           />
           <pre className="overflow-x-auto p-4 pr-12 text-[12px] leading-relaxed text-muted-foreground">
