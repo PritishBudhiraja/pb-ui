@@ -36,4 +36,12 @@ describe("TimePicker", () => {
     const { container } = render(<TimePicker name="at" defaultValue="09:00" disabled />)
     expect(container.querySelector('input[name="at"]')).toBeDisabled()
   })
+
+  it("shows and selects a minute that is off the step", async () => {
+    const user = userEvent.setup()
+    render(<TimePicker defaultValue="10:07" minuteStep={5} locale="en-US" />)
+    await user.click(screen.getByRole("button", { name: /10:07/ }))
+    expect(screen.getByRole("option", { name: "07" })).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("option", { name: "05" })).toHaveAttribute("aria-selected", "false")
+  })
 })

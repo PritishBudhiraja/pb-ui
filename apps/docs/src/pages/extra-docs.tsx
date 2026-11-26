@@ -268,6 +268,16 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     props: [
       { name: "value", type: "string", description: "ISO date YYYY-MM-DD" },
       {
+        name: "locale",
+        type: "string",
+        description: "Formats the date, month and weekdays. Pass it when server rendering",
+      },
+      {
+        name: "weekStartsOn",
+        type: "0–6",
+        description: "First day of the week. Default 0 (Sunday)",
+      },
+      {
         name: "onValueChange",
         type: "(value: string) => void",
         description: "Empty string clears",
@@ -288,6 +298,7 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     a11y: "Trigger is a button. Hour, minute, and period are listboxes. Choosing a minute commits. Provide a Label or aria-label.",
     props: [
       { name: "value", type: "string", description: "HH:mm" },
+      { name: "locale", type: "string", description: "Formats the shown time" },
       {
         name: "minuteStep",
         type: "1 | 5 | 10 | 15",
@@ -375,8 +386,15 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
         </DropdownMenu>
       </Preview>
     ),
-    a11y: "Arrow keys, typeahead, Escape.",
-    props: [{ name: "open", type: "boolean", description: "Controlled open" }],
+    a11y: "Arrow keys, typeahead, Escape. Right arrow opens a sub-menu.",
+    props: [
+      { name: "open", type: "boolean", description: "Controlled open" },
+      {
+        name: "parts",
+        type: "Sub, SubTrigger, SubContent, RadioGroup, RadioItem, Portal",
+        description: "Nested menus and single-choice items",
+      },
+    ],
   },
   "context-menu": {
     title: "ContextMenu",
@@ -397,7 +415,14 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
       </Preview>
     ),
     a11y: "Opens on contextmenu. Keyboard users should also have a visible menu trigger.",
-    props: [{ name: "onOpenChange", type: "(open) => void", description: "Open callback" }],
+    props: [
+      { name: "onOpenChange", type: "(open) => void", description: "Open callback" },
+      {
+        name: "parts",
+        type: "Sub, SubTrigger, SubContent, RadioGroup, RadioItem, Portal",
+        description: "Same as DropdownMenu",
+      },
+    ],
   },
   alert: {
     title: "Alert",

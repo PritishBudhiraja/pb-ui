@@ -2,11 +2,11 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { type KeyboardEvent, useEffect, useRef, useState } from "react"
+import { useFormatLocale, useHydrated } from "../hooks/use-hydrated"
 import { cn } from "../lib/cn"
 import { addDays, addMonths, calendarWeeks, isSameDay, startOfMonth, toISODate } from "../lib/date"
 import { IconButton } from "./icon-button"
 
-const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"]
 const ARROW_DAYS: Record<string, number> = {
   ArrowLeft: -1,
   ArrowRight: 1,
@@ -21,7 +21,19 @@ export interface CalendarProps {
   onSelect: (iso: string) => void
   min?: string
   max?: string
+  locale?: string
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   className?: string
+}
+
+// 2023-01-01 was a Sunday, so day n of that week has weekday n.
+function weekdayNames(locale: string | undefined, weekStartsOn: number) {
+  const narrow = new Intl.DateTimeFormat(locale, { weekday: "narrow" })
+  const long = new Intl.DateTimeFormat(locale, { weekday: "long" })
+  return Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(2023, 0, 1 + ((weekStartsOn + index) % 7))
+    return { short: narrow.format(date), long: long.format(date) }
+  })
 }
 
 export function Calendar({
@@ -31,17 +43,28 @@ export function Calendar({
   onSelect,
   min,
   max,
+  locale,
+  weekStartsOn = 0,
   className,
 }: CalendarProps) {
   const view = startOfMonth(month)
-  const today = new Date()
-  const weeks = calendarWeeks(view)
-  const label = new Intl.DateTimeFormat(undefined, { month: "long", year: "numeric" }).format(view)
-  const dayLabel = new Intl.DateTimeFormat(undefined, { dateStyle: "full" })
+  const formatLocale = useFormatLocale(locale)
+  // The server cannot know the viewer's date, so mark today only after hydration.
+  const today = useHydrated() ? new Date() : null
+  const weeks = calendarWeeks(view, weekStartsOn)
+  const label = new Intl.DateTimeFormat(formatLocale, {
+    calendar: "gregory",
+    month: "long",
+    year: "numeric",
+  }).format(view)
+  const dayLabel = new Intl.DateTimeFormat(formatLocale, { calendar: "gregory", dateStyle: "full" })
+  const weekdays = weekdayNames(formatLocale, weekStartsOn)
   const gridRef = useRef<HTMLDivElement>(null)
   const [focusIso, setFocusIso] = useState<string | null>(null)
   const inView = (iso: string | undefined) => iso?.slice(0, 7) === toISODate(view).slice(0, 7)
-  const tabStop = [focusIso ?? undefined, value, toISODate(today)].find(inView) ?? toISODate(view)
+  const tabStop =
+    [focusIso ?? undefined, value, today ? toISODate(today) : undefined].find(inView) ??
+    toISODate(view)
 
   useEffect(() => {
     if (!focusIso) return
@@ -79,19 +102,21 @@ export function Calendar({
         </IconButton>
       </div>
       <div ref={gridRef} className="grid grid-cols-7 gap-y-1 text-center">
-        {WEEKDAYS.map((day, index) => (
+        {weekdays.map((day) => (
           <span
-            key={`${day}-${index}`}
+            key={day.long}
+            aria-hidden
+            title={day.long}
             className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground"
           >
-            {day}
+            {day.short}
           </span>
         ))}
         {weeks.flat().map((date) => {
           const iso = toISODate(date)
           const outside = date.getMonth() !== view.getMonth()
           const selected = value === iso
-          const isToday = isSameDay(date, today)
+          const isToday = today !== null && isSameDay(date, today)
           const disabled = Boolean((min && iso < min) || (max && iso > max))
           return (
             <button

@@ -72,4 +72,18 @@ describe("CopyButton", () => {
     await user.click(button)
     expect(screen.getByRole("status")).toHaveTextContent("Could not copy")
   })
+
+  it("changes the status text on a repeat copy so it is announced again", async () => {
+    const user = userEvent.setup()
+    mockClipboard(vi.fn().mockResolvedValue(undefined))
+    render(<CopyButton value="x" label="again" />)
+    const button = screen.getByRole("button", { name: "Copy again" })
+    await user.click(button)
+    const first = screen.getByRole("status").textContent
+    await user.click(button)
+    const second = screen.getByRole("status").textContent
+    expect(first?.trim()).toBe("Copied")
+    expect(second?.trim()).toBe("Copied")
+    expect(second).not.toBe(first)
+  })
 })

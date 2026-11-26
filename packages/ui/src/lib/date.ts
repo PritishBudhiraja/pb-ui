@@ -42,9 +42,9 @@ export function compareISODate(a: string, b: string) {
   return a.localeCompare(b)
 }
 
-export function calendarWeeks(month: Date) {
+export function calendarWeeks(month: Date, weekStartsOn = 0) {
   const first = startOfMonth(month)
-  const startOffset = first.getDay()
+  const startOffset = (first.getDay() - weekStartsOn + 7) % 7
   const days: Date[] = []
   for (let index = 0; index < 42; index++) {
     days.push(new Date(first.getFullYear(), first.getMonth(), 1 - startOffset + index))

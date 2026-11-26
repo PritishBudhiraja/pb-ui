@@ -23,12 +23,12 @@ export function nowTime(minuteStep = 5) {
   return formatTime(hours, minutes)
 }
 
-export function displayTime(value: string) {
+export function displayTime(value: string, locale?: string) {
   const parsed = parseTime(value)
   if (!parsed) return ""
   const date = new Date()
   date.setHours(parsed.hours, parsed.minutes, 0, 0)
-  return new Intl.DateTimeFormat(undefined, {
+  return new Intl.DateTimeFormat(locale, {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,

@@ -1,6 +1,8 @@
-import { render, screen } from "@testing-library/react"
+import { act, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useState } from "react"
+import { hydrateRoot } from "react-dom/client"
+import { renderToString } from "react-dom/server"
 import { describe, expect, it, vi } from "vitest"
 import { expectNoAxeViolations } from "../test/axe"
 import { Calendar } from "./calendar"
@@ -88,5 +90,57 @@ describe("Calendar", () => {
     expect(screen.getByRole("button", { name: "Tuesday, December 1, 2026" })).toHaveFocus()
     await user.keyboard("a")
     expect(screen.getByRole("button", { name: "Tuesday, December 1, 2026" })).toHaveFocus()
+  })
+
+  it("renders the same markup on the server and when hydrating", async () => {
+    const today = new Date()
+    const ui = <Calendar month={today} onMonthChange={() => {}} onSelect={() => {}} />
+    const html = renderToString(ui)
+    expect(html).not.toContain('aria-current="date"')
+    const container = document.createElement("div")
+    container.innerHTML = html
+    document.body.append(container)
+    const errors = vi.spyOn(console, "error").mockImplementation(() => {})
+    await act(async () => {
+      hydrateRoot(container, ui)
+    })
+    expect(errors).not.toHaveBeenCalled()
+    errors.mockRestore()
+    expect(container.querySelector('[aria-current="date"]')).not.toBeNull()
+    container.remove()
+  })
+
+  it("uses the locale's weekday names and a chosen first day", () => {
+    render(
+      <Calendar
+        month={new Date(2026, 10, 1)}
+        locale="de-DE"
+        weekStartsOn={1}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    )
+    const headers = [...document.querySelectorAll("span[title]")].map((node) =>
+      node.getAttribute("title"),
+    )
+    expect(headers[0]).toBe("Montag")
+    expect(headers[6]).toBe("Sonntag")
+    const days = screen.getAllByRole("button").filter((node) => node.hasAttribute("aria-pressed"))
+    expect(days[0]).toHaveAccessibleName("Montag, 26. Oktober 2026")
+  })
+
+  it("keeps Gregorian dates in locales with another default calendar", () => {
+    render(
+      <Calendar
+        month={new Date(2026, 10, 1)}
+        locale="fa-IR"
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    )
+    const day = document.querySelector('[data-iso="2026-11-26"]')
+    const gregorian = new Intl.DateTimeFormat("fa-IR", { calendar: "gregory", dateStyle: "full" })
+    expect(day).toHaveAttribute("aria-label", gregorian.format(new Date(2026, 10, 26)))
+    expect(day?.getAttribute("aria-label")).toContain("۲۰۲۶")
   })
 })

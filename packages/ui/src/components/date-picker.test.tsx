@@ -48,4 +48,9 @@ describe("DatePicker", () => {
     rerender(<DatePicker name="day" min="2999-01-01" disabled />)
     expect(container.querySelector('input[name="day"]')).toBeDisabled()
   })
+
+  it("formats the chosen date in the given locale", () => {
+    render(<DatePicker defaultValue="2026-11-01" locale="de-DE" />)
+    expect(screen.getByRole("button", { name: /1\. Nov\. 2026/ })).toBeInTheDocument()
+  })
 })

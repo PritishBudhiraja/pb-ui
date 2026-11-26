@@ -1,5 +1,6 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
-import { Check } from "lucide-react"
+import { Slottable } from "@radix-ui/react-slot"
+import { Check, ChevronRight } from "lucide-react"
 import type * as React from "react"
 import { cn } from "../lib/cn"
 import { menuContentClass, menuItemClass, menuLabelClass, menuSeparatorClass } from "../lib/menu"
@@ -51,7 +52,7 @@ export function DropdownMenuCheckboxItem({
       className={cn(menuItemClass, "pr-8", className)}
       {...props}
     >
-      {children}
+      <Slottable>{children}</Slottable>
       <DropdownMenuPrimitive.ItemIndicator className="absolute right-2">
         <Check className="h-4 w-4" />
       </DropdownMenuPrimitive.ItemIndicator>
@@ -80,5 +81,59 @@ export function DropdownMenuSeparator({
       className={cn(menuSeparatorClass, className)}
       {...props}
     />
+  )
+}
+
+export function DropdownMenuRadioItem({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
+  return (
+    <DropdownMenuPrimitive.RadioItem
+      ref={ref}
+      className={cn(menuItemClass, "pr-8", className)}
+      {...props}
+    >
+      <Slottable>{children}</Slottable>
+      <DropdownMenuPrimitive.ItemIndicator className="absolute right-2 flex items-center">
+        <span className="h-2 w-2 rounded-full bg-current" />
+      </DropdownMenuPrimitive.ItemIndicator>
+    </DropdownMenuPrimitive.RadioItem>
+  )
+}
+
+export function DropdownMenuSubTrigger({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger>) {
+  return (
+    <DropdownMenuPrimitive.SubTrigger
+      ref={ref}
+      className={cn(menuItemClass, "data-[state=open]:bg-accent", className)}
+      {...props}
+    >
+      <Slottable>{children}</Slottable>
+      <ChevronRight className="ml-auto h-4 w-4" />
+    </DropdownMenuPrimitive.SubTrigger>
+  )
+}
+
+export function DropdownMenuSubContent({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
+  return (
+    <DropdownMenuPrimitive.Portal>
+      <DropdownMenuPrimitive.SubContent
+        ref={ref}
+        className={cn(menuContentClass, className)}
+        {...props}
+      />
+    </DropdownMenuPrimitive.Portal>
   )
 }

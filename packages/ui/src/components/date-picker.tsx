@@ -1,13 +1,14 @@
 "use client"
 
 import { Calendar as CalendarIcon } from "lucide-react"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"
 import { useFormFieldControl } from "../hooks/use-form-field-control"
+import { useFormatLocale } from "../hooks/use-hydrated"
 import { cn } from "../lib/cn"
 import { parseISODate, startOfMonth, toISODate } from "../lib/date"
 import { Button } from "./button"
-import { Calendar } from "./calendar"
+import { Calendar, type CalendarProps } from "./calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 
 export interface DatePickerProps {
@@ -21,6 +22,8 @@ export interface DatePickerProps {
   className?: string
   id?: string
   name?: string
+  locale?: string
+  weekStartsOn?: CalendarProps["weekStartsOn"]
   "aria-label"?: string
 }
 
@@ -35,8 +38,11 @@ export function DatePicker({
   className,
   id,
   name,
+  locale,
+  weekStartsOn,
   "aria-label": ariaLabel,
 }: DatePickerProps) {
+  const formatLocale = useFormatLocale(locale)
   const [open, setOpen] = useState(false)
   const field = useFormFieldControl({ id })
   const [selected, setSelected] = useControlledState({
@@ -49,14 +55,14 @@ export function DatePicker({
   const todayOutOfRange = Boolean((min && todayIso < min) || (max && todayIso > max))
   const [month, setMonth] = useState(() => startOfMonth(selectedDate ?? new Date()))
 
-  const display = useMemo(() => {
-    if (!selectedDate) return ""
-    return new Intl.DateTimeFormat(undefined, {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }).format(selectedDate)
-  }, [selectedDate])
+  const display = selectedDate
+    ? new Intl.DateTimeFormat(formatLocale, {
+        calendar: "gregory",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }).format(selectedDate)
+    : ""
 
   return (
     <>
@@ -96,6 +102,8 @@ export function DatePicker({
             value={selected || undefined}
             min={min}
             max={max}
+            locale={locale}
+            weekStartsOn={weekStartsOn}
             onSelect={(iso) => {
               setSelected(iso)
               setOpen(false)
