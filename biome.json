@@ -22,7 +22,14 @@
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "lineWidth": 100
+    "lineWidth": 100,
+    "lineEnding": "lf"
+  },
+  "markdown": {
+    "formatter": {
+      "enabled": true,
+      "lineWidth": 100
+    }
   },
   "javascript": {
     "formatter": {

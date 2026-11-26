@@ -34,6 +34,7 @@ Reject duplicate components with different names but equivalent responsibilities
 - Do not install dependencies without documenting why in `docs/audit/DEPENDENCY_AUDIT.md`.
 - Do not publish from a laptop. npm releases go through GitHub Actions (`Release`). Do not configure DNS or AWS without approval.
 - Do not generate boilerplate documentation.
+- Run `pnpm format:staged` (or `pnpm lint:fix`) before every commit. CI `biome check` fails on unformatted Markdown and JS.
 
 ## Packages
 

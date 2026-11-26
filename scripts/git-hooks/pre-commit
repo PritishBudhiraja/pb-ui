@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+cd "$(git rev-parse --show-toplevel)"
+pnpm exec biome check --write --staged --no-errors-on-unmatched
+git diff --name-only --cached | while IFS= read -r file; do
+  if [ -n "$file" ] && [ -f "$file" ]; then
+    git add -- "$file"
+  fi
+done

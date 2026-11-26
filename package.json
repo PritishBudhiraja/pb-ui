@@ -13,6 +13,8 @@
     "lint": "biome check . && pnpm --filter @pritish.budhiraja/ui typecheck && pnpm --filter @pritish.budhiraja/docs typecheck",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
+    "format:staged": "biome check --write --staged --no-errors-on-unmatched",
+    "prepare": "node scripts/install-git-hooks.mjs",
     "test": "pnpm --filter @pritish.budhiraja/ui test",
     "test:coverage": "pnpm --filter @pritish.budhiraja/ui test:coverage",
     "test:pack": "node scripts/published-consumer-smoke.mjs",
