@@ -13,7 +13,8 @@
       "!dist",
       "!storybook-static",
       "!coverage",
-      "!pnpm-lock.yaml"
+      "!pnpm-lock.yaml",
+      "!.changeset"
     ]
   },
   "formatter": {
