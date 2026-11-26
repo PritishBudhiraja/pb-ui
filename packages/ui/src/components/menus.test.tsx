@@ -62,26 +62,24 @@ describe("menu sub-menus and radio items", () => {
 
   it("slots a consumer element with asChild on items that add an indicator", () => {
     render(
-      <>
-        <ui.DropdownMenu open>
-          <ui.DropdownMenuTrigger>Sort</ui.DropdownMenuTrigger>
-          <ui.DropdownMenuContent>
-            <ui.DropdownMenuCheckboxItem asChild checked>
-              <a href="#pin">Pin</a>
-            </ui.DropdownMenuCheckboxItem>
-            <ui.DropdownMenuRadioGroup value="a">
-              <ui.DropdownMenuRadioItem asChild value="a">
-                <a href="#a">Option A</a>
-              </ui.DropdownMenuRadioItem>
-            </ui.DropdownMenuRadioGroup>
-            <ui.DropdownMenuSub>
-              <ui.DropdownMenuSubTrigger asChild>
-                <a href="#more">More</a>
-              </ui.DropdownMenuSubTrigger>
-            </ui.DropdownMenuSub>
-          </ui.DropdownMenuContent>
-        </ui.DropdownMenu>
-      </>,
+      <ui.DropdownMenu open>
+        <ui.DropdownMenuTrigger>Sort</ui.DropdownMenuTrigger>
+        <ui.DropdownMenuContent>
+          <ui.DropdownMenuCheckboxItem asChild checked>
+            <a href="#pin">Pin</a>
+          </ui.DropdownMenuCheckboxItem>
+          <ui.DropdownMenuRadioGroup value="a">
+            <ui.DropdownMenuRadioItem asChild value="a">
+              <a href="#a">Option A</a>
+            </ui.DropdownMenuRadioItem>
+          </ui.DropdownMenuRadioGroup>
+          <ui.DropdownMenuSub>
+            <ui.DropdownMenuSubTrigger asChild>
+              <a href="#more">More</a>
+            </ui.DropdownMenuSubTrigger>
+          </ui.DropdownMenuSub>
+        </ui.DropdownMenuContent>
+      </ui.DropdownMenu>,
     )
     expect(screen.getByRole("menuitemcheckbox", { name: "Pin" }).tagName).toBe("A")
     expect(screen.getByRole("menuitemradio", { name: "Option A" }).tagName).toBe("A")
