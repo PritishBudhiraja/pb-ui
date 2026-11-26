@@ -35,6 +35,7 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
+  CopyButton,
   DataTable,
   DatePicker,
   DescriptionDetail,
@@ -106,6 +107,9 @@ export interface ExtraDoc {
   description: string
   preview: ReactNode
   a11y: string
+  why?: string
+  whenNot?: string
+  related?: Array<{ slug: string; name: string }>
   props: Array<{ name: string; type: string; defaultValue?: string; description: string }>
 }
 
@@ -906,6 +910,21 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     ),
     a11y: "kbd. Decorative relative to a labelled control.",
     props: [{ name: "keys", type: "string[]", description: "Key captions" }],
+  },
+  "copy-button": {
+    title: "CopyButton",
+    kicker: "Action",
+    description: "Copies a value and announces success. Pass a visible label for the control.",
+    preview: (
+      <Preview code={`<CopyButton value="hello" label="Copy greeting" />`}>
+        <CopyButton value="hello" label="Copy greeting" />
+      </Preview>
+    ),
+    a11y: "Requires label. Live region announces copied or error.",
+    props: [
+      { name: "value", type: "string", description: "Text to copy" },
+      { name: "label", type: "string", description: "Accessible name" },
+    ],
   },
   "filter-bar": {
     title: "FilterBar",

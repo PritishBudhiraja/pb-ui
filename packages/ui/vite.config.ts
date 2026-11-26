@@ -11,14 +11,17 @@ function preserveUseClient(): Plugin {
   return {
     name: "preserve-use-client",
     transform(code, id) {
-      if (/^\s*["']use client["']/.test(code)) clientModules.add(id)
+      const file = id.split("?")[0]
+      if (/^\s*["']use client["']/.test(code)) clientModules.add(file)
       return null
     },
     outputOptions(options) {
       return {
         ...options,
-        banner: (chunk) =>
-          chunk.facadeModuleId && clientModules.has(chunk.facadeModuleId) ? '"use client";' : "",
+        banner: (chunk) => {
+          const file = chunk.facadeModuleId?.split("?")[0]
+          return file && clientModules.has(file) ? '"use client";\n' : ""
+        },
       }
     },
   }

@@ -1,0 +1,40 @@
+# Hatch
+
+> Editorial React design system for personal products. Dashed frames, hatch rules, handwritten notes, origin-ripple actions.
+
+- Docs: https://ui.pritishbudhiraja.com
+- Components: https://ui.pritishbudhiraja.com/components
+- Foundations: https://ui.pritishbudhiraja.com/foundations
+- Agents: https://ui.pritishbudhiraja.com/agents
+- Full catalog: https://ui.pritishbudhiraja.com/llms-full.txt
+- GitHub: https://github.com/PritishBudhiraja/pb-ui
+- npm: @pritish.budhiraja/ui , @pritish.budhiraja/tokens
+
+## Install
+
+pnpm add @pritish.budhiraja/ui
+import "@pritish.budhiraja/ui/styles.css"
+
+Set data-theme="portfolio" | "epoch" on the document. Toggle class="dark".
+OriginButton and ScrollProgress: import from @pritish.budhiraja/ui/motion.
+ThemeToggle is controlled (theme + setTheme). Host owns storage.
+
+## Invariants
+
+- No Next.js APIs in library components
+- No Epoch domain widgets (SeasonCard, FocusTimer, TaskRow)
+- Semantic tokens only — no hardcoded product hex
+- Prefer composition over a new name for the same job
+- Motion is an optional peer; core UI must not import framer-motion
+
+## Signature
+
+OriginButton, FramedContainer, HatchDivider, EditorialAnnotation, CalendarHeatmap, ThemeToggle, ScrollProgress, Surface
+
+## Categories
+
+- Actions: Button, IconButton, LinkButton, LoadingButton, CopyButton
+- Forms: Input, Textarea, Label, Checkbox, Switch, RadioGroup, Select, Combobox, Slider, FormField, SearchInput, DatePicker, TimePicker, FilterBar
+- Overlays: Dialog, AlertDialog, Sheet, Popover, Tooltip, DropdownMenu, ContextMenu, CommandPalette, Toast, Alert, EmptyState, ErrorState, Skeleton, Spinner, ProgressBar
+- Navigation: Tabs, Accordion, Breadcrumb, Pagination, Navbar, Sidebar, AppShell, KeyboardShortcut
+- Data: Text, Heading, Badge, Avatar, Card, Table, DataTable, Timeline, StatCard, DescriptionList, Stack, Grid, Separator

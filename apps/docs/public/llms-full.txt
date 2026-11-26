@@ -1,0 +1,62 @@
+# Hatch — full component catalog
+
+Install: pnpm add @pritish.budhiraja/ui
+Styles: import "@pritish.budhiraja/ui/styles.css"
+Motion: import { OriginButton, ScrollProgress } from "@pritish.budhiraja/ui/motion"
+Theme: data-theme="portfolio" | "epoch"; class="dark"
+Docs: https://ui.pritishbudhiraja.com
+
+## Signature
+
+- OriginButton — Primary CTA with pointer-origin ripple. Import from /motion. Not for every toolbar control. vs Button.
+- FramedContainer — Page chrome: dashed column + gutters. vs Surface for inner panels.
+- HatchDivider — Hatched section rule. vs Separator in dense chrome.
+- EditorialAnnotation — Handwritten margin note. vs Alert for operational messages.
+- CalendarHeatmap — Year activity grid with text summary. vs DatePicker.
+- ThemeToggle — Controlled light/dark with circular view transition. Host owns storage.
+- ScrollProgress — Fixed reading bar. Import from /motion.
+- Surface — Dashed inner panel. vs Card for header/title/footer.
+
+## Actions
+
+- Button — Quiet default/outline/ghost. vs OriginButton for signature CTAs.
+- IconButton — Icon-only; requires label.
+- LinkButton — Text-style link action.
+- LoadingButton — Submit in flight.
+- CopyButton — Copy value with clipboard feedback.
+
+## Forms
+
+- Input, Textarea, Label, Checkbox, Switch, RadioGroup
+- Select — Known list. vs Combobox when searchable.
+- Combobox, Slider, FormField, SearchInput, DatePicker, TimePicker, FilterBar
+
+## Overlays and feedback
+
+- Dialog, AlertDialog, Sheet (Drawer alias), Popover, Tooltip
+- DropdownMenu, ContextMenu
+- CommandPalette — Pass items from the host. ⌘K.
+- Toast — Mount Toaster once. vs Alert for inline status.
+- EmptyState, ErrorState, Skeleton, Spinner, ProgressBar
+
+## Navigation
+
+- Tabs, Accordion, Breadcrumb, Pagination
+- Navbar — Shell only. Hosts own Next Link and brand.
+- Sidebar, AppShell, KeyboardShortcut
+
+## Data and type
+
+- Text, Heading (EditorialHeading for serif display)
+- Badge, Avatar, Card, Table, DataTable, Timeline, StatCard, DescriptionList
+- Stack, Grid, Separator
+
+## Hooks
+
+cn, useClipboard, useReducedMotion, useToast, useKeyboardShortcut, useMediaQuery, useDebounce, useControlledState, useClickOutside
+
+## Do not
+
+- next/link, next/navigation, next/font inside library components
+- Epoch SeasonCard, FocusTimer, TaskRow
+- Hardcode product colors

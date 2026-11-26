@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ui.pritishbudhiraja.com/
+
+# LLM context
+# https://ui.pritishbudhiraja.com/llms.txt
+# https://ui.pritishbudhiraja.com/llms-full.txt

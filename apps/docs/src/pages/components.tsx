@@ -35,18 +35,21 @@ import {
 import { OriginButton } from "@pritish.budhiraja/ui/motion"
 import { Search } from "lucide-react"
 import type { ReactNode } from "react"
-import { Navigate, useParams } from "react-router-dom"
+import { Link, Navigate, useParams } from "react-router-dom"
 import { useDocsTheme } from "../theme"
 import { PageHeader, Preview, PropTable } from "../ui/preview"
 import { EXTRA_DOCS } from "./extra-docs"
 
-interface ComponentDoc {
+export interface ComponentDoc {
   title: string
   kicker: string
   description: string
   preview: ReactNode
-  code: string
+  code?: string
   a11y: string
+  why?: string
+  whenNot?: string
+  related?: Array<{ slug: string; name: string }>
   props: Array<{ name: string; type: string; defaultValue?: string; description: string }>
 }
 
@@ -71,6 +74,14 @@ const DOCS: Record<string, ComponentDoc> = {
   button: {
     title: "Button",
     kicker: "Primitive",
+    why: "The quiet action control. Variants and sizes cover most product UI without inventing another button.",
+    whenNot:
+      "Use OriginButton for the one CTA that should feel authored. Use LinkButton for text-style links. Use IconButton when there is no visible label besides the icon.",
+    related: [
+      { slug: "origin-button", name: "OriginButton" },
+      { slug: "icon-button", name: "IconButton" },
+      { slug: "link-button", name: "LinkButton" },
+    ],
     description:
       "Standard button with variants and sizes. Use OriginButton when the action should carry the signature ripple.",
     preview: <ButtonDoc />,
@@ -363,6 +374,13 @@ const DOCS: Record<string, ComponentDoc> = {
   "origin-button": {
     title: "OriginButton",
     kicker: "Signature",
+    why: "This is the Hatch CTA. The ripple starts at the pointer so the action feels physical, not a generic fill.",
+    whenNot:
+      "Do not sprinkle OriginButton on every toolbar control. Quiet Button/IconButton belong there. Always import from the motion entry.",
+    related: [
+      { slug: "button", name: "Button" },
+      { slug: "scroll-progress", name: "ScrollProgress" },
+    ],
     description:
       "Cursor-origin ripple CTA. Import from @pritish.budhiraja/ui/motion. Filled and outline share one implementation.",
     preview: (
@@ -391,6 +409,13 @@ const DOCS: Record<string, ComponentDoc> = {
   "framed-container": {
     title: "FramedContainer",
     kicker: "Signature",
+    why: "The page chrome from the portfolio: a dashed column with gutter hairlines. Hosts wrap a route in this instead of inventing a layout.",
+    whenNot:
+      "Use Surface or Card for inner panels. Do not nest FramedContainer inside another full-page frame.",
+    related: [
+      { slug: "surface", name: "Surface" },
+      { slug: "hatch-divider", name: "HatchDivider" },
+    ],
     description: "Dashed column with gutter hairlines. Generalization of SiteFrame.",
     preview: (
       <Preview code={`<FramedContainer>…</FramedContainer>`} className="p-0">
@@ -410,6 +435,10 @@ const DOCS: Record<string, ComponentDoc> = {
   "hatch-divider": {
     title: "HatchDivider",
     kicker: "Signature",
+    why: "The hatched section rule is the visual beat between editorial blocks. It is not a generic hr.",
+    whenNot:
+      "Use Separator inside dense chrome (menus, toolbars). HatchDivider is for page sections.",
+    related: [{ slug: "separator", name: "Separator" }],
     description: "The hatched section rule from the portfolio.",
     preview: (
       <Preview code={`<HatchDivider />`}>
@@ -425,6 +454,10 @@ const DOCS: Record<string, ComponentDoc> = {
   "editorial-annotation": {
     title: "EditorialAnnotation",
     kicker: "Signature",
+    why: "Handwritten asides are part of the voice. They sit in the margin on wide screens so the column stays clean.",
+    whenNot:
+      "Not an Alert, toast, or error. Operational messages use Alert. Parent must be relative.",
+    related: [{ slug: "alert", name: "Alert" }],
     description:
       "Handwritten margin note. Visible from the xl breakpoint. Parent must be relative.",
     preview: (
@@ -447,6 +480,9 @@ const DOCS: Record<string, ComponentDoc> = {
   },
   "calendar-heatmap": {
     title: "CalendarHeatmap",
+    why: "Contribution-style year grid with a text summary so the data is not trapped in color.",
+    whenNot: "Not a DatePicker. Missing days should be empty, not guessed.",
+    related: [{ slug: "date-picker", name: "DatePicker" }],
     kicker: "Signature",
     description:
       "Generic contribution-style grid. Missing dates between first and last are filled. No GitHub fetch.",
@@ -474,6 +510,10 @@ const DOCS: Record<string, ComponentDoc> = {
   "theme-toggle": {
     title: "ThemeToggle",
     kicker: "Signature",
+    why: "The circular view-transition clip is the Hatch theme change. The host owns storage so Next, Vite, and extensions can disagree on persistence.",
+    whenNot:
+      "Do not wrap next-themes inside the library. Pass theme, resolvedTheme, and setTheme from the host.",
+    related: [{ slug: "icon-button", name: "IconButton" }],
     description:
       "Circular View Transition clip. Pass theme and setTheme. This page uses the docs theme store.",
     preview: <ThemeTogglePreview />,
@@ -493,6 +533,9 @@ const DOCS: Record<string, ComponentDoc> = {
   "scroll-progress": {
     title: "ScrollProgress",
     kicker: "Signature",
+    why: "A thin reading bar for long documents. Optional — this docs layout does not mount it globally so it does not fight the header.",
+    whenNot: "Import from the motion entry. Skip it on short marketing pages.",
+    related: [{ slug: "origin-button", name: "OriginButton" }],
     description:
       "Fixed 3px bar. Import from motion. Optional on long article pages — this docs layout does not mount it globally so it does not fight the header.",
     preview: (
@@ -507,6 +550,13 @@ const DOCS: Record<string, ComponentDoc> = {
   surface: {
     title: "Surface",
     kicker: "Primitive",
+    why: "Dashed inner panel from the portfolio chrome. Smaller than FramedContainer, simpler than Card.",
+    whenNot:
+      "Use Card when you need header, title, and footer slots. Use FramedContainer for the page.",
+    related: [
+      { slug: "card", name: "Card" },
+      { slug: "framed-container", name: "FramedContainer" },
+    ],
     description: "Dashed card from the portfolio chrome.",
     preview: (
       <Preview code={`<Surface className="p-4">Content</Surface>`}>
@@ -537,13 +587,29 @@ function ThemeTogglePreview() {
 
 export function ComponentPage() {
   const { slug } = useParams()
-  if (!slug) return <Navigate to="/" replace />
-  const doc = DOCS[slug] ?? EXTRA_DOCS[slug]
-  if (!doc) return <Navigate to="/" replace />
+  if (!slug) return <Navigate to="/components" replace />
+  const extra = EXTRA_DOCS[slug]
+  const doc = DOCS[slug] ?? extra
+  if (!doc) return <Navigate to="/components" replace />
+  const why = doc.why
+  const whenNot = doc.whenNot
+  const related = doc.related
 
   return (
     <article className="space-y-8">
       <PageHeader kicker={doc.kicker} title={doc.title} description={doc.description} />
+      {why ? (
+        <section className="space-y-2">
+          <h2 className="text-sm font-medium">Why it exists</h2>
+          <p className="text-sm leading-relaxed text-muted-foreground">{why}</p>
+        </section>
+      ) : null}
+      {whenNot ? (
+        <section className="space-y-2">
+          <h2 className="text-sm font-medium">When not to use it</h2>
+          <p className="text-sm leading-relaxed text-muted-foreground">{whenNot}</p>
+        </section>
+      ) : null}
       {doc.preview}
       <section className="space-y-3">
         <h2 className="text-sm font-medium">API</h2>
@@ -553,6 +619,23 @@ export function ComponentPage() {
         <h2 className="text-sm font-medium">Accessibility</h2>
         <p className="text-sm text-muted-foreground">{doc.a11y}</p>
       </section>
+      {related && related.length > 0 ? (
+        <section className="space-y-2">
+          <h2 className="text-sm font-medium">Related</h2>
+          <ul className="flex flex-wrap gap-2 text-sm">
+            {related.map((item) => (
+              <li key={item.slug}>
+                <Link
+                  className="underline-offset-2 hover:underline"
+                  to={`/components/${item.slug}`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </article>
   )
 }

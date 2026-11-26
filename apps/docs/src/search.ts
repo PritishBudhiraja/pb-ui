@@ -1,22 +1,17 @@
 import { flattenNav, NAV } from "./nav"
 
 const PAGE_TEXT: Record<string, string> = {
-  "/": "personal design system editorial dashed hatch origin-ripple tokens primitives documentation",
-  "/installation": "install pnpm add styles.css workspace github package",
-  "/getting-started": "import css data-theme dark class fonts motion entry",
-  "/philosophy": "minimal editorial calm keyboard accessible composable dashed hatch annotation",
-  "/colors": "semantic variables background foreground primary muted border destructive editorial",
-  "/typography": "sans serif hand mono heading editorial instrument inter source serif caveat",
-  "/spacing": "720 1120 hatch radius column frame",
-  "/motion": "view transition origin button spring reduced motion framer",
-  "/themes": "portfolio epoch light dark data-theme",
-  "/accessibility": "wcag focus-visible label dialog command palette heatmap",
+  "/": "hatch editorial dashed origin-ripple tokens npm install portfolio epoch agents",
+  "/components": "catalog signature actions forms overlays navigation data",
+  "/foundations": "philosophy invariants colors typography spacing motion themes accessibility",
+  "/agents": "llm prompt llms.txt cursor claude agents.md npm",
   "/hooks":
     "cn useClipboard useReducedMotion useToast useKeyboardShortcut useMediaQuery useDebounce useControlledState useClickOutside",
-  "/changelog": "0.1.0 tokens primitives documentation",
+  "/changelog": "0.4.0 0.1.0 tokens primitives documentation npm",
   "/contributing": "agents lint test build pull request",
   "/components/button": "button variant size ghost outline disabled asChild",
-  "/components/icon-button": "icon button aria-label search",
+  "/components/icon-button": "icon button aria-label",
+  "/components/copy-button": "copy clipboard",
   "/components/input": "input email label form",
   "/components/textarea": "textarea note form",
   "/components/checkbox": "checkbox radix checked",
@@ -48,11 +43,13 @@ export function searchItems() {
     return "Docs"
   }
 
-  return flattenNav().map((item) => ({
-    id: item.to,
-    label: item.label,
-    group: groupFor(item.to),
-    href: item.to,
-    keywords: `${item.keywords ?? ""} ${PAGE_TEXT[item.to] ?? ""}`,
-  }))
+  return flattenNav()
+    .filter((item) => !item.to.includes("#"))
+    .map((item) => ({
+      id: item.to,
+      label: item.label,
+      group: groupFor(item.to),
+      href: item.to,
+      keywords: `${item.keywords ?? ""} ${PAGE_TEXT[item.to] ?? ""}`,
+    }))
 }
