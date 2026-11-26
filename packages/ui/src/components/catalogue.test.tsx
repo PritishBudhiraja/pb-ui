@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { AppShell } from "./app-shell"
 import { Badge } from "./badge"
 import {
@@ -39,7 +40,7 @@ import { Textarea } from "./textarea"
 import { Timeline, TimelineItem } from "./timeline"
 
 describe("catalogue primitives", () => {
-  it("renders layout, data, and feedback pieces", () => {
+  it("renders layout, data, and feedback pieces", async () => {
     render(
       <FramedContainer wide>
         <AppShell
@@ -50,7 +51,7 @@ describe("catalogue primitives", () => {
             </Navbar>
           }
           sidebar={
-            <Sidebar>
+            <Sidebar aria-label="Main">
               <SidebarSection title="Nav">
                 <SidebarItem current>Home</SidebarItem>
               </SidebarSection>
@@ -84,7 +85,7 @@ describe("catalogue primitives", () => {
               action={<button type="button">Retry</button>}
             />
             <ProgressBar />
-            <ProgressBar value={40} />
+            <ProgressBar value={40} label="Upload" />
             <ProgressRing />
             <ProgressRing value={40} label="Forty" />
             <FramedContainer>narrow</FramedContainer>
@@ -92,7 +93,7 @@ describe("catalogue primitives", () => {
             <ErrorState title="Bare error" />
             <StatCard label="Only" value="1" />
             <Surface>dashed</Surface>
-            <Sidebar>
+            <Sidebar aria-label="Filters">
               <SidebarItem>Idle</SidebarItem>
               <SidebarSection>
                 <SidebarItem>Child</SidebarItem>
@@ -187,6 +188,7 @@ describe("catalogue primitives", () => {
       true,
     )
     expect(screen.getByRole("img", { name: /Forty/ })).toBeInTheDocument()
+    await expectNoAxeViolations()
     expect(screen.getByText("Ada")).toBeInTheDocument()
     expect(screen.getByText("3 total, 2026-01-01 to 2026-01-03")).toBeInTheDocument()
   })

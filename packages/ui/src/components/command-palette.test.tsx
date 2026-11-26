@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { CommandPalette } from "./command-palette"
 
 describe("CommandPalette", () => {
@@ -29,6 +30,7 @@ describe("CommandPalette", () => {
     )
     await user.click(screen.getByRole("button", { name: "Search" }))
     expect(screen.getByRole("dialog")).toBeInTheDocument()
+    await expectNoAxeViolations()
     await user.keyboard("{Escape}")
     await user.keyboard("{Meta>}k{/Meta}")
     await user.keyboard("{Control>}k{/Control}")
