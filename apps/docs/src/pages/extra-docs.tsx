@@ -172,12 +172,15 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     kicker: "Form",
     description: "Radix slider on semantic tokens.",
     preview: (
-      <Preview code={`<Slider defaultValue={[40]} />`}>
-        <Slider className="w-56" defaultValue={[40]} />
+      <Preview code={`<Slider defaultValue={[40]} aria-label="Volume" />`}>
+        <Slider className="w-56" defaultValue={[40]} aria-label="Volume" />
       </Preview>
     ),
-    a11y: "Thumb is keyboard reachable. Set aria-label on the root when there is no visible label.",
-    props: [{ name: "defaultValue", type: "number[]", description: "Uncontrolled start" }],
+    a11y: "Thumb is keyboard reachable. aria-label or aria-labelledby on Slider names the thumb.",
+    props: [
+      { name: "defaultValue", type: "number[]", description: "Uncontrolled start" },
+      { name: "aria-label", type: "string", description: "Accessible name for the thumb" },
+    ],
   },
   "radio-group": {
     title: "RadioGroup",
@@ -472,15 +475,18 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     kicker: "Feedback",
     description: "Determinate bar. ProgressRing is the circular sibling.",
     preview: (
-      <Preview code={`<ProgressBar value={40} />\n<ProgressRing value={40} />`}>
+      <Preview code={`<ProgressBar value={40} label="Upload" />\n<ProgressRing value={40} />`}>
         <div className="flex w-full items-center gap-4">
-          <ProgressBar className="flex-1" value={40} />
+          <ProgressBar className="flex-1" value={40} label="Upload" />
           <ProgressRing value={40} />
         </div>
       </Preview>
     ),
-    a11y: "Radix progress root. Ring has role=img and a percent label.",
-    props: [{ name: "value", type: "number", description: "0–100" }],
+    a11y: "Radix progressbar named by label. Ring has role=img and a percent label.",
+    props: [
+      { name: "value", type: "number", description: "0–100" },
+      { name: "label", type: "string", description: "Accessible name. Default Progress" },
+    ],
   },
   tabs: {
     title: "Tabs",

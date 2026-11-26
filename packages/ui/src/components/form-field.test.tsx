@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { Combobox } from "./combobox"
 import { DatePicker } from "./date-picker"
 import { FormField } from "./form-field"
@@ -21,7 +22,7 @@ describe("FormField", () => {
     expect(input).not.toHaveAttribute("aria-invalid")
   })
 
-  it("describes the control with the hint", () => {
+  it("describes the control with the hint", async () => {
     render(
       <FormField label="Name" htmlFor="name" hint="Shown">
         <Input id="name" aria-describedby="extra" />
@@ -29,9 +30,10 @@ describe("FormField", () => {
     )
     expect(screen.getByLabelText("Name")).toHaveAttribute("aria-describedby", "name-hint extra")
     expect(screen.getByText("Shown")).toHaveAttribute("id", "name-hint")
+    await expectNoAxeViolations()
   })
 
-  it("marks the control invalid and describes it with the error", () => {
+  it("marks the control invalid and describes it with the error", async () => {
     render(
       <FormField label="Email" htmlFor="email" hint="Hidden" error="Required">
         <Textarea />
@@ -43,6 +45,7 @@ describe("FormField", () => {
     expect(control).toHaveAccessibleDescription("Required")
     expect(screen.getByRole("alert")).toHaveTextContent("Required")
     expect(screen.queryByText("Hidden")).not.toBeInTheDocument()
+    await expectNoAxeViolations()
   })
 
   it("keeps an explicit aria-invalid on the control", () => {
@@ -54,7 +57,7 @@ describe("FormField", () => {
     expect(screen.getByLabelText("Code")).toHaveAttribute("aria-invalid", "false")
   })
 
-  it("wires select, combobox, date and time triggers", () => {
+  it("wires select, combobox, date and time triggers", async () => {
     render(
       <>
         <FormField label="Plan" error="Pick one">
@@ -79,5 +82,6 @@ describe("FormField", () => {
     expect(screen.getByLabelText("Owner")).toHaveAccessibleDescription("Who runs it")
     expect(screen.getByLabelText("Due")).toHaveAttribute("aria-invalid", "true")
     expect(screen.getByLabelText("At")).toHaveAccessibleDescription("Local time")
+    await expectNoAxeViolations()
   })
 })

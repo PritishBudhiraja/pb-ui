@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./accordion"
 import {
   AlertDialog,
@@ -111,7 +112,7 @@ describe("overlay primitives", () => {
         <RadioGroup defaultValue="a">
           <RadioGroupItem value="a" aria-label="A" />
         </RadioGroup>
-        <Slider defaultValue={[40]} />
+        <Slider defaultValue={[40]} aria-label="Volume" />
         <ScrollArea className="h-10">
           <p>scroll</p>
         </ScrollArea>
@@ -134,7 +135,7 @@ describe("overlay primitives", () => {
         </Dialog>
         <Popover>
           <PopoverTrigger>Open popover</PopoverTrigger>
-          <PopoverContent>Tip</PopoverContent>
+          <PopoverContent aria-label="Tip">Tip</PopoverContent>
         </Popover>
         <Sheet>
           <SheetTrigger>Open sheet</SheetTrigger>
@@ -198,24 +199,31 @@ describe("overlay primitives", () => {
       </TooltipProvider>,
     )
 
+    await expectNoAxeViolations()
     await user.click(screen.getByRole("button", { name: "Section" }))
     expect(screen.getByText("Body")).toBeInTheDocument()
     await user.click(screen.getByRole("button", { name: "Delete" }))
     expect(screen.getByRole("alertdialog")).toBeInTheDocument()
+    await expectNoAxeViolations()
     await user.keyboard("{Escape}")
     await user.click(screen.getByRole("button", { name: "Open dialog" }))
     expect(screen.getByRole("dialog", { name: "Title" })).toBeInTheDocument()
+    await expectNoAxeViolations()
     await user.keyboard("{Escape}")
     await user.click(screen.getByRole("button", { name: "Open popover" }))
+    await expectNoAxeViolations()
     await user.keyboard("{Escape}")
     await user.click(screen.getByRole("button", { name: "Open sheet" }))
     expect(screen.getByText("Drawer")).toBeInTheDocument()
+    await expectNoAxeViolations()
     await user.keyboard("{Escape}")
     await user.click(screen.getByRole("button", { name: "Menu" }))
     expect(screen.getByText("Item")).toBeInTheDocument()
+    await expectNoAxeViolations()
     await user.keyboard("{Escape}")
     await user.pointer({ keys: "[MouseRight>]", target: screen.getByText("Right click") })
     expect(screen.getByRole("menuitem", { name: "Paste" })).toBeInTheDocument()
+    await expectNoAxeViolations()
   })
 
   it("opens remaining sheet sides", async () => {

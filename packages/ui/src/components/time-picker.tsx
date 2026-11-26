@@ -106,6 +106,7 @@ export function TimePicker({
         </PopoverTrigger>
         <PopoverContent
           align="start"
+          aria-label={ariaLabel ?? placeholder}
           side="bottom"
           avoidCollisions={false}
           className="w-auto border-dashed p-3"

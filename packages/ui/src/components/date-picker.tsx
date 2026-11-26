@@ -83,7 +83,11 @@ export function DatePicker({
             <CalendarIcon className="h-4 w-4 opacity-60" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent align="start" className="w-auto border-dashed p-3">
+        <PopoverContent
+          align="start"
+          aria-label={ariaLabel ?? placeholder}
+          className="w-auto border-dashed p-3"
+        >
           <Calendar
             month={month}
             onMonthChange={setMonth}
