@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { Button } from "./button"
 
 describe("Button", () => {
@@ -13,7 +14,7 @@ describe("Button", () => {
     expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
   })
 
-  it("renders the remaining variants", () => {
+  it("renders the remaining variants", async () => {
     render(
       <>
         <Button variant="destructive" size="sm">
@@ -32,5 +33,6 @@ describe("Button", () => {
       </>,
     )
     expect(screen.getByRole("link", { name: "Child" })).toHaveAttribute("href", "/x")
+    await expectNoAxeViolations()
   })
 })

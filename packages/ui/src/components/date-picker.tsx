@@ -1,6 +1,9 @@
+"use client"
+
 import { Calendar as CalendarIcon } from "lucide-react"
 import { useMemo, useState } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 import { parseISODate, startOfMonth, toISODate } from "../lib/date"
 import { Button } from "./button"
@@ -35,6 +38,7 @@ export function DatePicker({
   "aria-label": ariaLabel,
 }: DatePickerProps) {
   const [open, setOpen] = useState(false)
+  const field = useFormFieldControl({ id })
   const [selected, setSelected] = useControlledState({
     value,
     defaultValue,
@@ -64,7 +68,7 @@ export function DatePicker({
       >
         <PopoverTrigger asChild>
           <Button
-            id={id}
+            {...field}
             type="button"
             variant="outline"
             disabled={disabled}
@@ -79,7 +83,11 @@ export function DatePicker({
             <CalendarIcon className="h-4 w-4 opacity-60" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent align="start" className="w-auto border-dashed p-3">
+        <PopoverContent
+          align="start"
+          aria-label={ariaLabel ?? placeholder}
+          className="w-auto border-dashed p-3"
+        >
           <Calendar
             month={month}
             onMonthChange={setMonth}
