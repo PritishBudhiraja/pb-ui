@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { DatePicker } from "./date-picker"
 
 describe("DatePicker", () => {
@@ -8,6 +9,7 @@ describe("DatePicker", () => {
     const user = userEvent.setup()
     render(<DatePicker defaultValue="2026-11-01" />)
     await user.click(screen.getByRole("button", { name: /2026/ }))
+    await expectNoAxeViolations()
     await user.click(screen.getByRole("button", { name: "26" }))
     expect(screen.getByRole("button", { name: /26/ })).toBeInTheDocument()
   })

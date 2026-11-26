@@ -157,12 +157,14 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
   combobox: {
     title: "Combobox",
     kicker: "Form",
-    description: "Filterable list in a popover. No extra cmdk surface — uses the existing Popover.",
+    description: "Filterable list in a popover, built on cmdk inside the existing Popover.",
     preview: <ComboPreview />,
-    a11y: "Trigger has role=combobox and aria-expanded. Search input is labelled.",
+    a11y: "Trigger reports aria-expanded. The search input is a labelled combobox that controls a listbox; arrow keys move between options and Enter selects. The chosen option has aria-checked.",
     props: [
       { name: "items", type: "ComboboxItem[]", description: "Options" },
-      { name: "value", type: "string", description: "Selected value" },
+      { name: "value", type: "string", description: "Controlled value" },
+      { name: "defaultValue", type: "string", description: "Uncontrolled initial value" },
+      { name: "disabled", type: "boolean", description: "Disables the trigger" },
     ],
   },
   slider: {
@@ -170,12 +172,15 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     kicker: "Form",
     description: "Radix slider on semantic tokens.",
     preview: (
-      <Preview code={`<Slider defaultValue={[40]} />`}>
-        <Slider className="w-56" defaultValue={[40]} />
+      <Preview code={`<Slider defaultValue={[40]} aria-label="Volume" />`}>
+        <Slider className="w-56" defaultValue={[40]} aria-label="Volume" />
       </Preview>
     ),
-    a11y: "Thumb is keyboard reachable. Set aria-label on the root when there is no visible label.",
-    props: [{ name: "defaultValue", type: "number[]", description: "Uncontrolled start" }],
+    a11y: "Thumb is keyboard reachable. aria-label or aria-labelledby on Slider names the thumb.",
+    props: [
+      { name: "defaultValue", type: "number[]", description: "Uncontrolled start" },
+      { name: "aria-label", type: "string", description: "Accessible name for the thumb" },
+    ],
   },
   "radio-group": {
     title: "RadioGroup",
@@ -217,13 +222,21 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     description: "Label, control, hint, and FormError in one stack. Hosts still own validation.",
     preview: (
       <Preview code={`<FormField label="Email" error="Required"><Input /></FormField>`}>
-        <FormField className="w-72" label="Email" htmlFor="ff" error="Required">
-          <SearchInput id="ff" />
+        <FormField className="w-72" label="Email" error="Required">
+          <SearchInput />
         </FormField>
       </Preview>
     ),
-    a11y: "FormError uses role=alert.",
-    props: [{ name: "error", type: "string", description: "Shown as an alert" }],
+    a11y: "The label targets the control. Input, Textarea, SelectTrigger, Combobox, DatePicker and TimePicker pick up the field's id, aria-describedby (hint or error) and aria-invalid. Custom controls can join with useFormFieldControl. FormError uses role=alert.",
+    props: [
+      { name: "htmlFor", type: "string", description: "Control id; generated when omitted" },
+      { name: "hint", type: "string", description: "Describes the control when there is no error" },
+      {
+        name: "error",
+        type: "string",
+        description: "Shown as an alert; marks the control invalid",
+      },
+    ],
   },
   "search-input": {
     title: "SearchInput",
@@ -462,15 +475,18 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     kicker: "Feedback",
     description: "Determinate bar. ProgressRing is the circular sibling.",
     preview: (
-      <Preview code={`<ProgressBar value={40} />\n<ProgressRing value={40} />`}>
+      <Preview code={`<ProgressBar value={40} label="Upload" />\n<ProgressRing value={40} />`}>
         <div className="flex w-full items-center gap-4">
-          <ProgressBar className="flex-1" value={40} />
+          <ProgressBar className="flex-1" value={40} label="Upload" />
           <ProgressRing value={40} />
         </div>
       </Preview>
     ),
-    a11y: "Radix progress root. Ring has role=img and a percent label.",
-    props: [{ name: "value", type: "number", description: "0–100" }],
+    a11y: "Radix progressbar named by label. Ring has role=img and a percent label.",
+    props: [
+      { name: "value", type: "number", description: "0–100" },
+      { name: "label", type: "string", description: "Accessible name. Default Progress" },
+    ],
   },
   tabs: {
     title: "Tabs",

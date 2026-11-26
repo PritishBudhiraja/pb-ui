@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { createRef } from "react"
 import { describe, expect, it, vi } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
 import { OriginButton, OriginButtonOutline } from "./origin-button"
 import { ScrollProgress } from "./scroll-progress"
 import { ThemeToggle } from "./theme-toggle"
@@ -67,6 +68,7 @@ describe("motion components", () => {
     render(<ThemeToggle theme="dark" setTheme={setTheme} />)
     await user.click(screen.getByRole("button", { name: "Toggle theme" }))
     expect(setTheme).toHaveBeenCalledWith("light")
+    await expectNoAxeViolations()
   })
 
   it("toggles theme with reduced motion", async () => {
