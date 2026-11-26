@@ -43,6 +43,7 @@ Vitest is on 5.x so `@vitest/mocker` and tinypool come from the patched tree. `u
 | @dnd-kit/core, sortable, utilities | SortableList + keyboard reorder   | HTML DnD             | MIT     |
 | @tiptap/react, pm, starter-kit     | RichTextEditor chrome             | Lexical, textarea    | MIT     |
 | react-markdown                     | MarkdownRenderer without raw HTML | marked + DOMPurify   | MIT     |
+| remark-gfm                         | GFM tables and strikethrough      | hand-rolled GFM      | MIT     |
 | react-resizable-panels             | SplitWorkspace                    | custom split         | MIT     |
 | recharts                           | Optional `/charts` entry only     | product-owned charts | MIT     |
 | @tanstack/react-virtual            | VirtualList                       | windowing by hand    | MIT     |
@@ -51,7 +52,9 @@ Next.js and `@tailwindcss/postcss` are only dependencies of `apps/next-consumer`
 
 ## Explicitly not installed
 
-Sonner, React DayPicker, TanStack Table, FullCalendar, React Hook Form, Zod, next-themes, lenis, geist, vaul, react-dropzone, rehype-raw.
+Sonner, React DayPicker, TanStack Table, FullCalendar, React Hook Form, Zod, next-themes, lenis, geist, vaul, react-dropzone, rehype-raw, @tiptap/extension-placeholder (placeholder is an overlay).
+
+`@playwright/test` is a root CI dependency for browser interaction and token visual checks. It is not a runtime dependency of `@pritish.budhiraja/ui`.
 
 DatePicker is a Popover + Calendar grid. No DayPicker. DataTable maps columns onto Table. Charts are an optional entry, not core `index.js`.
 

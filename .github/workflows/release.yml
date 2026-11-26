@@ -37,6 +37,12 @@ jobs:
       - run: pnpm lint
       - run: pnpm test:coverage
       - run: pnpm build
+      - run: pnpm build:storybook
+      - run: pnpm test:catalog
+      - run: pnpm test:pack
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - run: pnpm audit:deps
 
       # Changesets only opens the "Version packages" PR; publishing is the next step.
       - name: Open or update the version PR

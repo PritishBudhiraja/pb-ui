@@ -238,7 +238,11 @@ export const CATALOG: CatalogCategory[] = [
     title: "Schedule",
     purpose: "Civil dates and week grids. Timezone stays in the host.",
     items: [
-      { slug: "week-calendar", name: "WeekCalendar", when: "Week of timed events." },
+      {
+        slug: "week-calendar",
+        name: "WeekCalendar",
+        when: "Week of timed events with overlap packing.",
+      },
       { slug: "time-grid", name: "TimeGrid", when: "Same grid as WeekCalendar." },
       { slug: "calendar-event", name: "CalendarEvent", when: "Event chip in the grid." },
       { slug: "sortable-list", name: "SortableList", when: "Reorder a list." },
@@ -253,7 +257,7 @@ export const CATALOG: CatalogCategory[] = [
       {
         slug: "markdown-renderer",
         name: "MarkdownRenderer",
-        when: "Render markdown. No raw HTML.",
+        when: "Render GFM markdown. No raw HTML. Images off by default.",
       },
       { slug: "rich-text-editor", name: "RichTextEditor", when: "HTML editor with Hatch chrome." },
       { slug: "streaming-text", name: "StreamingText", when: "Append-only model output." },

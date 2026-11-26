@@ -20,3 +20,9 @@ jobs:
       - run: pnpm test:coverage
       - run: pnpm build
       - run: pnpm build:docs
+      - run: pnpm build:storybook
+      - run: pnpm test:catalog
+      - run: pnpm test:pack
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - run: pnpm audit:deps

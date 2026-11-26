@@ -1,0 +1,10 @@
+@import "@pritish.budhiraja/ui/styles.css";
+@source "./**/*.{ts,tsx}";
+
+:root {
+  --pb-font-sans: ui-sans-serif, system-ui, sans-serif;
+  --pb-font-display: ui-sans-serif, system-ui, sans-serif;
+  --pb-font-serif: "Instrument Serif", Georgia, serif;
+  --pb-font-mono: ui-monospace, monospace;
+  --pb-font-hand: ui-sans-serif, cursive;
+}

@@ -97,18 +97,27 @@ export const EXPANSION_DOCS: Record<string, ExtraDoc> = {
   "week-calendar": {
     title: "WeekCalendar",
     kicker: "Schedule",
-    description: "Week columns × hour rows. Events are civil YYYY-MM-DDTHH:mm. Host owns timezone.",
+    description:
+      "Week columns × hour rows. Civil YYYY-MM-DDTHH:mm only. Overlaps pack into columns; events clip to visible hours and split across midnight. Host owns timezone and persistence.",
     preview: (
       <Preview code={`<WeekCalendar weekStart="2026-11-22" events={…} />`}>
         <WeekCalendar weekStart="2026-11-22" events={EVENTS} className="w-full" />
       </Preview>
     ),
-    a11y: "Events are buttons with start–end in the name.",
+    a11y: "Events and optional empty slots are buttons. Arrow keys move, Shift+Arrow resizes when onEventChange is set.",
     related: [
       { slug: "time-grid", name: "TimeGrid" },
       { slug: "calendar-event", name: "CalendarEvent" },
     ],
-    props: [{ name: "events", type: "CalendarEventData[]", description: "Slots in the week" }],
+    props: [
+      { name: "events", type: "CalendarEventData[]", description: "Slots in the week" },
+      { name: "onSlotSelect", type: "(slot) => void", description: "Empty hour cell" },
+      {
+        name: "onEventChange",
+        type: "(id, next) => void",
+        description: "Move or resize; host saves",
+      },
+    ],
   },
   "time-grid": {
     title: "TimeGrid",
@@ -226,14 +235,18 @@ export const EXPANSION_DOCS: Record<string, ExtraDoc> = {
   "markdown-renderer": {
     title: "MarkdownRenderer",
     kicker: "Content",
-    description: "react-markdown with Hatch type. No raw HTML.",
+    description:
+      "react-markdown plus GFM tables and strikethrough. No raw HTML. Images are omitted unless allowImages is set, and then only https URLs render.",
     preview: (
       <Preview code={`<MarkdownRenderer markdown="# Note" />`}>
         <MarkdownRenderer markdown={"## Note\n\nEditorial markdown."} />
       </Preview>
     ),
     a11y: "Semantic headings and lists.",
-    props: [{ name: "markdown", type: "string", description: "Source" }],
+    props: [
+      { name: "markdown", type: "string", description: "Source" },
+      { name: "allowImages", type: "boolean", description: "Default false; https only" },
+    ],
   },
   "streaming-text": {
     title: "StreamingText",
@@ -250,14 +263,19 @@ export const EXPANSION_DOCS: Record<string, ExtraDoc> = {
   "rich-text-editor": {
     title: "RichTextEditor",
     kicker: "Content",
-    description: "TipTap StarterKit. HTML in and out. No journal schema.",
+    description:
+      'TipTap StarterKit. HTML in and out. Clearing value to "" empties the document. placeholder is shown while empty. No journal schema.',
     preview: (
       <Preview code={`<RichTextEditor value="<p>Hello</p>" />`}>
         <RichTextEditor className="w-full" value="<p>Hello from Hatch.</p>" />
       </Preview>
     ),
-    a11y: "Toolbar buttons plus labelled editor.",
-    props: [{ name: "value", type: "string", description: "HTML" }],
+    a11y: "Toolbar buttons plus labelled editor. Toolbar is disabled when editable is false.",
+    props: [
+      { name: "value", type: "string", description: "HTML" },
+      { name: "placeholder", type: "string", description: "Shown when empty" },
+      { name: "editable", type: "boolean", description: "Default true" },
+    ],
   },
   "ai-execution-status": {
     title: "AIExecutionStatus",

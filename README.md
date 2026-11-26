@@ -6,6 +6,7 @@ A React design system: editorial, minimal, and built to reuse across products. P
 - [`@pritish.budhiraja/tokens`](https://www.npmjs.com/package/@pritish.budhiraja/tokens)
 - [`@pritish.budhiraja/ui`](https://www.npmjs.com/package/@pritish.budhiraja/ui)
 - Motion: `@pritish.budhiraja/ui/motion`
+- React 19.2+ (peer). `SplitWorkspace` uses `Activity`.
 
 ## Packages
 
@@ -77,6 +78,8 @@ pnpm dev
 | `pnpm build`      | Library ESM, types, and CSS                  |
 | `pnpm build:docs` | Static docs site                             |
 | `pnpm test`       | Vitest                                       |
+| `pnpm test:pack`  | Install packed tarballs into Vite and Next   |
+| `pnpm test:e2e`   | Playwright against the calendar and editor   |
 | `pnpm lint`       | Biome and TypeScript                         |
 
 ## Host the docs (Vercel)

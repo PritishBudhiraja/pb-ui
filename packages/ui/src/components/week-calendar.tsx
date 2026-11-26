@@ -1,10 +1,27 @@
 "use client"
 
-import type { CSSProperties } from "react"
+import {
+  type CSSProperties,
+  type KeyboardEvent,
+  type PointerEvent,
+  useEffect,
+  useState,
+} from "react"
 import { useFormatLocale } from "../hooks/use-hydrated"
 import { cn } from "../lib/cn"
 import { parseCivilDateTime, parseISODate, startOfWeek, toISODate, weekDays } from "../lib/date"
-import { Button } from "./button"
+import {
+  DEFAULT_SNAP_MINUTES,
+  HOUR_HEIGHT_PX,
+  layoutWeekEvents,
+  nowIndicatorTop,
+  resizeIntervalEnd,
+  segmentStyle,
+  shiftInterval,
+  slotEnd,
+  snapDelta,
+  toNowCivil,
+} from "../lib/week-event-layout"
 
 export interface CalendarEventData {
   id: string
@@ -21,6 +38,10 @@ export interface TimeGridProps {
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
   locale?: string
   onEventSelect?: (id: string) => void
+  onSlotSelect?: (slot: { start: string; end: string }) => void
+  onEventChange?: (id: string, next: { start: string; end: string }) => void
+  showNow?: boolean
+  now?: string
   className?: string
 }
 
@@ -28,30 +49,16 @@ export type WeekCalendarProps = TimeGridProps
 
 export interface CalendarEventProps extends CalendarEventData {
   onSelect?: (id: string) => void
+  onEventChange?: (id: string, next: { start: string; end: string }) => void
   className?: string
   style?: CSSProperties
 }
 
-function eventLayout(
-  event: CalendarEventData,
-  days: Date[],
-  startHour: number,
-  totalMinutes: number,
-) {
-  const start = parseCivilDateTime(event.start)
-  const end = parseCivilDateTime(event.end)
-  if (!start || !end) return null
-  const dayIndex = days.findIndex((day) => toISODate(day) === start.isoDate)
-  if (dayIndex < 0) return null
-  const startMin = start.hours * 60 + start.minutes - startHour * 60
-  const endMin = end.hours * 60 + end.minutes - startHour * 60
-  return {
-    dayIndex,
-    top: `${Math.max(0, (startMin / totalMinutes) * 100)}%`,
-    height: `${Math.max(3, ((endMin - startMin) / totalMinutes) * 100)}%`,
-    left: `${(dayIndex / days.length) * 100}%`,
-    width: `${100 / days.length}%`,
-  }
+function eventName(label: string, start: string, end: string) {
+  const parsedStart = parseCivilDateTime(start)
+  const parsedEnd = parseCivilDateTime(end)
+  if (!parsedStart || !parsedEnd) return label
+  return `${label}, ${start.slice(11)}–${end.slice(11)}`
 }
 
 export function CalendarEvent({
@@ -60,25 +67,94 @@ export function CalendarEvent({
   start,
   end,
   onSelect,
+  onEventChange,
   className,
   style,
 }: CalendarEventProps) {
-  const title = `${label}, ${start.slice(11)}–${end.slice(11)}`
+  const [drag, setDrag] = useState<{ originY: number; mode: "move" | "resize" } | null>(null)
+
+  useEffect(() => {
+    if (!drag || !onEventChange) return
+    const onMove = (event: globalThis.PointerEvent) => {
+      const delta = snapDelta(event.clientY - drag.originY)
+      if (delta === 0) return
+      const next =
+        drag.mode === "resize"
+          ? resizeIntervalEnd(start, end, delta)
+          : shiftInterval(start, end, delta)
+      if (next) onEventChange(id, next)
+    }
+    const onUp = () => setDrag(null)
+    window.addEventListener("pointermove", onMove)
+    window.addEventListener("pointerup", onUp)
+    return () => {
+      window.removeEventListener("pointermove", onMove)
+      window.removeEventListener("pointerup", onUp)
+    }
+  }, [drag, end, id, onEventChange, start])
+
+  function move(delta: number) {
+    const next = shiftInterval(start, end, delta)
+    if (next) onEventChange?.(id, next)
+  }
+
+  function resize(delta: number) {
+    const next = resizeIntervalEnd(start, end, delta)
+    if (next) onEventChange?.(id, next)
+  }
+
+  function onKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    if (!onEventChange) return
+    if (event.key === "ArrowUp") {
+      event.preventDefault()
+      if (event.shiftKey) resize(-DEFAULT_SNAP_MINUTES)
+      else move(-DEFAULT_SNAP_MINUTES)
+    }
+    if (event.key === "ArrowDown") {
+      event.preventDefault()
+      if (event.shiftKey) resize(DEFAULT_SNAP_MINUTES)
+      else move(DEFAULT_SNAP_MINUTES)
+    }
+    if (event.key === "ArrowLeft") {
+      event.preventDefault()
+      move(-24 * 60)
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault()
+      move(24 * 60)
+    }
+  }
+
+  function begin(event: PointerEvent<HTMLButtonElement>, mode: "move" | "resize") {
+    if (!onEventChange) return
+    event.preventDefault()
+    setDrag({ originY: event.clientY, mode })
+  }
+
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="sm"
-      style={style}
-      className={cn(
-        "h-auto justify-start overflow-hidden rounded-sm border border-dashed border-border bg-foreground/10 px-1 py-0.5 text-left text-[11px] leading-tight font-normal",
-        className,
-      )}
-      aria-label={title}
-      onClick={() => onSelect?.(id)}
-    >
-      {label}
-    </Button>
+    <div className={cn("absolute px-0.5", className)} style={style}>
+      <button
+        type="button"
+        className="flex h-full w-full items-start overflow-hidden rounded-sm border border-dashed border-border bg-foreground/10 px-1 py-0.5 text-left text-[11px] leading-tight font-normal hover:bg-foreground/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label={eventName(label, start, end)}
+        onClick={() => onSelect?.(id)}
+        onPointerDown={(event) => begin(event, "move")}
+        onKeyDown={onKeyDown}
+      >
+        {label}
+      </button>
+      {onEventChange ? (
+        <button
+          type="button"
+          aria-label={`Resize ${label}`}
+          className="absolute inset-x-1 bottom-0 h-2 cursor-ns-resize rounded-sm"
+          onPointerDown={(event) => {
+            event.stopPropagation()
+            begin(event, "resize")
+          }}
+        />
+      ) : null}
+    </div>
   )
 }
 
@@ -90,6 +166,10 @@ export function TimeGrid({
   weekStartsOn = 0,
   locale,
   onEventSelect,
+  onSlotSelect,
+  onEventChange,
+  showNow = true,
+  now,
   className,
 }: TimeGridProps) {
   const formatLocale = useFormatLocale(locale)
@@ -106,9 +186,19 @@ export function TimeGrid({
     weekday: "short",
     day: "numeric",
   })
+  const slotFmt = new Intl.DateTimeFormat(formatLocale, {
+    calendar: "gregory",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  })
+  const clock = now ?? toNowCivil(new Date())
+  const indicator = showNow ? nowIndicatorTop(clock, days, startHour, endHour) : undefined
+  const segments = layoutWeekEvents(events, days, startHour, endHour)
 
   return (
-    <div className={cn("overflow-x-auto", className)}>
+    <div className={cn("max-w-full overflow-x-auto", className)}>
       <div className="min-w-[40rem]">
         <div
           className="grid"
@@ -129,7 +219,8 @@ export function TimeGrid({
             {hours.map((hour) => (
               <div
                 key={hour}
-                className="h-12 border-t border-dashed border-border pr-1 text-right text-[11px] tabular-nums text-muted-foreground"
+                className="border-t border-dashed border-border pr-1 text-right text-[11px] tabular-nums text-muted-foreground"
+                style={{ height: HOUR_HEIGHT_PX }}
               >
                 {String(hour).padStart(2, "0")}
               </div>
@@ -140,38 +231,62 @@ export function TimeGrid({
               className="grid h-full"
               style={{
                 gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))`,
-                gridTemplateRows: `repeat(${hours.length}, 3rem)`,
+                gridTemplateRows: `repeat(${hours.length}, ${HOUR_HEIGHT_PX}px)`,
               }}
             >
               {hours.flatMap((hour) =>
-                days.map((day) => (
-                  <div
-                    key={`${hour}-${toISODate(day)}`}
-                    className="border-t border-l border-dashed border-border"
-                  />
-                )),
+                days.map((day) => {
+                  const iso = toISODate(day)
+                  const label = `${slotFmt.format(day)}, ${String(hour).padStart(2, "0")}:00`
+                  if (!onSlotSelect) {
+                    return (
+                      <div
+                        key={`${hour}-${iso}`}
+                        className="border-t border-l border-dashed border-border"
+                      />
+                    )
+                  }
+                  return (
+                    <button
+                      key={`${hour}-${iso}`}
+                      type="button"
+                      aria-label={label}
+                      className="border-t border-l border-dashed border-border hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      onClick={() =>
+                        onSlotSelect({
+                          start: `${iso}T${String(hour).padStart(2, "0")}:00`,
+                          end: slotEnd(iso, hour),
+                        })
+                      }
+                    />
+                  )
+                }),
               )}
             </div>
-            {events.map((event) => {
-              const layout = eventLayout(event, days, startHour, totalMinutes)
-              if (!layout) return null
-              return (
-                <CalendarEvent
-                  key={event.id}
-                  {...event}
-                  onSelect={onEventSelect}
-                  className="absolute px-1"
-                  style={{
-                    top: layout.top,
-                    height: layout.height,
-                    left: layout.left,
-                    width: layout.width,
-                    paddingLeft: 4,
-                    paddingRight: 4,
-                  }}
-                />
-              )
-            })}
+            {indicator ? (
+              <div
+                data-now
+                aria-hidden
+                className="pointer-events-none absolute z-10 h-px bg-foreground"
+                style={{
+                  top: indicator.top,
+                  left: `${(indicator.dayIndex / days.length) * 100}%`,
+                  width: `${100 / days.length}%`,
+                }}
+              />
+            ) : null}
+            {segments.map((segment) => (
+              <CalendarEvent
+                key={`${segment.id}-${segment.dayIndex}-${segment.startMin}`}
+                id={segment.id}
+                label={segment.label}
+                start={segment.start}
+                end={segment.end}
+                onSelect={onEventSelect}
+                onEventChange={onEventChange}
+                style={segmentStyle(segment, days.length, totalMinutes)}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -6,7 +6,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 const editor = {
   isActive: (name: string) => name === "bold" || name === "italic" || name === "bulletList",
   getHTML: () => "<p>Hi</p>",
-  commands: { setContent: vi.fn() },
+  isEmpty: false,
+  setEditable: vi.fn(),
+  destroy: vi.fn(),
+  commands: { setContent: vi.fn(), clearContent: vi.fn() },
   chain: () => ({
     focus: () => ({
       toggleBold: () => ({ run: vi.fn() }),
@@ -250,7 +253,7 @@ describe("expansion components", () => {
       <>
         <MarkdownRenderer
           markdown={
-            "# Title\n\n## Sub\n\n### Small\n\nA [link](/x) and `code`.\n\n```js\nblock\n```\n\n- item\n\n1. one"
+            "# Title\n\n## Sub\n\n### Small\n\nA [link](/x) and `code`.\n\n```js\nblock\n```\n\n- item\n\n1. one\n\n~~old~~\n\n| a | b |\n| - | - |\n| 1 | 2 |\n\n![no](http://example.com/x.png)"
           }
         />
         <CodeBlock code="const x = 1" />

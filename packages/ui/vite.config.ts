@@ -68,6 +68,7 @@ export default defineConfig({
         "clsx",
         "tailwind-merge",
         "react-markdown",
+        "remark-gfm",
         "react-resizable-panels",
         "recharts",
         /^@dnd-kit\//,
@@ -85,6 +86,7 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     testTimeout: 20_000,
+    teardownTimeout: 10_000,
     maxWorkers: 4,
     setupFiles: ["./src/test/setup.ts"],
     coverage: {

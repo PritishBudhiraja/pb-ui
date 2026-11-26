@@ -1,4 +1,9 @@
 import "@testing-library/jest-dom/vitest"
+import { afterEach } from "vitest"
+
+afterEach(() => {
+  vi.useRealTimers()
+})
 
 if (typeof PointerEvent === "undefined") {
   class PointerEventPolyfill extends MouseEvent {}

@@ -2,7 +2,7 @@
 
 import { EditorContent, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
-import { useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import { cn } from "../lib/cn"
 import { Button } from "./button"
 
@@ -15,13 +15,21 @@ export interface RichTextEditorProps {
   label?: string
 }
 
+function incomingHtml(value: string) {
+  if (!value || value === "<p></p>") return ""
+  return value
+}
+
 export function RichTextEditor({
   value = "",
   onValueChange,
+  placeholder,
   editable = true,
   className,
   label = "Editor",
 }: RichTextEditorProps) {
+  const [, setRevision] = useState(0)
+  const synced = useRef<string | null>(null)
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [StarterKit],
@@ -40,8 +48,28 @@ export function RichTextEditor({
 
   useEffect(() => {
     if (!editor) return
-    const current = editor.getHTML()
-    if (value && value !== current) editor.commands.setContent(value, { emitUpdate: false })
+    editor.setEditable(editable)
+  }, [editable, editor])
+
+  useEffect(() => {
+    return () => {
+      editor?.destroy()
+    }
+  }, [editor])
+
+  useEffect(() => {
+    if (!editor) return
+    const current = editor.isEmpty ? "" : editor.getHTML()
+    const next = incomingHtml(value)
+    if (synced.current === next) return
+    if (incomingHtml(current) === next) {
+      synced.current = next
+      return
+    }
+    synced.current = next
+    if (next === "") editor.commands.clearContent(false)
+    else editor.commands.setContent(value, { emitUpdate: false })
+    setRevision((revision) => revision + 1)
   }, [editor, value])
 
   if (!editor)
@@ -56,6 +84,7 @@ export function RichTextEditor({
           type="button"
           size="sm"
           variant={editor.isActive("bold") ? "default" : "ghost"}
+          disabled={!editable}
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
           Bold
@@ -64,6 +93,7 @@ export function RichTextEditor({
           type="button"
           size="sm"
           variant={editor.isActive("italic") ? "default" : "ghost"}
+          disabled={!editable}
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
           Italic
@@ -72,12 +102,20 @@ export function RichTextEditor({
           type="button"
           size="sm"
           variant={editor.isActive("bulletList") ? "default" : "ghost"}
+          disabled={!editable}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
           List
         </Button>
       </div>
-      <EditorContent editor={editor} />
+      <div className="relative">
+        {placeholder && editor.isEmpty ? (
+          <div className="pointer-events-none absolute top-2 left-3 text-sm text-muted-foreground">
+            {placeholder}
+          </div>
+        ) : null}
+        <EditorContent editor={editor} />
+      </div>
     </div>
   )
 }

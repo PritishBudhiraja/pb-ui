@@ -17,7 +17,10 @@ import "@pritish.budhiraja/ui/styles.css"
 
 Set data-theme="portfolio" on the document. Toggle class="dark".
 OriginButton and ScrollProgress: import from @pritish.budhiraja/ui/motion.
+Charts: import from @pritish.budhiraja/ui/charts.
+Peer: React 19.2+ (SplitWorkspace uses React Activity).
 ThemeToggle is controlled (theme + setTheme). Host owns storage.
+WeekCalendar is presentational: civil datetimes in, onEventChange/onSlotSelect out.
 
 ## Invariants
 

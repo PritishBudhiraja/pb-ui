@@ -15,6 +15,10 @@
     "format": "biome format --write .",
     "test": "pnpm --filter @pritish.budhiraja/ui test",
     "test:coverage": "pnpm --filter @pritish.budhiraja/ui test:coverage",
+    "test:pack": "node scripts/published-consumer-smoke.mjs",
+    "test:e2e": "playwright test",
+    "test:catalog": "node scripts/check-catalog.mjs",
+    "audit:deps": "pnpm audit --audit-level=high",
     "typecheck": "pnpm -r --if-present typecheck",
     "changeset": "changeset",
     "release": "pnpm build && node scripts/publish.mjs"
@@ -22,7 +26,16 @@
   "devDependencies": {
     "@biomejs/biome": "2.6.9",
     "@changesets/cli": "^3.0.3",
-    "typescript": "^7.0.2"
+    "@playwright/test": "^1.57.0",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^4.7.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^7.0.2",
+    "vite": "^7.1.2"
   },
   "engines": {
     "node": ">=22.11.0"

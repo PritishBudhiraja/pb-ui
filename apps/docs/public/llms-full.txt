@@ -51,9 +51,9 @@ Docs: https://ui.pritishbudhiraja.com
 - Badge, Avatar, Card, Table, DataTable, Timeline, ActivityTimeline, StatCard, DescriptionList
 - Stack, Grid, Separator
 - DateRangePicker, DurationPicker, TimeRangePicker
-- WeekCalendar, TimeGrid, CalendarEvent, SortableList
+- WeekCalendar, TimeGrid, CalendarEvent, SortableList (calendar is presentational; host persists)
 - SplitWorkspace, ResizablePanel, CollapsibleSidebar, InspectorPanel
-- CodeBlock, MarkdownRenderer, RichTextEditor, StreamingText
+- CodeBlock, MarkdownRenderer (GFM; images opt-in https), RichTextEditor, StreamingText
 - AIExecutionStatus, WorkflowStepper, MilestoneStepper
 - TimeAllocationBar, WeeklyActivityGrid, CountdownDisplay, FileDropzone, VirtualList
 - Charts via @pritish.budhiraja/ui/charts: StackedBarChart, AreaChart, DonutChart

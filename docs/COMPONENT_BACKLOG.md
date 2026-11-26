@@ -20,4 +20,4 @@ DateRangePicker, DurationPicker, TimeRangePicker, WeekCalendar, TimeGrid, Calend
 
 ## Later if a product needs it
 
-Virtualized tables, FullCalendar if recurrence/drag outgrow the Hatch grid, shadcn registry.
+Virtualized tables, FullCalendar if recurrence/timezones outgrow the Hatch grid, optional `/editor` and `/sortable` package entries, shadcn registry. Do not expand the catalogue without a real consumer.
