@@ -1,5 +1,5 @@
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
-import { Check } from "lucide-react"
+import { Check, ChevronRight } from "lucide-react"
 import type * as React from "react"
 import { cn } from "../lib/cn"
 import { menuContentClass, menuItemClass, menuLabelClass, menuSeparatorClass } from "../lib/menu"
@@ -9,6 +9,7 @@ export const ContextMenuTrigger = ContextMenuPrimitive.Trigger
 export const ContextMenuGroup = ContextMenuPrimitive.Group
 export const ContextMenuPortal = ContextMenuPrimitive.Portal
 export const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup
+export const ContextMenuSub = ContextMenuPrimitive.Sub
 
 export function ContextMenuContent({
   className,
@@ -75,5 +76,59 @@ export function ContextMenuSeparator({
       className={cn(menuSeparatorClass, className)}
       {...props}
     />
+  )
+}
+
+export function ContextMenuRadioItem({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem>) {
+  return (
+    <ContextMenuPrimitive.RadioItem
+      ref={ref}
+      className={cn(menuItemClass, "pr-8", className)}
+      {...props}
+    >
+      {children}
+      <ContextMenuPrimitive.ItemIndicator className="absolute right-2 flex items-center">
+        <span className="h-2 w-2 rounded-full bg-current" />
+      </ContextMenuPrimitive.ItemIndicator>
+    </ContextMenuPrimitive.RadioItem>
+  )
+}
+
+export function ContextMenuSubTrigger({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentProps<typeof ContextMenuPrimitive.SubTrigger>) {
+  return (
+    <ContextMenuPrimitive.SubTrigger
+      ref={ref}
+      className={cn(menuItemClass, "data-[state=open]:bg-accent", className)}
+      {...props}
+    >
+      {children}
+      <ChevronRight className="ml-auto h-4 w-4" />
+    </ContextMenuPrimitive.SubTrigger>
+  )
+}
+
+export function ContextMenuSubContent({
+  className,
+  ref,
+  ...props
+}: React.ComponentProps<typeof ContextMenuPrimitive.SubContent>) {
+  return (
+    <ContextMenuPrimitive.Portal>
+      <ContextMenuPrimitive.SubContent
+        ref={ref}
+        className={cn(menuContentClass, className)}
+        {...props}
+      />
+    </ContextMenuPrimitive.Portal>
   )
 }

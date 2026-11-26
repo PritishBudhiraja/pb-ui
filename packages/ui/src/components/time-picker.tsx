@@ -4,6 +4,7 @@ import { Clock } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"
 import { useFormFieldControl } from "../hooks/use-form-field-control"
+import { useFormatLocale } from "../hooks/use-hydrated"
 import { cn } from "../lib/cn"
 import {
   currentTime,
@@ -26,6 +27,7 @@ export interface TimePickerProps {
   className?: string
   id?: string
   name?: string
+  locale?: string
   "aria-label"?: string
 }
 
@@ -39,8 +41,10 @@ export function TimePicker({
   className,
   id,
   name,
+  locale,
   "aria-label": ariaLabel,
 }: TimePickerProps) {
+  const formatLocale = useFormatLocale(locale)
   const [open, setOpen] = useState(false)
   const field = useFormFieldControl({ id })
   const [selected, setSelected] = useControlledState({
@@ -64,11 +68,15 @@ export function TimePicker({
   }, [open, selected, minuteStep])
 
   const hourValues = Array.from({ length: 12 }, (_, index) => index + 1)
-  const minuteValues = Array.from(
+  const stepMinutes = Array.from(
     { length: Math.floor(60 / minuteStep) },
     (_, index) => index * minuteStep,
   )
-  const shown = selected ? displayTime(selected) : ""
+  // Keep an off-step value (10:07 with 5-minute steps) visible and selected.
+  const minuteValues = stepMinutes.includes(minutes)
+    ? stepMinutes
+    : [...stepMinutes, minutes].sort((a, b) => a - b)
+  const shown = selected ? displayTime(selected, formatLocale) : ""
 
   const commit = (
     nextHour12: number,

@@ -28,13 +28,18 @@ export function CopyButton({
 }: CopyButtonProps) {
   const { copied, copy } = useClipboard()
   const [failed, setFailed] = useState(false)
+  const [copies, setCopies] = useState(0)
   const showCopied = copied && !failed
-  const status = failed ? errorText : showCopied ? copiedText : ""
+  // A trailing no-break space on every other copy changes the live region's text,
+  // so screen readers announce a repeat copy instead of ignoring it.
+  const copiedStatus = copies % 2 === 0 ? copiedText : `${copiedText}\u00a0`
+  const status = failed ? errorText : showCopied ? copiedStatus : ""
 
   async function onCopy() {
     setFailed(false)
     try {
       await copy(value)
+      setCopies((count) => count + 1)
       onCopied?.(value)
     } catch (error) {
       setFailed(true)
