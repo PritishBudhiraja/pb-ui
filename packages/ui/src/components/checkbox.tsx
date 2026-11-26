@@ -1,6 +1,9 @@
+"use client"
+
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { Check } from "lucide-react"
 import type * as React from "react"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 
 export function Checkbox({
@@ -8,6 +11,7 @@ export function Checkbox({
   ref,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
+  const field = useFormFieldControl(props)
   return (
     <CheckboxPrimitive.Root
       ref={ref}
@@ -16,6 +20,7 @@ export function Checkbox({
         className,
       )}
       {...props}
+      {...field}
     >
       <CheckboxPrimitive.Indicator className={cn("flex items-center justify-center text-current")}>
         <Check className="h-3 w-3" />

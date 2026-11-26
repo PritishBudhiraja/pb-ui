@@ -304,9 +304,14 @@ const DOCS: Record<string, ComponentDoc> = {
       </Preview>
     ),
     code: "",
-    a11y: "⌘K / Ctrl+K. Dialog is labelled. Trigger exposes aria-expanded.",
+    a11y: "⌘K / Ctrl+K. Dialog is labelled. Trigger exposes aria-expanded. With two palettes on a page, one press opens only the first.",
     props: [
       { name: "items", type: "CommandPaletteItem[]", description: "Searchable entries" },
+      {
+        name: "shortcut",
+        type: "string | false",
+        description: "Letter used with ⌘ / Ctrl. Default k; false turns it off",
+      },
       { name: "onSelect", type: "(item) => void", description: "Called after close" },
     ],
   },

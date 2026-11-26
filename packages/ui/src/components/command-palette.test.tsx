@@ -47,4 +47,30 @@ describe("CommandPalette", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     expect(onOpenChange).toHaveBeenLastCalledWith(false)
   })
+
+  it("lets two palettes share the page and turns the shortcut off", async () => {
+    const user = userEvent.setup()
+    const first = vi.fn()
+    const second = vi.fn()
+    const { rerender } = render(
+      <>
+        <CommandPalette items={[]} onSelect={vi.fn()} onOpenChange={first} />
+        <CommandPalette items={[]} onSelect={vi.fn()} onOpenChange={second} triggerLabel="Other" />
+      </>,
+    )
+    await user.keyboard("{Control>}k{/Control}")
+    expect(first).toHaveBeenCalledTimes(1)
+    expect(second).not.toHaveBeenCalled()
+    await user.keyboard("{Escape}")
+    rerender(
+      <>
+        <CommandPalette items={[]} onSelect={vi.fn()} onOpenChange={first} shortcut={false} />
+        <CommandPalette items={[]} onSelect={vi.fn()} onOpenChange={second} triggerLabel="Other" />
+      </>,
+    )
+    first.mockClear()
+    await user.keyboard("{Control>}k{/Control}")
+    expect(first).not.toHaveBeenCalled()
+    expect(second).toHaveBeenCalledWith(true)
+  })
 })

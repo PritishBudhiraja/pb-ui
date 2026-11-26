@@ -29,6 +29,33 @@ describe("useDebounce", () => {
 })
 
 describe("useKeyboardShortcut", () => {
+  it("ignores plain keys typed in fields unless allowed", () => {
+    const handler = vi.fn()
+    const allowed = vi.fn()
+    const chord = vi.fn()
+    renderHook(() => useKeyboardShortcut({ key: "/" }, handler))
+    renderHook(() => useKeyboardShortcut({ key: "/", allowInInputs: true }, allowed))
+    renderHook(() => useKeyboardShortcut({ key: "/", ctrl: true }, chord))
+    const input = document.createElement("input")
+    const editor = document.createElement("div")
+    editor.setAttribute("contenteditable", "true")
+    const inner = document.createElement("span")
+    editor.append(inner)
+    document.body.append(input, editor)
+    act(() => {
+      input.dispatchEvent(new KeyboardEvent("keydown", { key: "/", bubbles: true }))
+      inner.dispatchEvent(new KeyboardEvent("keydown", { key: "/", bubbles: true }))
+      input.dispatchEvent(new KeyboardEvent("keydown", { key: "/", ctrlKey: true, bubbles: true }))
+      document.body.dispatchEvent(new KeyboardEvent("keydown", { key: "/", bubbles: true }))
+      window.dispatchEvent(new KeyboardEvent("keydown", { key: "/" }))
+    })
+    expect(handler).toHaveBeenCalledTimes(2)
+    expect(allowed).toHaveBeenCalledTimes(4)
+    expect(chord).toHaveBeenCalledTimes(1)
+    input.remove()
+    editor.remove()
+  })
+
   it("keeps one listener and calls the latest handler across renders", () => {
     const add = vi.spyOn(window, "addEventListener")
     const first = vi.fn()

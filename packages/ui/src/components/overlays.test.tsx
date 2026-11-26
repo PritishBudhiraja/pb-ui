@@ -113,6 +113,9 @@ describe("overlay primitives", () => {
           <RadioGroupItem value="a" aria-label="A" />
         </RadioGroup>
         <Slider defaultValue={[40]} aria-label="Volume" />
+        <Slider value={[10, 90]} thumbLabels={["Minimum", "Maximum"]} />
+        <Slider aria-labelledby="volume-label" />
+        <span id="volume-label">Gain</span>
         <ScrollArea className="h-10">
           <p>scroll</p>
         </ScrollArea>
@@ -199,6 +202,9 @@ describe("overlay primitives", () => {
       </TooltipProvider>,
     )
 
+    expect(screen.getByRole("slider", { name: "Minimum" })).toBeInTheDocument()
+    expect(screen.getByRole("slider", { name: "Maximum" })).toBeInTheDocument()
+    expect(screen.getByRole("slider", { name: "Gain" })).toBeInTheDocument()
     await expectNoAxeViolations()
     await user.click(screen.getByRole("button", { name: "Section" }))
     expect(screen.getByText("Body")).toBeInTheDocument()

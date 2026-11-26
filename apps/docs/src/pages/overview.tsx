@@ -290,7 +290,8 @@ export function HooksPage() {
           <code>useToast</code> / <code>toast()</code> — module store, limit 3, 4s remove
         </li>
         <li>
-          <code>useKeyboardShortcut</code> — key + modifier match
+          <code>useKeyboardShortcut</code> — key + modifier match; plain keys are ignored while
+          typing in a field unless <code>allowInInputs</code> is set
         </li>
         <li>
           <code>useMediaQuery</code> — matchMedia

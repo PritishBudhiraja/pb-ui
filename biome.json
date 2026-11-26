@@ -14,7 +14,8 @@
       "!storybook-static",
       "!coverage",
       "!pnpm-lock.yaml",
-      "!.changeset"
+      "!.changeset",
+      "!**/CHANGELOG.md"
     ]
   },
   "formatter": {

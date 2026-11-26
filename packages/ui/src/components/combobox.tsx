@@ -89,9 +89,12 @@ export function Combobox({
             placeholder={searchPlaceholder}
             className="mb-1 h-9 w-full rounded-md border border-input bg-background px-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
           />
-          <Command.Empty className="px-2 py-3 text-sm text-muted-foreground">
+          <Command.Empty aria-hidden className="px-2 py-3 text-sm text-muted-foreground">
             {emptyText}
           </Command.Empty>
+          <p role="status" className="sr-only">
+            {filtered.length === 0 ? emptyText : ""}
+          </p>
           <Command.List className="max-h-56 overflow-auto">
             {filtered.map((item) => (
               <Command.Item

@@ -180,6 +180,11 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     props: [
       { name: "defaultValue", type: "number[]", description: "Uncontrolled start" },
       { name: "aria-label", type: "string", description: "Accessible name for the thumb" },
+      {
+        name: "thumbLabels",
+        type: "string[]",
+        description: "One name per thumb for a range, such as Minimum and Maximum",
+      },
     ],
   },
   "radio-group": {

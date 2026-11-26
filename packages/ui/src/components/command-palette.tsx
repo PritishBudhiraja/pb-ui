@@ -15,6 +15,9 @@ export interface CommandPaletteItem {
   icon?: ReactNode
 }
 
+// One ⌘K press toggles only the first palette that sees it.
+const handledShortcuts = new WeakSet<KeyboardEvent>()
+
 export interface CommandPaletteProps {
   items: CommandPaletteItem[]
   onSelect: (item: CommandPaletteItem) => void
@@ -22,6 +25,7 @@ export interface CommandPaletteProps {
   label?: string
   triggerLabel?: string
   shortcutHint?: string
+  shortcut?: string | false
   emptyText?: string
   className?: string
   open?: boolean
@@ -35,6 +39,7 @@ export function CommandPalette({
   label = "Command palette",
   triggerLabel = "Search",
   shortcutHint = "⌘K",
+  shortcut = "k",
   emptyText = "No results.",
   className,
   open: openProp,
@@ -47,15 +52,18 @@ export function CommandPalette({
   })
 
   useEffect(() => {
+    if (shortcut === false) return
     function onKeyDown(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+      if (handledShortcuts.has(event)) return
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === shortcut) {
+        handledShortcuts.add(event)
         event.preventDefault()
         setOpen(!open)
       }
     }
     document.addEventListener("keydown", onKeyDown)
     return () => document.removeEventListener("keydown", onKeyDown)
-  }, [open, setOpen])
+  }, [open, setOpen, shortcut])
 
   const groups = items.reduce<Record<string, CommandPaletteItem[]>>((acc, item) => {
     const key = item.group ?? "Items"
@@ -79,9 +87,11 @@ export function CommandPalette({
       >
         <Search className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">{triggerLabel}</span>
-        <kbd className="hidden rounded border border-border bg-muted px-1 font-sans text-[10px] sm:inline">
-          {shortcutHint}
-        </kbd>
+        {shortcut === false ? null : (
+          <kbd className="hidden rounded border border-border bg-muted px-1 font-sans text-[10px] sm:inline">
+            {shortcutHint}
+          </kbd>
+        )}
       </button>
 
       <Command.Dialog

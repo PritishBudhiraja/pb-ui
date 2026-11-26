@@ -118,4 +118,36 @@ describe("toast helpers", () => {
     })
     expect(result.current.toasts).toHaveLength(0)
   })
+
+  it("clears the removal timer of a toast pushed out by the limit", () => {
+    vi.useFakeTimers()
+    const { result } = renderHook(() => useToast())
+    let first = ""
+    act(() => {
+      first = toast({ title: "First" }).id
+    })
+    act(() => {
+      result.current.dismiss(first)
+    })
+    act(() => {
+      toast({ title: "A" })
+      toast({ title: "B" })
+      toast({ title: "C" })
+    })
+    expect(result.current.toasts.some((item) => item.id === first)).toBe(false)
+    expect(vi.getTimerCount()).toBe(0)
+    act(() => {
+      result.current.dismiss()
+      vi.advanceTimersByTime(4000)
+    })
+  })
+
+  it("does nothing on the server", () => {
+    const { result } = renderHook(() => useToast())
+    vi.stubGlobal("window", undefined)
+    const handle = toast({ title: "Server" })
+    handle.dismiss()
+    vi.unstubAllGlobals()
+    expect(result.current.toasts.some((item) => item.title === "Server")).toBe(false)
+  })
 })
