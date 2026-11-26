@@ -157,12 +157,14 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
   combobox: {
     title: "Combobox",
     kicker: "Form",
-    description: "Filterable list in a popover. No extra cmdk surface — uses the existing Popover.",
+    description: "Filterable list in a popover, built on cmdk inside the existing Popover.",
     preview: <ComboPreview />,
-    a11y: "Trigger has role=combobox and aria-expanded. Search input is labelled.",
+    a11y: "Trigger reports aria-expanded. The search input is a labelled combobox that controls a listbox; arrow keys move between options and Enter selects. The chosen option has aria-checked.",
     props: [
       { name: "items", type: "ComboboxItem[]", description: "Options" },
-      { name: "value", type: "string", description: "Selected value" },
+      { name: "value", type: "string", description: "Controlled value" },
+      { name: "defaultValue", type: "string", description: "Uncontrolled initial value" },
+      { name: "disabled", type: "boolean", description: "Disables the trigger" },
     ],
   },
   slider: {
@@ -217,13 +219,21 @@ export const EXTRA_DOCS: Record<string, ExtraDoc> = {
     description: "Label, control, hint, and FormError in one stack. Hosts still own validation.",
     preview: (
       <Preview code={`<FormField label="Email" error="Required"><Input /></FormField>`}>
-        <FormField className="w-72" label="Email" htmlFor="ff" error="Required">
-          <SearchInput id="ff" />
+        <FormField className="w-72" label="Email" error="Required">
+          <SearchInput />
         </FormField>
       </Preview>
     ),
-    a11y: "FormError uses role=alert.",
-    props: [{ name: "error", type: "string", description: "Shown as an alert" }],
+    a11y: "The label targets the control. Input, Textarea, SelectTrigger, Combobox, DatePicker and TimePicker pick up the field's id, aria-describedby (hint or error) and aria-invalid. Custom controls can join with useFormFieldControl. FormError uses role=alert.",
+    props: [
+      { name: "htmlFor", type: "string", description: "Control id; generated when omitted" },
+      { name: "hint", type: "string", description: "Describes the control when there is no error" },
+      {
+        name: "error",
+        type: "string",
+        description: "Shown as an alert; marks the control invalid",
+      },
+    ],
   },
   "search-input": {
     title: "SearchInput",
