@@ -35,4 +35,16 @@ describe("CommandPalette", () => {
     await user.keyboard("{Meta>}k{/Meta}")
     await user.keyboard("{Control>}k{/Control}")
   })
+
+  it("opens and reports changes when only onOpenChange is passed", async () => {
+    const onOpenChange = vi.fn()
+    const user = userEvent.setup()
+    render(<CommandPalette onSelect={vi.fn()} onOpenChange={onOpenChange} items={[]} />)
+    await user.click(screen.getByRole("button", { name: "Search" }))
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(onOpenChange).toHaveBeenLastCalledWith(true)
+    await user.keyboard("{Control>}k{/Control}")
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+    expect(onOpenChange).toHaveBeenLastCalledWith(false)
+  })
 })
