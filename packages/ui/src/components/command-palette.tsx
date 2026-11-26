@@ -2,7 +2,8 @@
 
 import { Command } from "cmdk"
 import { Search } from "lucide-react"
-import { type ReactNode, useEffect, useState } from "react"
+import { type ReactNode, useEffect } from "react"
+import { useControlledState } from "../hooks/use-controlled-state"
 import { cn } from "../lib/cn"
 
 export interface CommandPaletteItem {
@@ -39,9 +40,11 @@ export function CommandPalette({
   open: openProp,
   onOpenChange,
 }: CommandPaletteProps) {
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
-  const open = openProp ?? uncontrolledOpen
-  const setOpen = onOpenChange ?? setUncontrolledOpen
+  const [open, setOpen] = useControlledState({
+    value: openProp,
+    defaultValue: false,
+    onChange: onOpenChange,
+  })
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
