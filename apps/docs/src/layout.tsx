@@ -1,4 +1,11 @@
-import { CommandPalette, cn, HatchDivider, ThemeToggle, Toaster } from "@pritish.budhiraja/ui"
+import {
+  CommandPalette,
+  cn,
+  HatchDivider,
+  IconButton,
+  ThemeToggle,
+  Toaster,
+} from "@pritish.budhiraja/ui"
 import { Menu, X } from "lucide-react"
 import { type Ref, Suspense, useEffect, useRef, useState } from "react"
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"
@@ -78,17 +85,6 @@ export function DocsLayout() {
                 {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
             ) : null}
-            <select
-              aria-label="Color theme"
-              className="h-8 max-w-[7.25rem] rounded-md border border-dashed border-border bg-background px-2 font-sans text-xs text-foreground"
-              value={preset}
-              onChange={(event) =>
-                setPreset(event.target.value === "epoch" ? "epoch" : "portfolio")
-              }
-            >
-              <option value="portfolio">Portfolio</option>
-              <option value="epoch">Epoch</option>
-            </select>
             <CommandPalette
               items={searchItems()}
               onSelect={(item) => {
@@ -103,6 +99,17 @@ export function DocsLayout() {
             >
               GitHub
             </a>
+            <IconButton
+              variant="ghost"
+              className="h-8 w-8 font-serif text-sm italic"
+              label={
+                preset === "epoch" ? "Switch to Portfolio palette" : "Switch to Epoch palette"
+              }
+              aria-pressed={preset === "epoch"}
+              onClick={() => setPreset(preset === "epoch" ? "portfolio" : "epoch")}
+            >
+              {preset === "epoch" ? "E" : "P"}
+            </IconButton>
             <ThemeToggle
               theme={mode}
               setTheme={(next) => setMode(next === "dark" ? "dark" : "light")}
