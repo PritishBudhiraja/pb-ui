@@ -63,9 +63,7 @@ export function flattenNav() {
 }
 
 export function sidebarFor(pathname: string): NavGroup[] | null {
-  if (pathname.startsWith("/components/") && pathname !== "/components") {
-    return COMPONENT_NAV
-  }
+  if (pathname === "/components" || pathname.startsWith("/components/")) return COMPONENT_NAV
   if (pathname === "/foundations") return FOUNDATION_NAV
   if (pathname === "/hooks" || pathname === "/changelog" || pathname === "/contributing") {
     return PROJECT_NAV_GROUP

@@ -1,6 +1,6 @@
 import { CommandPalette, cn, HatchDivider, ThemeToggle, Toaster } from "@pritish.budhiraja/ui"
 import { Menu, X } from "lucide-react"
-import { type Ref, Suspense, useEffect, useRef, useState } from "react"
+import { type Ref, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react"
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"
 import { type NavGroup, sidebarFor, TABS } from "./nav"
 import { searchItems } from "./search"
@@ -151,51 +151,87 @@ function DocsNav({
   ref?: Ref<HTMLElement>
   onNavigate: () => void
 }) {
+  const location = useLocation()
+  const listRef = useRef<HTMLDivElement>(null)
+  const [hovered, setHovered] = useState<HTMLElement | null>(null)
+  const [bar, setBar] = useState<{ top: number; height: number } | null>(null)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the active link changes with the route
+  useLayoutEffect(() => {
+    const list = listRef.current
+    if (!list) return
+    const target = hovered ?? list.querySelector<HTMLElement>("[aria-current=page]")
+    if (!target) {
+      setBar(null)
+      return
+    }
+    const listTop = list.getBoundingClientRect().top
+    const box = target.getBoundingClientRect()
+    setBar({ top: box.top - listTop, height: box.height })
+  }, [hovered, location.pathname, groups])
+
   return (
     <nav
       ref={ref}
       className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-3 lg:px-4 [overflow-clip-margin:0px]"
       aria-label="Documentation"
     >
-      {groups.map((group) => (
-        <div key={group.title} className="pb-3">
-          <p className="px-1 py-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-            {group.title}
-          </p>
-          <ul className="border-l border-dashed border-border">
-            {group.items.map((item) => {
-              const hash = item.to.includes("#")
-              const className = ({ isActive }: { isActive: boolean }) =>
-                cn(
-                  "-ml-px block border-l border-transparent py-1 pl-3 text-sm text-muted-foreground transition-colors hover:border-foreground/40 hover:text-foreground",
-                  isActive && "border-foreground font-medium text-foreground",
+      <div
+        ref={listRef}
+        className="relative"
+        onPointerOver={(event) => {
+          const link = (event.target as HTMLElement).closest<HTMLElement>("a")
+          if (link && link !== hovered) setHovered(link)
+        }}
+        onPointerLeave={() => setHovered(null)}
+      >
+        {groups.map((group) => (
+          <div key={group.title} className="pb-3">
+            <p className="px-1 py-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+              {group.title}
+            </p>
+            <ul className="border-l border-dashed border-border">
+              {group.items.map((item) => {
+                const hash = item.to.includes("#")
+                const className = ({ isActive }: { isActive: boolean }) =>
+                  cn(
+                    "block py-1 pl-3 text-sm text-muted-foreground transition-colors hover:text-foreground",
+                    isActive && "font-medium text-foreground",
+                  )
+                return (
+                  <li key={item.to}>
+                    {hash ? (
+                      <a
+                        href={item.to}
+                        onClick={onNavigate}
+                        className={className({ isActive: false })}
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <NavLink
+                        to={item.to}
+                        end={item.to === "/"}
+                        onClick={onNavigate}
+                        className={className}
+                      >
+                        {item.label}
+                      </NavLink>
+                    )}
+                  </li>
                 )
-              return (
-                <li key={item.to}>
-                  {hash ? (
-                    <a
-                      href={item.to}
-                      onClick={onNavigate}
-                      className={className({ isActive: false })}
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <NavLink
-                      to={item.to}
-                      end={item.to === "/"}
-                      onClick={onNavigate}
-                      className={className}
-                    >
-                      {item.label}
-                    </NavLink>
-                  )}
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      ))}
+              })}
+            </ul>
+          </div>
+        ))}
+        {bar ? (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-0 w-px bg-foreground transition-[top,height] duration-200 ease-out motion-reduce:transition-none"
+            style={{ top: bar.top, height: bar.height }}
+          />
+        ) : null}
+      </div>
     </nav>
   )
 }
