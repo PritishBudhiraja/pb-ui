@@ -9,8 +9,6 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "@pritish.budhiraja/docs",
-    "@pritish.budhiraja/storybook",
-    "@pritish.budhiraja/vite-consumer",
-    "@pritish.budhiraja/next-consumer"
+    "@pritish.budhiraja/storybook"
   ]
 }

@@ -48,7 +48,7 @@ Vitest is on 5.x so `@vitest/mocker` and tinypool come from the patched tree. `u
 | recharts                           | Optional `/charts` entry only     | product-owned charts | MIT     |
 | @tanstack/react-virtual            | VirtualList                       | windowing by hand    | MIT     |
 
-Next.js and `@tailwindcss/postcss` are only dependencies of `apps/next-consumer`. They are not part of `@pritish.budhiraja/ui`. The consumer uses Next 16.2+ because Next 15 cannot load TypeScript 7 (no JavaScript compiler API). The library itself does not depend on Next.
+Next.js and `@tailwindcss/postcss` are only dependencies of the `consumers/next` fixture, which `pnpm test:pack` installs outside the workspace. They are not part of `@pritish.budhiraja/ui`. The consumer uses Next 16.2+ because Next 15 cannot load TypeScript 7 (no JavaScript compiler API). The library itself does not depend on Next.
 
 ## Explicitly not installed
 
