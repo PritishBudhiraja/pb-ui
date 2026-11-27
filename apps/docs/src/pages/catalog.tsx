@@ -1,10 +1,7 @@
 import { cn, EditorialHeading, Text } from "@pritish.budhiraja/ui"
 import { Link } from "react-router-dom"
-import { CATALOG } from "../catalog"
+import { CATALOG, DOCS } from "../content"
 import { PageHeader } from "../ui/preview"
-import { CORE_DOCS } from "./components"
-import { EXPANSION_DOCS } from "./expansion-docs"
-import { EXTRA_DOCS } from "./extra-docs"
 
 const WIDE = new Set([
   "week-calendar",
@@ -24,10 +21,6 @@ const WIDE = new Set([
   "navbar",
 ])
 
-function livePreview(slug: string) {
-  return CORE_DOCS[slug]?.preview ?? EXTRA_DOCS[slug]?.preview ?? EXPANSION_DOCS[slug]?.preview
-}
-
 export function CatalogPage() {
   return (
     <article className="space-y-16">
@@ -42,7 +35,7 @@ export function CatalogPage() {
           <Text tone="muted">{category.purpose}</Text>
           <div className="grid gap-4 md:grid-cols-2">
             {category.items.map((item) => {
-              const preview = livePreview(item.slug)
+              const preview = DOCS[item.slug]?.preview
               return (
                 <article
                   key={item.slug}

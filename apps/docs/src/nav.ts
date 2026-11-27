@@ -1,4 +1,6 @@
-import { CATALOG, type CatalogCategory, FOUNDATION_SECTIONS, PROJECT_NAV, TABS } from "./catalog"
+import { CATALOG } from "./content"
+import type { CatalogCategory } from "./content/types"
+import { FOUNDATION_SECTIONS, PROJECT_NAV, TABS } from "./nav-data"
 
 export interface NavItem {
   to: string

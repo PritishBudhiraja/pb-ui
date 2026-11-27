@@ -23,7 +23,7 @@ const ContributingPage = lazy(() =>
   import("./pages/overview").then((module) => ({ default: module.ContributingPage })),
 )
 const ComponentPage = lazy(() =>
-  import("./pages/components").then((module) => ({ default: module.ComponentPage })),
+  import("./pages/component").then((module) => ({ default: module.ComponentPage })),
 )
 
 export function App() {

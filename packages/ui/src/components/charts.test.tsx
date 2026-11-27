@@ -104,4 +104,20 @@ describe("charts", () => {
     expect(container.querySelectorAll('[data-part="cell"]')).toHaveLength(2)
     expect(error.mock.calls.flat().join(" ")).not.toContain("same key")
   })
+
+  it("renders charts", () => {
+    const data = [
+      { name: "Mon", deep: 2, shallow: 1, value: 3 },
+      { name: "Tue", deep: 1, shallow: 2, value: 3 },
+    ]
+    render(
+      <>
+        <StackedBarChart data={data} series={[{ key: "deep" }, { key: "shallow" }]} />
+        <AreaChart data={data} series={[{ key: "value", label: "Hours" }]} />
+        <AreaChart data={data} series={[]} />
+        <DonutChart data={data} />
+      </>,
+    )
+    expect(screen.getByRole("img", { name: "Stacked bar chart" })).toBeInTheDocument()
+  })
 })

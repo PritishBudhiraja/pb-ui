@@ -313,4 +313,25 @@ describe("WeekCalendar", () => {
     expect(set).not.toHaveBeenCalled()
     set.mockRestore()
   })
+
+  it("renders a week event and ignores invalid ones", async () => {
+    const onEventSelect = vi.fn()
+    const user = userEvent.setup()
+    render(
+      <>
+        <WeekCalendar weekStart="nope" events={[]} />
+        <WeekCalendar
+          weekStart="2026-11-22"
+          onEventSelect={onEventSelect}
+          events={[
+            { id: "a", start: "2026-11-23T09:00", end: "2026-11-23T10:30", label: "Focus" },
+            { id: "bad", start: "nope", end: "nope", label: "Bad" },
+            { id: "out", start: "2026-01-01T09:00", end: "2026-01-01T10:00", label: "Out" },
+          ]}
+        />
+      </>,
+    )
+    await user.click(screen.getByRole("button", { name: /Focus/ }))
+    expect(onEventSelect).toHaveBeenCalledWith("a")
+  })
 })
