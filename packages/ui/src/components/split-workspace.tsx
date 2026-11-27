@@ -39,6 +39,24 @@ export function ResizablePanel({
   )
 }
 
+function percentOf(size: number | string) {
+  if (typeof size !== "string") return null
+  const match = /^\s*(\d+(?:\.\d+)?)\s*%?\s*$/.exec(size)
+  return match ? Number(match[1]) : null
+}
+
+// Defaults must add up to 100 or react-resizable-panels rescales every panel.
+// A pixel or other-unit side cannot be summed, so main then takes what is left.
+function mainSize(sides: (number | string)[]) {
+  let total = 0
+  for (const side of sides) {
+    const value = percentOf(side)
+    if (value === null) return undefined
+    total += value
+  }
+  return String(100 - total)
+}
+
 export function SplitWorkspace({
   nav,
   main,
@@ -47,6 +65,9 @@ export function SplitWorkspace({
   defaultInspectorSize = "24",
   className,
 }: SplitWorkspaceProps) {
+  const sides = [nav ? defaultNavSize : null, inspector ? defaultInspectorSize : null].filter(
+    (side) => side !== null,
+  )
   return (
     <SplitPane className={className}>
       {nav ? (
@@ -57,7 +78,7 @@ export function SplitWorkspace({
           <Separator className="w-px bg-border" />
         </>
       ) : null}
-      <ResizablePanel defaultSize={inspector ? "56" : "80"} minSize="30">
+      <ResizablePanel defaultSize={mainSize(sides)} minSize="30">
         {main}
       </ResizablePanel>
       {inspector ? (

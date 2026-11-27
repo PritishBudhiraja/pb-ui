@@ -1,6 +1,7 @@
 "use client"
 
-import { type ChangeEvent, type DragEvent, useRef, useState } from "react"
+import { type ChangeEvent, type DragEvent, useId, useRef, useState } from "react"
+import { useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 import { Button } from "./button"
 import { Input } from "./input"
@@ -16,6 +17,22 @@ export interface FileDropzoneProps {
   className?: string
 }
 
+// Mirrors the file input's accept rules: MIME types, type/* wildcards and .ext suffixes.
+export function acceptsFile(file: File, accept = "") {
+  const rules = accept
+    .split(",")
+    .map((rule) => rule.trim().toLowerCase())
+    .filter(Boolean)
+  if (rules.length === 0) return true
+  const name = file.name.toLowerCase()
+  const type = file.type.toLowerCase()
+  return rules.some((rule) => {
+    if (rule.startsWith(".")) return name.endsWith(rule)
+    if (rule.endsWith("/*")) return type.startsWith(rule.slice(0, -1))
+    return type === rule
+  })
+}
+
 export function FileDropzone({
   onFiles,
   accept,
@@ -26,21 +43,25 @@ export function FileDropzone({
 }: FileDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [active, setActive] = useState(false)
+  const labelId = useId()
+  const inputId = useId()
+  const control = useFormFieldControl({ "aria-describedby": labelId })
 
-  function take(list: FileList | null) {
-    if (!list) return
-    onFiles([...list])
+  function take(files: File[]) {
+    if (files.length === 0) return
+    onFiles(files)
   }
 
   function onDrop(event: DragEvent<HTMLDivElement>) {
     event.preventDefault()
     setActive(false)
     if (disabled) return
-    take(event.dataTransfer.files)
+    const accepted = [...event.dataTransfer.files].filter((file) => acceptsFile(file, accept))
+    take(multiple ? accepted : accepted.slice(0, 1))
   }
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    take(event.target.files)
+    take(event.target.files ? [...event.target.files] : [])
     event.target.value = ""
   }
 
@@ -63,14 +84,20 @@ export function FileDropzone({
       <Input
         ref={inputRef}
         type="file"
+        id={inputId}
+        tabIndex={-1}
+        aria-hidden
         className="sr-only"
         accept={accept}
         multiple={multiple}
         disabled={disabled}
         onChange={onChange}
       />
-      <Text tone="muted">{label}</Text>
+      <Text id={labelId} tone="muted">
+        {label}
+      </Text>
       <Button
+        {...control}
         type="button"
         size="sm"
         variant="outline"

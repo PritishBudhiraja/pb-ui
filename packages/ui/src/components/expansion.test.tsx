@@ -57,6 +57,13 @@ vi.mock("@tanstack/react-virtual", () => ({
 
 vi.mock("@tiptap/react", () => ({
   useEditor: vi.fn(),
+  useEditorState: ({
+    editor,
+    selector,
+  }: {
+    editor: unknown
+    selector: (context: { editor: unknown; transactionNumber: number }) => unknown
+  }) => selector({ editor, transactionNumber: 0 }),
   EditorContent: () => <div />,
 }))
 

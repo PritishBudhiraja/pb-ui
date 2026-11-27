@@ -26,7 +26,7 @@ export function TimeAllocationBar({
       >
         {segments.map((segment, index) => (
           <span
-            key={segment.label}
+            key={index}
             title={`${segment.label}: ${segment.value}`}
             className={cn("h-full", index % 2 === 0 ? "bg-foreground" : "bg-foreground/40")}
             style={{ width: `${(Math.max(0, segment.value) / total) * 100}%` }}
@@ -34,8 +34,8 @@ export function TimeAllocationBar({
         ))}
       </div>
       <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-        {segments.map((segment) => (
-          <li key={segment.label}>
+        {segments.map((segment, index) => (
+          <li key={index}>
             {segment.label} · {segment.value}
           </li>
         ))}

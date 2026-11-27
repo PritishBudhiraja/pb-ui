@@ -177,6 +177,30 @@ describe("Calendar", () => {
     await user.click(screen.getByRole("button", { name: "Monday, November 16, 2026" }))
   })
 
+  it("announces every day in the range as pressed", async () => {
+    render(
+      <Calendar
+        mode="range"
+        month={new Date(2026, 10, 1)}
+        range={{ from: "2026-11-12", to: "2026-11-16" }}
+        onMonthChange={vi.fn()}
+        onSelect={vi.fn()}
+      />,
+    )
+    for (const name of [
+      "Thursday, November 12, 2026",
+      "Saturday, November 14, 2026",
+      "Monday, November 16, 2026",
+    ]) {
+      expect(screen.getByRole("button", { name })).toHaveAttribute("aria-pressed", "true")
+    }
+    expect(screen.getByRole("button", { name: "Tuesday, November 17, 2026" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    )
+    await expectNoAxeViolations()
+  })
+
   it("starts a range when no range value is passed", async () => {
     const onRangeChange = vi.fn()
     const user = userEvent.setup()

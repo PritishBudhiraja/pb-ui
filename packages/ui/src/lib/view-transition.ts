@@ -11,8 +11,14 @@ export async function revealFromOrigin(origin: HTMLElement, update: () => void, 
 
   if (name) document.documentElement.setAttribute("data-theme-transition", name)
 
+  let updated = false
+  const run = () => {
+    updated = true
+    update()
+  }
+
   try {
-    const transition = document.startViewTransition(update)
+    const transition = document.startViewTransition(run)
     await transition.ready
     document.documentElement.animate(
       {
@@ -26,7 +32,8 @@ export async function revealFromOrigin(origin: HTMLElement, update: () => void, 
     )
     await transition.finished
   } catch {
-    update()
+    // ready and finished also reject when a transition is skipped after the update already ran.
+    if (!updated) update()
   } finally {
     document.documentElement.removeAttribute("data-theme-transition")
   }

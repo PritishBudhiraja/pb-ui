@@ -19,6 +19,13 @@ export interface StepperProps {
   label?: string
 }
 
+const statusText: Record<StepStatus, string> = {
+  done: "Completed",
+  current: "Current step",
+  pending: "Not started",
+  error: "Error",
+}
+
 function statusFor(index: number, current: number, explicit?: StepStatus): StepStatus {
   if (explicit) return explicit
   if (index < current) return "done"
@@ -38,7 +45,11 @@ export function Stepper({
       {steps.map((step, index) => {
         const status = statusFor(index, current, step.status)
         return (
-          <li key={step.id} className="flex gap-3">
+          <li
+            key={step.id}
+            className="flex gap-3"
+            aria-current={status === "current" ? "step" : undefined}
+          >
             <span
               className={cn(
                 "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px]",
@@ -47,9 +58,13 @@ export function Stepper({
                 status === "pending" && "border-border text-muted-foreground",
                 status === "error" && "border-destructive text-destructive",
               )}
-              aria-current={status === "current" ? "step" : undefined}
             >
-              {numbered ? index + 1 : status === "done" ? "✓" : status === "error" ? "!" : "•"}
+              {numbered ? (
+                index + 1
+              ) : (
+                <span aria-hidden>{status === "done" ? "✓" : status === "error" ? "!" : "•"}</span>
+              )}
+              <span className="sr-only">{statusText[status]}</span>
             </span>
             <div>
               <Heading as="h3" size="sm">

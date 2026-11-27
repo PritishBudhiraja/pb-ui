@@ -54,6 +54,8 @@ export function VirtualList<T>({
         return (
           <li
             key={row.key}
+            aria-setsize={items.length}
+            aria-posinset={row.index + 1}
             className="absolute left-0 top-0 m-0 w-full list-none p-0"
             style={{ height: row.size, transform: `translateY(${row.start}px)` }}
           >

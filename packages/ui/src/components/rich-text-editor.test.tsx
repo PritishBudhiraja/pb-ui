@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeAll, describe, expect, it, vi } from "vitest"
+import { expectNoAxeViolations } from "../test/axe"
+import { FormField } from "./form-field"
 import { RichTextEditor } from "./rich-text-editor"
 
 beforeAll(() => {
@@ -55,5 +57,43 @@ describe("RichTextEditor", () => {
     await user.click(screen.getByRole("button", { name: "Italic" }))
     await user.click(screen.getByRole("button", { name: "List" }))
     expect(onValueChange).toHaveBeenCalled()
+  })
+
+  it("hides the placeholder and presses Bold as the editor changes", async () => {
+    const user = userEvent.setup()
+    render(<RichTextEditor placeholder="Write" />)
+    const textbox = await screen.findByRole("textbox", { name: "Editor" })
+    expect(screen.getByText("Write")).toBeInTheDocument()
+    const bold = screen.getByRole("button", { name: "Bold" })
+    expect(bold).toHaveAttribute("aria-pressed", "false")
+    await user.click(textbox)
+    await user.keyboard("Typed")
+    await waitFor(() => expect(screen.queryByText("Write")).toBeNull())
+    await user.click(bold)
+    await waitFor(() => expect(bold).toHaveAttribute("aria-pressed", "true"))
+    expect(screen.getByRole("button", { name: "Italic" })).toHaveAttribute("aria-pressed", "false")
+    await expectNoAxeViolations()
+  })
+
+  it("joins a FormField label, hint and error", async () => {
+    const { rerender } = render(
+      <FormField label="Notes" htmlFor="notes" hint="Markdown is not supported">
+        <RichTextEditor />
+      </FormField>,
+    )
+    const textbox = await screen.findByRole("textbox", { name: "Notes" })
+    expect(textbox).toHaveAttribute("id", "notes")
+    expect(textbox).not.toHaveAttribute("aria-label")
+    expect(textbox).toHaveAccessibleDescription("Markdown is not supported")
+    expect(textbox).not.toHaveAttribute("aria-invalid")
+    await expectNoAxeViolations()
+    rerender(
+      <FormField label="Notes" htmlFor="notes" error="Add a note">
+        <RichTextEditor />
+      </FormField>,
+    )
+    await waitFor(() => expect(textbox).toHaveAttribute("aria-invalid", "true"))
+    expect(textbox).toHaveAccessibleDescription("Add a note")
+    await expectNoAxeViolations()
   })
 })
