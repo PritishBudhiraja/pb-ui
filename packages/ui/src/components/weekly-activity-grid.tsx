@@ -57,7 +57,7 @@ export function WeeklyActivityGrid({
         ))}
         {dayLabels.slice(0, 7).map((day, dayIndex) => (
           <DayRow
-            key={day}
+            key={dayIndex}
             day={day}
             dayIndex={dayIndex as 0 | 1 | 2 | 3 | 4 | 5 | 6}
             hours={hours}
@@ -90,7 +90,11 @@ function DayRow({
             key={`${dayIndex}-${hour}`}
             title={`${day} ${hour}:00 · ${value}`}
             className={cn("h-4 rounded-sm", tone(value))}
-          />
+          >
+            <span className="sr-only">
+              {day} {hour}:00, {value}
+            </span>
+          </div>
         )
       })}
     </>

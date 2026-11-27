@@ -18,6 +18,7 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { ChevronDown, ChevronUp, GripVertical } from "lucide-react"
+import { useId } from "react"
 import { useControlledState } from "../hooks/use-controlled-state"
 import { cn } from "../lib/cn"
 import { IconButton } from "./icon-button"
@@ -120,6 +121,8 @@ export function SortableList({
     defaultValue: defaultItems,
     onChange: onReorder,
   })
+  // dnd-kit's own id counter differs between server and client renders.
+  const dndId = useId()
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -130,11 +133,17 @@ export function SortableList({
   }
 
   function onDragEnd(event: DragEndEvent) {
-    setList(handleSortEnd(list, event.active.id, event.over?.id))
+    const next = handleSortEnd(list, event.active.id, event.over?.id)
+    if (next !== list) setList(next)
   }
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+    <DndContext
+      id={dndId}
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={onDragEnd}
+    >
       <SortableContext items={list.map((item) => item.id)} strategy={verticalListSortingStrategy}>
         <ul aria-label={label} className={cn("grid gap-2", className)}>
           {list.map((item, index) => (

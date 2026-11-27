@@ -1,8 +1,9 @@
 "use client"
 
-import { EditorContent, useEditor } from "@tiptap/react"
+import { type Editor, EditorContent, useEditor, useEditorState } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
-import { useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useRef } from "react"
+import { FormFieldContext, useFormFieldControl } from "../hooks/use-form-field-control"
 import { cn } from "../lib/cn"
 import { Button } from "./button"
 
@@ -28,19 +29,26 @@ export function RichTextEditor({
   className,
   label = "Editor",
 }: RichTextEditorProps) {
-  const [, setRevision] = useState(0)
   const synced = useRef<string | null>(null)
+  const field = useContext(FormFieldContext)
+  const control = useFormFieldControl({})
+  const attributes: Record<string, string> = {
+    class: "min-h-32 px-3 py-2 text-sm outline-none",
+    role: "textbox",
+    "aria-multiline": "true",
+  }
+  if (control.id) attributes.id = control.id
+  if (control["aria-describedby"]) attributes["aria-describedby"] = control["aria-describedby"]
+  if (control["aria-invalid"]) attributes["aria-invalid"] = "true"
+  if (field) attributes["aria-labelledby"] = field.labelId
+  else attributes["aria-label"] = label
+
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [StarterKit],
     content: value,
     editable,
-    editorProps: {
-      attributes: {
-        class: "min-h-32 px-3 py-2 text-sm outline-none",
-        "aria-label": label,
-      },
-    },
+    editorProps: { attributes },
     onUpdate: ({ editor: instance }) => {
       onValueChange?.(instance.getHTML())
     },
@@ -69,7 +77,6 @@ export function RichTextEditor({
     synced.current = next
     if (next === "") editor.commands.clearContent(false)
     else editor.commands.setContent(value, { emitUpdate: false })
-    setRevision((revision) => revision + 1)
   }, [editor, value])
 
   if (!editor)
@@ -78,12 +85,45 @@ export function RichTextEditor({
     )
 
   return (
+    <RichTextSurface
+      editor={editor}
+      editable={editable}
+      placeholder={placeholder}
+      className={className}
+    />
+  )
+}
+
+function RichTextSurface({
+  editor,
+  editable,
+  placeholder,
+  className,
+}: {
+  editor: Editor
+  editable: boolean
+  placeholder?: string
+  className?: string
+}) {
+  // useEditor does not re-render on transactions, so read live editor state through a subscription.
+  const state = useEditorState({
+    editor,
+    selector: ({ editor: instance }) => ({
+      isEmpty: instance.isEmpty,
+      bold: instance.isActive("bold"),
+      italic: instance.isActive("italic"),
+      bulletList: instance.isActive("bulletList"),
+    }),
+  })
+
+  return (
     <div className={cn("overflow-hidden rounded-md border border-dashed border-border", className)}>
       <div className="flex flex-wrap gap-1 border-b border-dashed border-border p-1">
         <Button
           type="button"
           size="sm"
-          variant={editor.isActive("bold") ? "default" : "ghost"}
+          variant={state.bold ? "default" : "ghost"}
+          aria-pressed={state.bold}
           disabled={!editable}
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
@@ -92,7 +132,8 @@ export function RichTextEditor({
         <Button
           type="button"
           size="sm"
-          variant={editor.isActive("italic") ? "default" : "ghost"}
+          variant={state.italic ? "default" : "ghost"}
+          aria-pressed={state.italic}
           disabled={!editable}
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
@@ -101,7 +142,8 @@ export function RichTextEditor({
         <Button
           type="button"
           size="sm"
-          variant={editor.isActive("bulletList") ? "default" : "ghost"}
+          variant={state.bulletList ? "default" : "ghost"}
+          aria-pressed={state.bulletList}
           disabled={!editable}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
@@ -109,7 +151,7 @@ export function RichTextEditor({
         </Button>
       </div>
       <div className="relative">
-        {placeholder && editor.isEmpty ? (
+        {placeholder && state.isEmpty ? (
           <div className="pointer-events-none absolute top-2 left-3 text-sm text-muted-foreground">
             {placeholder}
           </div>

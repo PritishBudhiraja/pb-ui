@@ -8,7 +8,7 @@ export interface CountdownDisplayProps {
 }
 
 function parts(total: number) {
-  const safe = Math.max(0, Math.floor(total))
+  const safe = Number.isFinite(total) ? Math.max(0, Math.floor(total)) : 0
   const hours = Math.floor(safe / 3600)
   const minutes = Math.floor((safe % 3600) / 60)
   const seconds = safe % 60

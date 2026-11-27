@@ -146,7 +146,7 @@ export function Calendar({
               type="button"
               data-iso={outside ? undefined : iso}
               aria-label={dayLabel.format(date)}
-              aria-pressed={selected}
+              aria-pressed={selected || inRange}
               aria-current={isToday ? "date" : undefined}
               tabIndex={iso === tabStop && !outside ? 0 : -1}
               disabled={disabled}
