@@ -14,7 +14,7 @@ import {
 } from "@pritish.budhiraja/ui"
 import { OriginButton } from "@pritish.budhiraja/ui/motion"
 import { Link } from "react-router-dom"
-import { CATALOG } from "../catalog"
+import { CATALOG } from "../content"
 import { useDocsTheme } from "../theme"
 import { CategoryCard, CodeBlock, PackageManager } from "../ui/code"
 

@@ -1,9 +1,9 @@
 # Architecture
 
-pnpm workspace with two publishable packages (`tokens`, `ui`) and a private Storybook app.
+pnpm workspace with two publishable packages (`tokens`, `ui`) and a private docs app.
 
 ```
-apps/storybook     engineering preview
+apps/docs          docs site, renders every component live
 packages/tokens    CSS variables and theme files
 packages/ui        React components, hooks, compiled styles.css
 docs               specifications and ADRs

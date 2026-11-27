@@ -6,10 +6,8 @@
   "packageManager": "pnpm@10.18.0",
   "scripts": {
     "dev": "pnpm --filter @pritish.budhiraja/docs dev",
-    "storybook": "pnpm --filter @pritish.budhiraja/storybook dev",
     "build": "pnpm --filter @pritish.budhiraja/ui build",
     "build:docs": "pnpm --filter @pritish.budhiraja/docs build",
-    "build:storybook": "pnpm --filter @pritish.budhiraja/storybook build",
     "lint": "biome check . && pnpm --filter @pritish.budhiraja/ui typecheck && pnpm --filter @pritish.budhiraja/docs typecheck",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
@@ -48,10 +46,8 @@
       "@parcel/watcher"
     ],
     "overrides": {
-      "glob": "^14.0.6",
       "minimatch": "^11.0.1",
-      "tinypool": "^2.2.0",
-      "uuid": "^11.1.1"
+      "tinypool": "^2.2.0"
     },
     "peerDependencyRules": {
       "allowedVersions": {

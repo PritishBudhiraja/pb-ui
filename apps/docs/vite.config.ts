@@ -26,7 +26,7 @@ export default defineConfig({
           if (id.includes("node_modules/framer-motion")) return "motion"
           if (id.includes("node_modules/@radix-ui")) return "radix"
           if (id.includes("node_modules/cmdk")) return "cmdk"
-          if (id.includes("pages/components")) return "component-docs"
+          if (id.includes("/src/content/")) return "component-docs"
         },
       },
     },
