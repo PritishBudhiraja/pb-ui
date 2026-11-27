@@ -1,6 +1,6 @@
 import { cn, CodeBlock as HatchCodeBlock, toast } from "@pritish.budhiraja/ui"
 import { type ReactNode, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link } from "./link"
 
 const MANAGERS = ["pnpm", "npm", "bun"] as const
 type Manager = (typeof MANAGERS)[number]

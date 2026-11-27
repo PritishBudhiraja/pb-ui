@@ -13,10 +13,10 @@ import {
   TimeAllocationBar,
 } from "@pritish.budhiraja/ui"
 import { OriginButton } from "@pritish.budhiraja/ui/motion"
-import { Link } from "react-router-dom"
 import { CATALOG } from "../content"
 import { useDocsTheme } from "../theme"
 import { CategoryCard, CodeBlock, PackageManager } from "../ui/code"
+import { Link } from "../ui/link"
 
 const CSS_IMPORT = `import "@pritish.budhiraja/ui/styles.css"`
 const USAGE = `import { Button, FramedContainer } from "@pritish.budhiraja/ui"

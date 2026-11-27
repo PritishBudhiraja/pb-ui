@@ -1,8 +1,8 @@
 import { cn, EditorialHeading, Text } from "@pritish.budhiraja/ui"
 import { use } from "react"
-import { Link } from "react-router-dom"
 import { CATALOG } from "../content"
 import { loadAllDocs } from "../content/docs"
+import { Link } from "../ui/link"
 import { PageHeader } from "../ui/preview"
 
 const WIDE = new Set([

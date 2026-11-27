@@ -1,60 +1,68 @@
-import { lazy } from "react"
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, redirect } from "react-router-dom"
+import { loadAllDocs, loadDoc } from "./content/docs"
 import { DocsLayout } from "./layout"
 import { ThemeStateProvider } from "./theme"
 
-const HomePage = lazy(() => import("./pages/home").then((module) => ({ default: module.HomePage })))
-const CatalogPage = lazy(() =>
-  import("./pages/catalog").then((module) => ({ default: module.CatalogPage })),
-)
-const FoundationsPage = lazy(() =>
-  import("./pages/foundations").then((module) => ({ default: module.FoundationsPage })),
-)
-const AgentsPage = lazy(() =>
-  import("./pages/agents").then((module) => ({ default: module.AgentsPage })),
-)
-const HooksPage = lazy(() =>
-  import("./pages/overview").then((module) => ({ default: module.HooksPage })),
-)
-const ChangelogPage = lazy(() =>
-  import("./pages/overview").then((module) => ({ default: module.ChangelogPage })),
-)
-const ContributingPage = lazy(() =>
-  import("./pages/overview").then((module) => ({ default: module.ContributingPage })),
-)
-const ComponentPage = lazy(() =>
-  import("./pages/component").then((module) => ({ default: module.ComponentPage })),
-)
+const to = (path: string) => () => redirect(path)
+
+// Routes load their code and data before the navigation commits, so the view transition
+// cross-fades between two finished pages instead of a page and a loading state.
+const router = createBrowserRouter([
+  {
+    element: <DocsLayout />,
+    HydrateFallback: () => null,
+    children: [
+      { index: true, lazy: async () => ({ Component: (await import("./pages/home")).HomePage }) },
+      {
+        path: "components",
+        loader: () => loadAllDocs(),
+        lazy: async () => ({ Component: (await import("./pages/catalog")).CatalogPage }),
+      },
+      {
+        path: "components/:slug",
+        loader: async ({ params }) => {
+          const doc = params.slug ? await loadDoc(params.slug) : undefined
+          return doc ?? redirect("/components")
+        },
+        lazy: async () => ({ Component: (await import("./pages/component")).ComponentPage }),
+      },
+      {
+        path: "foundations",
+        lazy: async () => ({ Component: (await import("./pages/foundations")).FoundationsPage }),
+      },
+      {
+        path: "agents",
+        lazy: async () => ({ Component: (await import("./pages/agents")).AgentsPage }),
+      },
+      {
+        path: "hooks",
+        lazy: async () => ({ Component: (await import("./pages/overview")).HooksPage }),
+      },
+      {
+        path: "changelog",
+        lazy: async () => ({ Component: (await import("./pages/overview")).ChangelogPage }),
+      },
+      {
+        path: "contributing",
+        lazy: async () => ({ Component: (await import("./pages/overview")).ContributingPage }),
+      },
+      { path: "installation", loader: to("/#install") },
+      { path: "getting-started", loader: to("/#install") },
+      { path: "philosophy", loader: to("/foundations#philosophy") },
+      { path: "colors", loader: to("/foundations#colors") },
+      { path: "typography", loader: to("/foundations#typography") },
+      { path: "spacing", loader: to("/foundations#spacing") },
+      { path: "motion", loader: to("/foundations#motion") },
+      { path: "themes", loader: to("/foundations#themes") },
+      { path: "accessibility", loader: to("/foundations#accessibility") },
+    ],
+  },
+])
 
 export function App() {
   return (
     <ThemeStateProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<DocsLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="components" element={<CatalogPage />} />
-            <Route path="components/:slug" element={<ComponentPage />} />
-            <Route path="foundations" element={<FoundationsPage />} />
-            <Route path="agents" element={<AgentsPage />} />
-            <Route path="hooks" element={<HooksPage />} />
-            <Route path="changelog" element={<ChangelogPage />} />
-            <Route path="contributing" element={<ContributingPage />} />
-            <Route path="installation" element={<Navigate to="/#install" replace />} />
-            <Route path="getting-started" element={<Navigate to="/#install" replace />} />
-            <Route path="philosophy" element={<Navigate to="/foundations#philosophy" replace />} />
-            <Route path="colors" element={<Navigate to="/foundations#colors" replace />} />
-            <Route path="typography" element={<Navigate to="/foundations#typography" replace />} />
-            <Route path="spacing" element={<Navigate to="/foundations#spacing" replace />} />
-            <Route path="motion" element={<Navigate to="/foundations#motion" replace />} />
-            <Route path="themes" element={<Navigate to="/foundations#themes" replace />} />
-            <Route
-              path="accessibility"
-              element={<Navigate to="/foundations#accessibility" replace />}
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </ThemeStateProvider>
   )
 }

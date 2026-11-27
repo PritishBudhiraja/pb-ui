@@ -1,6 +1,7 @@
 import { use } from "react"
-import { Link, Navigate, useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 import { loadDoc } from "../content/docs"
+import { Link } from "../ui/link"
 import { PageHeader, PropTable } from "../ui/preview"
 
 export function ComponentPage() {
