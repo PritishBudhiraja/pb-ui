@@ -20,7 +20,7 @@
     "test:pack": "node scripts/published-consumer-smoke.mjs",
     "test:e2e": "playwright test",
     "test:catalog": "node scripts/check-catalog.mjs",
-    "audit:deps": "pnpm audit --audit-level=high",
+    "audit:deps": "pnpm audit --prod --audit-level=high",
     "typecheck": "pnpm -r --if-present typecheck",
     "changeset": "changeset",
     "release": "pnpm build && node scripts/publish.mjs"

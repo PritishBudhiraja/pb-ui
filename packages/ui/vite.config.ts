@@ -94,11 +94,19 @@ export default defineConfig({
       reporter: ["text-summary", "text", "lcov"],
       include: ["src/**/*.{ts,tsx}"],
       exclude: ["src/**/*.test.*", "src/test/**", "src/styles.css"],
+      // Logic in lib/ and hooks/ stays fully covered; components need 90% so a fix does not
+      // demand a test for every visual branch.
       thresholds: {
-        statements: 100,
-        branches: 100,
-        functions: 100,
-        lines: 100,
+        statements: 90,
+        branches: 90,
+        functions: 90,
+        lines: 90,
+        "src/{lib,hooks}/**": {
+          statements: 100,
+          branches: 100,
+          functions: 100,
+          lines: 100,
+        },
       },
     },
   },

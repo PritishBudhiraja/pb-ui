@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-test("editor, calendar, theme, and serif", async ({ page }) => {
+test("serif heading, theme tokens, editor and calendar", async ({ page }) => {
   const errors: string[] = []
   page.on("pageerror", (error) => errors.push(error.message))
   page.on("console", (message) => {
@@ -14,9 +14,11 @@ test("editor, calendar, theme, and serif", async ({ page }) => {
   expect(family).toMatch(/Instrument Serif|Georgia/i)
 
   const surface = page.locator("div.min-h-svh")
-  const lightBg = await surface.evaluate((node) => getComputedStyle(node).backgroundColor)
+  await expect(surface).toHaveCSS("background-color", "rgb(255, 255, 255)")
   await page.getByRole("button", { name: "Toggle theme" }).click()
-  await expect(surface).not.toHaveCSS("background-color", lightBg)
+  // The theme switches inside a view transition, after the click resolves.
+  await expect(surface).toHaveCSS("background-color", "rgb(10, 10, 10)")
+  await expect(heading).not.toHaveCSS("color", "rgb(255, 255, 255)")
 
   await page.getByLabel("Editor").click()
   await page.keyboard.type("Typed in TipTap")

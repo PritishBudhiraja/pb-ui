@@ -21,8 +21,6 @@ Next 16 defaults to Turbopack, which `require()`s Tailwind's ESM. The fixture bu
 
 Results are written to `artifacts/published/smoke.json` (gitignored). Re-run locally after changing exports.
 
-Workspace apps `apps/vite-consumer` and `apps/next-consumer` still use `workspace:*` for fast iteration. They are **not** the publish contract.
-
 ## Registry baseline (0.5.0 / 0.1.2)
 
 Installed 26 Nov 2026 from npm, before this hardening pass:

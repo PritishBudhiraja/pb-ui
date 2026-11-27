@@ -1,7 +1,10 @@
 name: Release
 
+# Runs after CI passes on main, so lint, tests, builds and e2e are not repeated here.
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
 
 concurrency:
@@ -15,10 +18,13 @@ permissions:
 
 jobs:
   release:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
@@ -34,15 +40,6 @@ jobs:
       - run: npm install -g npm@11
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm lint
-      - run: pnpm test:coverage
-      - run: pnpm build
-      - run: pnpm build:storybook
-      - run: pnpm test:catalog
-      - run: pnpm test:pack
-      - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:e2e
-      - run: pnpm audit:deps
 
       # Changesets only opens the "Version packages" PR; publishing is the next step.
       - name: Open or update the version PR
@@ -55,6 +52,11 @@ jobs:
 
       # While changesets are pending, the checkout holds the version PR's bumped
       # versions. Publish only once the version PR has merged and none remain.
+      # Builds and packs the packages, then installs and builds them in Next and Vite apps.
+      - name: Check the packed packages in consumer apps
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: pnpm test:pack
+
       - name: Publish versions that are not on npm
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: node scripts/publish.mjs
