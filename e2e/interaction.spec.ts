@@ -13,14 +13,10 @@ test("editor, calendar, theme, and serif", async ({ page }) => {
   const family = await heading.evaluate((node) => getComputedStyle(node).fontFamily)
   expect(family).toMatch(/Instrument Serif|Georgia/i)
 
-  const lightBg = await page
-    .locator("div.min-h-svh")
-    .evaluate((node) => getComputedStyle(node).backgroundColor)
+  const surface = page.locator("div.min-h-svh")
+  const lightBg = await surface.evaluate((node) => getComputedStyle(node).backgroundColor)
   await page.getByRole("button", { name: "Toggle theme" }).click()
-  const darkBg = await page
-    .locator("div.min-h-svh")
-    .evaluate((node) => getComputedStyle(node).backgroundColor)
-  expect(darkBg).not.toBe(lightBg)
+  await expect(surface).not.toHaveCSS("background-color", lightBg)
 
   await page.getByLabel("Editor").click()
   await page.keyboard.type("Typed in TipTap")
