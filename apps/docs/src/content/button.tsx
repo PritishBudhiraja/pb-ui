@@ -23,6 +23,7 @@ export const doc: ComponentDoc = {
   slug: "button",
   name: "Button",
   when: "Default, outline, ghost, and sizes.",
+  keywords: "button variant size ghost outline disabled asChild",
   sibling: "OriginButton for signature CTAs.",
   title: "Button",
   kicker: "Primitive",

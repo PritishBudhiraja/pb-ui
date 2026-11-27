@@ -1,6 +1,8 @@
 import { cn, EditorialHeading, Text } from "@pritish.budhiraja/ui"
+import { use } from "react"
 import { Link } from "react-router-dom"
-import { CATALOG, DOCS } from "../content"
+import { CATALOG } from "../content"
+import { loadAllDocs } from "../content/docs"
 import { PageHeader } from "../ui/preview"
 
 const WIDE = new Set([
@@ -22,6 +24,7 @@ const WIDE = new Set([
 ])
 
 export function CatalogPage() {
+  const docs = use(loadAllDocs())
   return (
     <article className="space-y-16">
       <PageHeader
@@ -35,7 +38,7 @@ export function CatalogPage() {
           <Text tone="muted">{category.purpose}</Text>
           <div className="grid gap-4 md:grid-cols-2">
             {category.items.map((item) => {
-              const preview = DOCS[item.slug]?.preview
+              const preview = docs[item.slug]?.preview
               return (
                 <article
                   key={item.slug}

@@ -14,6 +14,7 @@ export const doc: ComponentDoc = {
   slug: "dialog",
   name: "Dialog",
   when: "Modal task.",
+  keywords: "dialog modal overlay focus trap",
   title: "Dialog",
   kicker: "Overlay",
   description: "Radix dialog with portfolio overlay blur.",

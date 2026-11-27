@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "heading",
   name: "Heading",
   when: "UI heading. EditorialHeading for serif display.",
+  keywords: "heading editorial heading serif italic",
   title: "Heading",
   kicker: "Typography",
   description: "Tracking-tight sans headings. EditorialHeading is the serif italic display.",

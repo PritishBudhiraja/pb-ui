@@ -20,6 +20,7 @@ export const COMPONENT_NAV: NavGroup[] = CATALOG.map((category: CatalogCategory)
   items: category.items.map((item) => ({
     to: `/components/${item.slug}`,
     label: item.name,
+    keywords: item.keywords,
   })),
 }))
 

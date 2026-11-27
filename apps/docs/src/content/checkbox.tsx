@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "checkbox",
   name: "Checkbox",
   when: "Boolean or multi-select.",
+  keywords: "checkbox radix checked",
   title: "Checkbox",
   kicker: "Form",
   description: "Radix checkbox with a check indicator.",

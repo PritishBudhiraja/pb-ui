@@ -3,11 +3,12 @@ import { fileURLToPath } from "node:url"
 import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
+import { componentMeta } from "./component-meta"
 
 const root = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), componentMeta(join(root, "src/content"))],
   resolve: {
     alias: {
       "@pritish.budhiraja/ui/motion": join(root, "../../packages/ui/src/motion.ts"),
@@ -18,17 +19,5 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id: string) {
-          if (id.includes("node_modules/framer-motion")) return "motion"
-          if (id.includes("node_modules/@radix-ui")) return "radix"
-          if (id.includes("node_modules/cmdk")) return "cmdk"
-          if (id.includes("/src/content/")) return "component-docs"
-        },
-      },
-    },
   },
 })

@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "textarea",
   name: "Textarea",
   when: "Multiline notes.",
+  keywords: "textarea note form",
   title: "Textarea",
   kicker: "Form",
   description: "Native textarea, min-height 6rem.",

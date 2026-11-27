@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "editorial-annotation",
   name: "EditorialAnnotation",
   when: "Handwritten margin note or aside.",
+  keywords: "editorial annotation handwritten margin note",
   sibling: "Alert for operational messages.",
   title: "EditorialAnnotation",
   kicker: "Signature",

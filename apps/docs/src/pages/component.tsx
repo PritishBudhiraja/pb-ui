@@ -1,11 +1,16 @@
+import { use } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
-import { DOCS } from "../content"
+import { loadDoc } from "../content/docs"
 import { PageHeader, PropTable } from "../ui/preview"
 
 export function ComponentPage() {
   const { slug } = useParams()
   if (!slug) return <Navigate to="/components" replace />
-  const doc = DOCS[slug]
+  return <ComponentDocView key={slug} slug={slug} />
+}
+
+function ComponentDocView({ slug }: { slug: string }) {
+  const doc = use(loadDoc(slug))
   if (!doc) return <Navigate to="/components" replace />
   const why = doc.why
   const whenNot = doc.whenNot

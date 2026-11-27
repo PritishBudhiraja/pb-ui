@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "toast",
   name: "Toast",
   when: "Transient confirmation. Mount Toaster once.",
+  keywords: "toast notification queue",
   title: "Toast",
   kicker: "Feedback",
   description: "Radix toast with a 3-item queue and 4s removal. Mount Toaster once.",

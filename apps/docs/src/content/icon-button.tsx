@@ -7,6 +7,7 @@ export const doc: ComponentDoc = {
   slug: "icon-button",
   name: "IconButton",
   when: "Icon-only control. Requires a label.",
+  keywords: "icon button aria-label",
   sibling: "Button when the action has visible text.",
   title: "IconButton",
   kicker: "Primitive",

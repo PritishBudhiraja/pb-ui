@@ -5,6 +5,7 @@ export interface CatalogEntry {
   name: string
   when: string
   sibling?: string
+  keywords?: string
 }
 
 export interface CatalogCategory {

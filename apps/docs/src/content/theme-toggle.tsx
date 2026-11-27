@@ -16,6 +16,7 @@ export const doc: ComponentDoc = {
   slug: "theme-toggle",
   name: "ThemeToggle",
   when: "Host-controlled light/dark with a circular view transition.",
+  keywords: "theme toggle view transition sun moon",
   sibling: "You own storage (next-themes, localStorage).",
   title: "ThemeToggle",
   kicker: "Signature",
