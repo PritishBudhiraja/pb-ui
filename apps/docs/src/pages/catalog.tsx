@@ -1,4 +1,4 @@
-import { EditorialHeading, Text } from "@pritish.budhiraja/ui"
+import { cn, EditorialHeading, Text } from "@pritish.budhiraja/ui"
 import { Link } from "react-router-dom"
 import { CATALOG } from "../catalog"
 import { PageHeader } from "../ui/preview"
@@ -46,7 +46,8 @@ export function CatalogPage() {
               return (
                 <article
                   key={item.slug}
-                  className={WIDE.has(item.slug) ? "min-w-0 md:col-span-2" : "min-w-0"}
+                  id={item.slug}
+                  className={cn("min-w-0 scroll-mt-20", WIDE.has(item.slug) && "md:col-span-2")}
                 >
                   <div className="overflow-hidden rounded-md border border-dashed border-border">
                     <div className="flex flex-wrap items-baseline justify-between gap-2 px-4 pt-3">

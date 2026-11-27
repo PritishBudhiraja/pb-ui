@@ -21,6 +21,15 @@ export const COMPONENT_NAV: NavGroup[] = CATALOG.map((category: CatalogCategory)
   })),
 }))
 
+// On the overview every block is on the page, so links jump to it and follow the scroll.
+const COMPONENT_OVERVIEW_NAV: NavGroup[] = CATALOG.map((category: CatalogCategory) => ({
+  title: category.title,
+  items: category.items.map((item) => ({
+    to: `/components#${item.slug}`,
+    label: item.name,
+  })),
+}))
+
 export const FOUNDATION_NAV: NavGroup[] = [
   {
     title: "Foundations",
@@ -63,7 +72,8 @@ export function flattenNav() {
 }
 
 export function sidebarFor(pathname: string): NavGroup[] | null {
-  if (pathname === "/components" || pathname.startsWith("/components/")) return COMPONENT_NAV
+  if (pathname === "/components") return COMPONENT_OVERVIEW_NAV
+  if (pathname.startsWith("/components/")) return COMPONENT_NAV
   if (pathname === "/foundations") return FOUNDATION_NAV
   if (pathname === "/hooks" || pathname === "/changelog" || pathname === "/contributing") {
     return PROJECT_NAV_GROUP
