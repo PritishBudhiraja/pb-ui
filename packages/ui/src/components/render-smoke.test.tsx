@@ -3,9 +3,68 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it } from "vitest"
 import { expectNoAxeViolations } from "../test/axe"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./accordion"
-import { ActivityTimeline } from "./activity-timeline"
-import { AIExecutionStatus } from "./ai-execution-status"
+import { LoadingButton } from "./actions/loading-button"
+import { AIExecutionStatus } from "./content/ai-execution-status"
+import { CodeBlock } from "./content/code-block"
+import { MarkdownRenderer } from "./content/markdown-renderer"
+import { MilestoneStepper, WorkflowStepper } from "./content/stepper"
+import { StreamingText } from "./content/streaming-text"
+import { Avatar, AvatarFallback, AvatarImage } from "./data/avatar"
+import { Badge } from "./data/badge"
+import { DataTable } from "./data/data-table"
+import { DescriptionDetail, DescriptionList, DescriptionTerm } from "./data/description-list"
+import { Heading } from "./data/heading"
+import { ScrollArea } from "./data/scroll-area"
+import { Separator } from "./data/separator"
+import { Grid, Stack } from "./data/stack"
+import { StatCard } from "./data/stat-card"
+import { Text } from "./data/text"
+import { Timeline, TimelineItem } from "./data/timeline"
+import { Checkbox } from "./forms/checkbox"
+import { FilterBar } from "./forms/filter-bar"
+import { Input } from "./forms/input"
+import { Label } from "./forms/label"
+import { RadioGroup, RadioGroupItem } from "./forms/radio-group"
+import { SearchInput } from "./forms/search-input"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./forms/select"
+import { Slider } from "./forms/slider"
+import { Switch } from "./forms/switch"
+import { Textarea } from "./forms/textarea"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./navigation/accordion"
+import { AppShell } from "./navigation/app-shell"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "./navigation/breadcrumb"
+import { InspectorPanel } from "./navigation/inspector-panel"
+import { KeyboardShortcut } from "./navigation/keyboard-shortcut"
+import { Navbar, NavbarBrand, NavbarSpacer } from "./navigation/navbar"
+import {
+  Pagination,
+  PaginationButton,
+  PaginationNext,
+  PaginationPrevious,
+} from "./navigation/pagination"
+import { CollapsibleSidebar, Sidebar, SidebarItem, SidebarSection } from "./navigation/sidebar"
+import { SplitWorkspace } from "./navigation/split-workspace"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./navigation/tabs"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,21 +75,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./alert-dialog"
-import { AppShell } from "./app-shell"
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
-import { Badge } from "./badge"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "./breadcrumb"
-import { CalendarHeatmap } from "./calendar-heatmap"
-import { Checkbox } from "./checkbox"
-import { CodeBlock } from "./code-block"
+} from "./overlays/alert-dialog"
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -39,10 +84,7 @@ import {
   ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "./context-menu"
-import { CountdownDisplay } from "./countdown-display"
-import { DataTable } from "./data-table"
-import { DescriptionDetail, DescriptionList, DescriptionTerm } from "./description-list"
+} from "./overlays/context-menu"
 import {
   Dialog,
   DialogContent,
@@ -50,7 +92,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog"
+} from "./overlays/dialog"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -59,38 +101,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
-import { EditorialAnnotation } from "./editorial-annotation"
-import { EditorialHeading } from "./editorial-heading"
-import { EmptyState } from "./empty-state"
-import { ErrorState } from "./error-state"
-import { FilterBar } from "./filter-bar"
-import { FramedContainer } from "./framed-container"
-import { HatchDivider } from "./hatch-divider"
-import { Heading } from "./heading"
-import { Input } from "./input"
-import { InspectorPanel } from "./inspector-panel"
-import { KeyboardShortcut } from "./keyboard-shortcut"
-import { Label } from "./label"
-import { LoadingButton } from "./loading-button"
-import { MarkdownRenderer } from "./markdown-renderer"
-import { Navbar, NavbarBrand, NavbarSpacer } from "./navbar"
-import { Pagination, PaginationButton, PaginationNext, PaginationPrevious } from "./pagination"
-import { Popover, PopoverContent, PopoverTrigger } from "./popover"
-import { ProgressBar, ProgressRing } from "./progress"
-import { RadioGroup, RadioGroupItem } from "./radio-group"
-import { ScrollArea } from "./scroll-area"
-import { SearchInput } from "./search-input"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "./select"
-import { Separator } from "./separator"
+} from "./overlays/dropdown-menu"
+import { EmptyState } from "./overlays/empty-state"
+import { ErrorState } from "./overlays/error-state"
+import { Popover, PopoverContent, PopoverTrigger } from "./overlays/popover"
+import { ProgressBar, ProgressRing } from "./overlays/progress"
 import {
   Sheet,
   SheetContent,
@@ -98,23 +113,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./sheet"
-import { CollapsibleSidebar, Sidebar, SidebarItem, SidebarSection } from "./sidebar"
-import { Skeleton } from "./skeleton"
-import { Slider } from "./slider"
-import { Spinner } from "./spinner"
-import { SplitWorkspace } from "./split-workspace"
-import { Grid, Stack } from "./stack"
-import { StatCard } from "./stat-card"
-import { MilestoneStepper, WorkflowStepper } from "./stepper"
-import { StreamingText } from "./streaming-text"
-import { Surface } from "./surface"
-import { Switch } from "./switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs"
-import { Text } from "./text"
-import { Textarea } from "./textarea"
-import { TimeAllocationBar } from "./time-allocation-bar"
-import { Timeline, TimelineItem } from "./timeline"
+} from "./overlays/sheet"
+import { Skeleton } from "./overlays/skeleton"
+import { Spinner } from "./overlays/spinner"
 import {
   Toast,
   ToastAction,
@@ -123,9 +124,18 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "./toast"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip"
-import { WeeklyActivityGrid } from "./weekly-activity-grid"
+} from "./overlays/toast"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./overlays/tooltip"
+import { ActivityTimeline } from "./presentation/activity-timeline"
+import { CountdownDisplay } from "./presentation/countdown-display"
+import { TimeAllocationBar } from "./presentation/time-allocation-bar"
+import { WeeklyActivityGrid } from "./presentation/weekly-activity-grid"
+import { CalendarHeatmap } from "./signature/calendar-heatmap"
+import { EditorialAnnotation } from "./signature/editorial-annotation"
+import { EditorialHeading } from "./signature/editorial-heading"
+import { FramedContainer } from "./signature/framed-container"
+import { HatchDivider } from "./signature/hatch-divider"
+import { Surface } from "./signature/surface"
 
 describe("catalogue primitives", () => {
   it("renders layout, data, and feedback pieces", async () => {

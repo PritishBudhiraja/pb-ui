@@ -17,6 +17,8 @@ Vite library build:
 
 Externals: react, react-dom, framer-motion, radix, cmdk, lucide, cva, clsx, tailwind-merge.
 
+Source: `src/components/<category>/<component>.tsx`, one folder per docs category (signature, actions, forms, overlays, navigation, data, schedule, content, presentation). A component's test sits next to it as `<component>.test.tsx`. Consumers import only from the package entry points, so folders are internal.
+
 ## Storybook
 
 Aliases packages to TypeScript source so components iterate without a watch build. Production consumers use `dist`.
