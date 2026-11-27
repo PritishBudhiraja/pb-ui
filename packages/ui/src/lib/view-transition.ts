@@ -13,6 +13,7 @@ export async function revealFromOrigin(origin: HTMLElement, update: () => void, 
 
   let updated = false
   const run = () => {
+    if (updated) return
     updated = true
     update()
   }
@@ -32,8 +33,8 @@ export async function revealFromOrigin(origin: HTMLElement, update: () => void, 
     )
     await transition.finished
   } catch {
-    // ready and finished also reject when a transition is skipped after the update already ran.
-    if (!updated) update()
+    // A skipped transition may call the queued callback before or after this point; run once.
+    run()
   } finally {
     document.documentElement.removeAttribute("data-theme-transition")
   }

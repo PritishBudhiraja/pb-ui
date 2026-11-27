@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { revealFromOrigin } from "./view-transition"
 
+let queued: (() => void) | undefined
+
 function mockTransition(options: { runUpdate: boolean; ready: Promise<void> }) {
   const finished = options.ready.then(() => undefined)
   finished.catch(() => {})
@@ -9,6 +11,7 @@ function mockTransition(options: { runUpdate: boolean; ready: Promise<void> }) {
     writable: true,
     value: (callback: () => void) => {
       if (options.runUpdate) callback()
+      else queued = callback
       return {
         ready: options.ready,
         finished,
@@ -28,6 +31,7 @@ function skipped() {
 }
 
 afterEach(() => {
+  queued = undefined
   Reflect.deleteProperty(document, "startViewTransition")
 })
 
@@ -44,6 +48,14 @@ describe("revealFromOrigin", () => {
     mockTransition({ runUpdate: false, ready: skipped() })
     const update = vi.fn()
     await revealFromOrigin(document.body, update)
+    expect(update).toHaveBeenCalledTimes(1)
+  })
+
+  it("does not repeat the update when a queued callback runs after the fallback", async () => {
+    mockTransition({ runUpdate: false, ready: skipped() })
+    const update = vi.fn()
+    await revealFromOrigin(document.body, update)
+    queued?.()
     expect(update).toHaveBeenCalledTimes(1)
   })
 })
