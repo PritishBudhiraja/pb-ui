@@ -27,6 +27,6 @@ test("editor, calendar, theme, and serif", async ({ page }) => {
   await expect(page.getByLabel("Editor")).toContainText("Typed in TipTap")
 
   await page.getByRole("button", { name: /Monday, November 23, 2026, 11:00/ }).click()
-  await expect(page.getByRole("button", { name: /Slot/ })).toBeVisible()
+  await expect(page.getByRole("button", { name: /^Slot, 11:00/ })).toBeVisible()
   expect(errors.filter((message) => !message.includes("not implemented"))).toEqual([])
 })
