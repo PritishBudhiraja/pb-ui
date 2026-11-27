@@ -54,6 +54,23 @@ code {
   view-transition-name: docs-tab-pill;
 }
 
+/* Each label gets its own snapshot after the pill, so the sliding pill never covers the text. */
+:root:not([data-theme-transition]) nav[aria-label="Primary"] a:nth-of-type(1) {
+  view-transition-name: docs-tab-1;
+}
+
+:root:not([data-theme-transition]) nav[aria-label="Primary"] a:nth-of-type(2) {
+  view-transition-name: docs-tab-2;
+}
+
+:root:not([data-theme-transition]) nav[aria-label="Primary"] a:nth-of-type(3) {
+  view-transition-name: docs-tab-3;
+}
+
+:root:not([data-theme-transition]) nav[aria-label="Primary"] a:nth-of-type(4) {
+  view-transition-name: docs-tab-4;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   :root:not([data-theme-transition])::view-transition-old(root) {
     animation: 150ms ease-in both docs-page-out;
@@ -63,7 +80,11 @@ code {
     animation: 250ms ease-out both docs-page-in;
   }
 
-  :root:not([data-theme-transition])::view-transition-group(docs-tab-pill) {
+  :root:not([data-theme-transition])::view-transition-group(docs-tab-pill),
+  :root:not([data-theme-transition])::view-transition-group(docs-tab-1),
+  :root:not([data-theme-transition])::view-transition-group(docs-tab-2),
+  :root:not([data-theme-transition])::view-transition-group(docs-tab-3),
+  :root:not([data-theme-transition])::view-transition-group(docs-tab-4) {
     animation-duration: 250ms;
     animation-timing-function: ease-out;
   }
