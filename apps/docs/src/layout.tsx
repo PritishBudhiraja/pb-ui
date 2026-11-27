@@ -1,18 +1,12 @@
 import { CommandPalette, cn, HatchDivider, ThemeToggle, Toaster } from "@pritish.budhiraja/ui"
 import { Menu, X } from "lucide-react"
 import { type Ref, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react"
-import {
-  Link,
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useNavigationType,
-} from "react-router-dom"
+import { Outlet, ScrollRestoration, useLocation, useNavigate } from "react-router-dom"
 import { loadAllDocs } from "./content/docs"
 import { type NavGroup, sidebarFor, TABS } from "./nav"
 import { searchItems } from "./search"
 import { useDocsTheme } from "./theme"
+import { Link, NavLink } from "./ui/link"
 
 const GITHUB = "https://github.com/PritishBudhiraja/pb-ui"
 
@@ -23,7 +17,6 @@ export function DocsLayout() {
   const [open, setOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
   const sidebar = sidebarFor(location.pathname)
-  useScrollOnNavigate()
 
   useEffect(() => {
     setOpen(false)
@@ -44,7 +37,7 @@ export function DocsLayout() {
   return (
     <div className="site-frame site-frame--wide min-h-svh overflow-x-clip">
       <div className="site-frame-column mx-auto flex min-h-svh max-w-[1120px] flex-col border-x border-dashed border-border">
-        <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-dashed border-border bg-background px-3 sm:px-6">
+        <header className="docs-header sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-dashed border-border bg-background px-3 sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <Link to="/" className="flex shrink-0 items-center gap-2">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-dashed border-border font-mono text-[11px] font-semibold">
@@ -71,7 +64,7 @@ export function DocsLayout() {
             <CommandPalette
               items={searchItems()}
               onSelect={(item) => {
-                if (item.href) navigate(item.href)
+                if (item.href) navigate(item.href, { viewTransition: true })
               }}
               placeholder="Search docs…"
               label="Documentation search"
@@ -101,7 +94,7 @@ export function DocsLayout() {
           {sidebar ? (
             <aside
               className={cn(
-                "docs-nav z-30 w-[15.5rem] shrink-0 flex-col border-r border-dashed border-border bg-background",
+                "docs-nav docs-sidebar z-30 w-[15.5rem] shrink-0 flex-col border-r border-dashed border-border bg-background",
                 open
                   ? "absolute inset-y-0 left-0 flex overflow-y-auto shadow-xl lg:static lg:shadow-none"
                   : "hidden lg:flex",
@@ -114,12 +107,7 @@ export function DocsLayout() {
           <div className="min-w-0 flex-1">
             <main className="px-4 py-8 sm:px-8">
               <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
-                <div
-                  key={location.pathname}
-                  className="animate-in fade-in slide-in-from-bottom-1 duration-200 motion-reduce:animate-none"
-                >
-                  <Outlet />
-                </div>
+                <Outlet />
               </Suspense>
             </main>
             <HatchDivider />
@@ -132,42 +120,10 @@ export function DocsLayout() {
           </div>
         </div>
         <Toaster />
+        <ScrollRestoration />
       </div>
     </div>
   )
-}
-
-const scrollPositions = new Map<string, number>()
-
-// Navigations keep the old scroll offset otherwise, so a new page opens part way down.
-// Back and forward return to where that page was left.
-function useScrollOnNavigate() {
-  const location = useLocation()
-  const navigationType = useNavigationType()
-  const key = useRef(location.key)
-
-  useEffect(() => {
-    window.history.scrollRestoration = "manual"
-    const save = () => {
-      // Entries made outside the router (the initial load, in-page # links) share the key "default".
-      if (key.current !== "default") scrollPositions.set(key.current, window.scrollY)
-    }
-    window.addEventListener("scroll", save, { passive: true })
-    return () => window.removeEventListener("scroll", save)
-  }, [])
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs once per navigation
-  useLayoutEffect(() => {
-    key.current = location.key
-    const saved = scrollPositions.get(location.key)
-    if (navigationType === "POP" && saved !== undefined) {
-      window.scrollTo(0, saved)
-      return
-    }
-    const target = location.hash ? document.getElementById(location.hash.slice(1)) : null
-    if (target) target.scrollIntoView()
-    else window.scrollTo(0, 0)
-  }, [location.key])
 }
 
 function PrimaryTabs() {
@@ -200,7 +156,7 @@ function PrimaryTabs() {
         <span
           aria-hidden
           className={cn(
-            "absolute inset-y-0 rounded-md bg-muted",
+            "docs-tab-pill absolute inset-y-0 rounded-md bg-muted",
             pill.animate &&
               "transition-[left,width] duration-200 ease-out motion-reduce:transition-none",
           )}

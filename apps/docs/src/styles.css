@@ -39,3 +39,53 @@ code {
   background: var(--border);
   border-radius: 999px;
 }
+
+/* Page changes cross-fade. The header, sidebar and tab pill keep their own snapshots so they stay
+   put (the pill slides). Skipped during the theme toggle, which runs its own circular reveal. */
+:root:not([data-theme-transition]) .docs-header {
+  view-transition-name: docs-header;
+}
+
+:root:not([data-theme-transition]) .docs-sidebar {
+  view-transition-name: docs-sidebar;
+}
+
+:root:not([data-theme-transition]) .docs-tab-pill {
+  view-transition-name: docs-tab-pill;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-theme-transition])::view-transition-old(root) {
+    animation: 150ms ease-in both docs-page-out;
+  }
+
+  :root:not([data-theme-transition])::view-transition-new(root) {
+    animation: 250ms ease-out both docs-page-in;
+  }
+
+  :root:not([data-theme-transition])::view-transition-group(docs-tab-pill) {
+    animation-duration: 250ms;
+    animation-timing-function: ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}
+
+@keyframes docs-page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes docs-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
