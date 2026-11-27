@@ -5,4 +5,4 @@
 - **Selected:** Keep Radix toast; fix remove delay (4s) and limit (3); actually dequeue on timeout
 - **Rationale:** Matches the portfolio API; no new dependency
 - **Trade-offs:** Less fashionable than Sonner; store is module-global
-- **Validation:** reducer tests + Storybook
+- **Validation:** reducer tests + docs site preview

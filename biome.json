@@ -11,7 +11,6 @@
       "**",
       "!node_modules",
       "!dist",
-      "!storybook-static",
       "!coverage",
       "!pnpm-lock.yaml",
       "!.changeset",

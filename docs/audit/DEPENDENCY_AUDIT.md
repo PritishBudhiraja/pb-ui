@@ -17,7 +17,6 @@
 | @typescript/typescript6  | JS Compiler API for dts tooling under TypeScript 7 | wait for dts TS7  | MIT        |
 | vitest + testing-library | Component and util tests                           | jest              | MIT        |
 | @vitest/coverage-v8      | Coverage report in CI                              | c8                | MIT        |
-| storybook 8              | Engineering workspace                              | Ladle             | MIT        |
 | biome                    | Lint/format, same as portfolio                     | eslint            | MIT        |
 | @changesets/cli          | Versioning and npm publish (v3, Node 22.11+)       | —                 | MIT        |
 
@@ -25,14 +24,12 @@
 
 `pnpm.overrides` pin nested tooling to patched releases. They are not runtime dependencies of `@pritish.budhiraja/ui`.
 
-| Package   | Why                                                                | Pinned to |
-| --------- | ------------------------------------------------------------------ | --------- |
-| tinypool  | Vitest worker pool RCE advisories                                  | ^2.2.0    |
-| uuid      | Storybook `addon-actions` buffer bounds check                      | ^11.1.1   |
-| glob      | Storybook `vite-plugin-react-docgen-typescript` AbortSignal bypass | ^14.0.6   |
-| minimatch | Nested glob / API Extractor globparts DoS                          | ^11.0.1   |
+| Package   | Why                                       | Pinned to |
+| --------- | ----------------------------------------- | --------- |
+| tinypool  | Vitest worker pool RCE advisories         | ^2.2.0    |
+| minimatch | Nested glob / API Extractor globparts DoS | ^11.0.1   |
 
-Vitest is on 5.x so `@vitest/mocker` and tinypool come from the patched tree. `uuid` stays on 11.x (patched) rather than 14.x because Storybook 8 still imports the v9/v11 API.
+Vitest is on 5.x so `@vitest/mocker` and tinypool come from the patched tree.
 
 `vite-plugin-dts` / Volar still declare `typescript@<7`. Types are unbundled because API Extractor cannot follow `Omit` under TypeScript 7. `@typescript/typescript6` is the JS Compiler API fallback dts requires.
 

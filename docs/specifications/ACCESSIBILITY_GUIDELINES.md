@@ -9,4 +9,4 @@ Target WCAG 2.2 AA for shipped behavior.
 - Heatmaps expose a text summary (`sr-only` + `role="img"`)
 - Theme toggle sets `aria-pressed`
 - Respect `prefers-reduced-motion`
-- Automated Storybook a11y addon does not replace keyboard review
+- Automated axe checks in the component tests do not replace keyboard review

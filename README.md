@@ -71,20 +71,19 @@ pnpm build
 pnpm dev
 ```
 
-| Command           | What it does                                 |
-| ----------------- | -------------------------------------------- |
-| `pnpm dev`        | Docs at http://localhost:5173                |
-| `pnpm storybook`  | Component workbench at http://localhost:6006 |
-| `pnpm build`      | Library ESM, types, and CSS                  |
-| `pnpm build:docs` | Static docs site                             |
-| `pnpm test`       | Vitest                                       |
-| `pnpm test:pack`  | Install packed tarballs into Vite and Next   |
-| `pnpm test:e2e`   | Playwright against the calendar and editor   |
-| `pnpm lint`       | Biome and TypeScript                         |
+| Command           | What it does                               |
+| ----------------- | ------------------------------------------ |
+| `pnpm dev`        | Docs at http://localhost:5173              |
+| `pnpm build`      | Library ESM, types, and CSS                |
+| `pnpm build:docs` | Static docs site                           |
+| `pnpm test`       | Vitest                                     |
+| `pnpm test:pack`  | Install packed tarballs into Vite and Next |
+| `pnpm test:e2e`   | Playwright against the calendar and editor |
+| `pnpm lint`       | Biome and TypeScript                       |
 
 ## Host the docs (Vercel)
 
-On the import screen, Vercel lists `docs`, `storybook`, and `ui`. Import **docs** only (`Import single project`). Skip Storybook and the UI package. Leave environment variables empty.
+On the import screen, Vercel lists `docs` and `ui`. Import **docs** only (`Import single project`). Skip the UI package. Leave environment variables empty.
 
 That sets Root Directory to `apps/docs`. `apps/docs/vercel.json` installs from the repo root so the pnpm workspace still builds.
 
