@@ -1,7 +1,15 @@
 import { CommandPalette, cn, HatchDivider, ThemeToggle, Toaster } from "@pritish.budhiraja/ui"
 import { Menu, X } from "lucide-react"
 import { type Ref, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react"
-import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useNavigationType,
+} from "react-router-dom"
+import { loadAllDocs } from "./content/docs"
 import { type NavGroup, sidebarFor, TABS } from "./nav"
 import { searchItems } from "./search"
 import { useDocsTheme } from "./theme"
@@ -15,6 +23,7 @@ export function DocsLayout() {
   const [open, setOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
   const sidebar = sidebarFor(location.pathname)
+  useScrollOnNavigate()
 
   useEffect(() => {
     setOpen(false)
@@ -45,26 +54,7 @@ export function DocsLayout() {
                 Hatch
               </span>
             </Link>
-            <nav
-              className="flex min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              aria-label="Primary"
-            >
-              {TABS.map((tab) => (
-                <NavLink
-                  key={tab.to}
-                  to={tab.to}
-                  end={"end" in tab ? tab.end : false}
-                  className={({ isActive }) =>
-                    cn(
-                      "shrink-0 rounded-md px-2.5 py-1 text-sm text-muted-foreground hover:text-foreground",
-                      isActive && "bg-muted font-medium text-foreground",
-                    )
-                  }
-                >
-                  {tab.label}
-                </NavLink>
-              ))}
-            </nav>
+            <PrimaryTabs />
           </div>
           <div className="flex shrink-0 items-center gap-2">
             {sidebar ? (
@@ -124,7 +114,12 @@ export function DocsLayout() {
           <div className="min-w-0 flex-1">
             <main className="px-4 py-8 sm:px-8">
               <Suspense fallback={<p className="text-sm text-muted-foreground">Loading…</p>}>
-                <Outlet />
+                <div
+                  key={location.pathname}
+                  className="animate-in fade-in slide-in-from-bottom-1 duration-200 motion-reduce:animate-none"
+                >
+                  <Outlet />
+                </div>
               </Suspense>
             </main>
             <HatchDivider />
@@ -139,6 +134,98 @@ export function DocsLayout() {
         <Toaster />
       </div>
     </div>
+  )
+}
+
+const scrollPositions = new Map<string, number>()
+
+// Navigations keep the old scroll offset otherwise, so a new page opens part way down.
+// Back and forward return to where that page was left.
+function useScrollOnNavigate() {
+  const location = useLocation()
+  const navigationType = useNavigationType()
+  const key = useRef(location.key)
+
+  useEffect(() => {
+    window.history.scrollRestoration = "manual"
+    const save = () => {
+      // Entries made outside the router (the initial load, in-page # links) share the key "default".
+      if (key.current !== "default") scrollPositions.set(key.current, window.scrollY)
+    }
+    window.addEventListener("scroll", save, { passive: true })
+    return () => window.removeEventListener("scroll", save)
+  }, [])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: runs once per navigation
+  useLayoutEffect(() => {
+    key.current = location.key
+    const saved = scrollPositions.get(location.key)
+    if (navigationType === "POP" && saved !== undefined) {
+      window.scrollTo(0, saved)
+      return
+    }
+    const target = location.hash ? document.getElementById(location.hash.slice(1)) : null
+    if (target) target.scrollIntoView()
+    else window.scrollTo(0, 0)
+  }, [location.key])
+}
+
+function PrimaryTabs() {
+  const location = useLocation()
+  const navRef = useRef<HTMLElement>(null)
+  const [pill, setPill] = useState<{ left: number; width: number; animate: boolean } | null>(null)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the active tab changes with the route
+  useLayoutEffect(() => {
+    const measure = () => {
+      const active = navRef.current?.querySelector<HTMLElement>("[aria-current=page]")
+      setPill((previous) =>
+        active
+          ? { left: active.offsetLeft, width: active.offsetWidth, animate: previous !== null }
+          : null,
+      )
+    }
+    measure()
+    window.addEventListener("resize", measure)
+    return () => window.removeEventListener("resize", measure)
+  }, [location.pathname])
+
+  return (
+    <nav
+      ref={navRef}
+      className="relative flex min-w-0 items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      aria-label="Primary"
+    >
+      {pill ? (
+        <span
+          aria-hidden
+          className={cn(
+            "absolute inset-y-0 rounded-md bg-muted",
+            pill.animate &&
+              "transition-[left,width] duration-200 ease-out motion-reduce:transition-none",
+          )}
+          style={{ left: pill.left, width: pill.width }}
+        />
+      ) : null}
+      {TABS.map((tab) => (
+        <NavLink
+          key={tab.to}
+          to={tab.to}
+          end={"end" in tab ? tab.end : false}
+          // The overview renders every preview; start loading them before the click lands.
+          onPointerEnter={tab.to === "/components" ? () => void loadAllDocs() : undefined}
+          onFocus={tab.to === "/components" ? () => void loadAllDocs() : undefined}
+          className={({ isActive }) =>
+            cn(
+              "relative shrink-0 rounded-md px-2.5 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground",
+              isActive && "font-medium text-foreground",
+            )
+          }
+        >
+          {tab.label}
+        </NavLink>
+      ))}
+    </nav>
   )
 }
 
