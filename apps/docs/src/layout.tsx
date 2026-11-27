@@ -142,6 +142,69 @@ export function DocsLayout() {
   )
 }
 
+const SPY_OFFSET = 96
+
+function useScrollSpy(ids: string[]) {
+  const [active, setActive] = useState<string | null>(null)
+  const picked = useRef<string | null>(null)
+  const key = ids.join(" ")
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: key stands in for ids
+  useEffect(() => {
+    if (ids.length === 0) {
+      setActive(null)
+      return
+    }
+    let frame = 0
+    const measure = () => {
+      frame = 0
+      const tops = new Map<string, number>()
+      for (const id of ids) {
+        const element = document.getElementById(id)
+        if (element) tops.set(id, element.getBoundingClientRect().top)
+      }
+      // Blocks share rows, so take the first block of the lowest row that has reached the header.
+      let current: string | null = null
+      let currentTop = Number.NEGATIVE_INFINITY
+      for (const [id, top] of tops) {
+        if (top <= SPY_OFFSET && top > currentTop + 1) {
+          current = id
+          currentTop = top
+        }
+      }
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
+      if (atBottom) current = [...tops.keys()].at(-1) ?? current
+      const clicked = picked.current
+      const clickedTop = clicked ? tops.get(clicked) : undefined
+      if (clicked && clickedTop !== undefined && Math.abs(clickedTop - currentTop) <= 1) {
+        current = clicked
+      } else {
+        picked.current = null
+      }
+      setActive(current ?? ids[0] ?? null)
+    }
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(measure)
+    }
+    measure()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
+    }
+  }, [key])
+
+  const select = (id: string | null) => {
+    picked.current = id
+    setActive(id)
+  }
+
+  return [active, select] as const
+}
+
 function DocsNav({
   groups,
   ref,
@@ -155,12 +218,19 @@ function DocsNav({
   const listRef = useRef<HTMLDivElement>(null)
   const [hovered, setHovered] = useState<HTMLElement | null>(null)
   const [bar, setBar] = useState<{ top: number; height: number } | null>(null)
+  const sectionIds = groups.flatMap((group) =>
+    group.items.flatMap((item) => {
+      const [path, hash] = item.to.split("#")
+      return hash && path === location.pathname ? [hash] : []
+    }),
+  )
+  const [section, setSection] = useScrollSpy(sectionIds)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the active link changes with the route
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the active link changes with the route and the scroll
   useLayoutEffect(() => {
     const list = listRef.current
     if (!list) return
-    const target = hovered ?? list.querySelector<HTMLElement>("[aria-current=page]")
+    const target = hovered ?? list.querySelector<HTMLElement>("[aria-current]")
     if (!target) {
       setBar(null)
       return
@@ -168,7 +238,19 @@ function DocsNav({
     const listTop = list.getBoundingClientRect().top
     const box = target.getBoundingClientRect()
     setBar({ top: box.top - listTop, height: box.height })
-  }, [hovered, location.pathname, groups])
+  }, [hovered, location.pathname, groups, section])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: keep the spied link in view as it changes
+  useEffect(() => {
+    const nav = listRef.current?.parentElement
+    const active = listRef.current?.querySelector<HTMLElement>("[aria-current=location]")
+    if (!nav || !active) return
+    const navBox = nav.getBoundingClientRect()
+    const itemBox = active.getBoundingClientRect()
+    if (itemBox.top < navBox.top + 12) nav.scrollTop += itemBox.top - navBox.top - 12
+    else if (itemBox.bottom > navBox.bottom - 12)
+      nav.scrollTop += itemBox.bottom - navBox.bottom + 12
+  }, [section])
 
   return (
     <nav
@@ -193,6 +275,7 @@ function DocsNav({
             <ul className="border-l border-dashed border-border">
               {group.items.map((item) => {
                 const hash = item.to.includes("#")
+                const current = hash && section === item.to.split("#")[1]
                 const className = ({ isActive }: { isActive: boolean }) =>
                   cn(
                     "block py-1 pl-3 text-sm text-muted-foreground transition-colors hover:text-foreground",
@@ -203,8 +286,12 @@ function DocsNav({
                     {hash ? (
                       <a
                         href={item.to}
-                        onClick={onNavigate}
-                        className={className({ isActive: false })}
+                        aria-current={current ? "location" : undefined}
+                        onClick={() => {
+                          setSection(item.to.split("#")[1] ?? null)
+                          onNavigate()
+                        }}
+                        className={className({ isActive: current })}
                       >
                         {item.label}
                       </a>
