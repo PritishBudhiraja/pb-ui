@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "origin-button",
   name: "OriginButton",
   when: "Primary call to action that should carry the signature ripple.",
+  keywords: "origin button ripple filled outline href motion",
   sibling: "Button for quiet actions; LinkButton for text-style links.",
   title: "OriginButton",
   kicker: "Signature",

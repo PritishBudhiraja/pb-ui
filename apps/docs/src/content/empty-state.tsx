@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "empty-state",
   name: "EmptyState",
   when: "First-run or no results.",
+  keywords: "empty state dashed first run",
   title: "EmptyState",
   kicker: "Feedback",
   description: "Dashed first-run panel.",

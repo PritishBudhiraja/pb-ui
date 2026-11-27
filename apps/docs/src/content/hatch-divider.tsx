@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "hatch-divider",
   name: "HatchDivider",
   when: "Section rule between editorial blocks.",
+  keywords: "hatch divider section rule",
   sibling: "Separator for tight UI lists.",
   title: "HatchDivider",
   kicker: "Signature",

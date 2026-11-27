@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "command-palette",
   name: "CommandPalette",
   when: "⌘K jump list. Pass items from the host.",
+  keywords: "command palette cmdk search shortcut",
   title: "CommandPalette",
   kicker: "Overlay",
   description:

@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "surface",
   name: "Surface",
   when: "Dashed inner panel.",
+  keywords: "surface dashed card",
   sibling: "Card when you need header/title/footer structure.",
   title: "Surface",
   kicker: "Primitive",

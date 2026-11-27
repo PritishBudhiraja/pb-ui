@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "label",
   name: "Label",
   when: "Associate text with a control via htmlFor.",
+  keywords: "label htmlFor",
   title: "Label",
   kicker: "Form",
   description: "Radix label primitive.",

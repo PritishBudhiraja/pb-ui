@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "framed-container",
   name: "FramedContainer",
   when: "Page chrome with dashed column gutters.",
+  keywords: "framed container dashed column gutters site frame",
   sibling: "Surface for inner cards.",
   title: "FramedContainer",
   kicker: "Signature",

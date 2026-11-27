@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "popover",
   name: "Popover",
   when: "Small anchored panel.",
+  keywords: "popover panel",
   title: "Popover",
   kicker: "Overlay",
   description: "Positioned panel.",

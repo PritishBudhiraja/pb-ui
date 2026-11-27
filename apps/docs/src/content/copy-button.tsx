@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "copy-button",
   name: "CopyButton",
   when: "Copy a value with clipboard feedback.",
+  keywords: "copy clipboard",
   sibling: "useClipboard when the trigger is custom.",
   title: "CopyButton",
   kicker: "Action",

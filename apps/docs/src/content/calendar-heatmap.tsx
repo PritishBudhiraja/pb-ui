@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "calendar-heatmap",
   name: "CalendarHeatmap",
   when: "Year of activity with a text summary.",
+  keywords: "calendar heatmap contributions grid",
   sibling: "Not a date picker — use DatePicker for choosing a day.",
   title: "CalendarHeatmap",
   why: "Contribution-style year grid with a text summary so the data is not trapped in color.",

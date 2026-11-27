@@ -12,6 +12,7 @@ export const doc: ComponentDoc = {
   slug: "tooltip",
   name: "Tooltip",
   when: "Short hover/focus hint.",
+  keywords: "tooltip hover focus",
   title: "Tooltip",
   kicker: "Overlay",
   description: "Wrap the tree in TooltipProvider.",

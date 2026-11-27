@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "input",
   name: "Input",
   when: "Single-line text.",
+  keywords: "input email label form",
   sibling: "SearchInput for filter bars.",
   title: "Input",
   kicker: "Form",

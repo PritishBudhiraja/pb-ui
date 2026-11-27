@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "scroll-progress",
   name: "ScrollProgress",
   when: "Reading progress on long articles.",
+  keywords: "scroll progress reading bar",
   sibling: "Import from @pritish.budhiraja/ui/motion.",
   title: "ScrollProgress",
   kicker: "Signature",

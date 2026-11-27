@@ -6,6 +6,7 @@ export const doc: ComponentDoc = {
   slug: "text",
   name: "Text",
   when: "Body copy with tone.",
+  keywords: "text tone muted editorial paragraph",
   title: "Text",
   kicker: "Typography",
   description: "Paragraph with tone tokens.",
